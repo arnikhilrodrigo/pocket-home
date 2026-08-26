@@ -66,7 +66,7 @@ Interactions, all vanilla JS:
 
 ## Before this goes live
 
-- [ ] **Replace the placeholder WhatsApp number.** `index.html` still contains
-      `https://wa.me/919000000000` — search for it and swap in the real number.
+- [x] ~~Replace the placeholder WhatsApp number.~~ Enquiries now go to **+91 96001 56838**
+      (`https://wa.me/919600156838` in `index.html`).
 - [ ] Point the Instagram link at the actual profile (currently `instagram.com`).
 - [ ] Confirm every plot area and BHK count in the project grid.
