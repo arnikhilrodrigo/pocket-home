@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#2D6A5C">
+<title>Nichekala Lead Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+/* Layout: sticky studio header + tab strip; one working column (max 1080px); lead detail opens as a bottom sheet on phone, side drawer on desktop */
+:root{
+  --bg:#EEF0EC; --surface:#FFFFFF; --surface-2:#F6F7F4; --ink:#1B2220; --muted:#5B6661; --line:#D7DCD6;
+  --accent:#2D6A5C; --accent-ink:#FFFFFF; --accent-soft:#DCEAE5;
+  --hot:#B1432E; --hot-soft:#F6E1DB; --warn:#9A6411; --warn-soft:#F4E8D2; --ok:#2C7443; --ok-soft:#DCEEDF;
+  --info:#38598A; --info-soft:#DEE6F2; --plum:#6E4A7E; --plum-soft:#ECE2F0; --grey-soft:#E6E9E5;
+  --shadow:0 10px 30px rgba(20,30,26,.16);
+  --f-display:"Familjen Grotesk","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111614; --surface:#19201D; --surface-2:#1E2622; --ink:#E4E9E6; --muted:#9AA6A0; --line:#2C3531;
+  --accent:#74B8A6; --accent-ink:#0D1513; --accent-soft:#1E3530;
+  --hot:#E58A74; --hot-soft:#3A2420; --warn:#DDAA5C; --warn-soft:#352B1A; --ok:#7CC48F; --ok-soft:#1D3324;
+  --info:#93AEDB; --info-soft:#1F2A3D; --plum:#C5A3D6; --plum-soft:#2E2433; --grey-soft:#262E2A;
+  --shadow:0 10px 30px rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111614; --surface:#19201D; --surface-2:#1E2622; --ink:#E4E9E6; --muted:#9AA6A0; --line:#2C3531;
+  --accent:#74B8A6; --accent-ink:#0D1513; --accent-soft:#1E3530;
+  --hot:#E58A74; --hot-soft:#3A2420; --warn:#DDAA5C; --warn-soft:#352B1A; --ok:#7CC48F; --ok-soft:#1D3324;
+  --info:#93AEDB; --info-soft:#1F2A3D; --plum:#C5A3D6; --plum-soft:#2E2433; --grey-soft:#262E2A;
+  --shadow:0 10px 30px rgba(0,0,0,.5); color-scheme:dark}
+*{box-sizing:border-box}
+html{color-scheme:light}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font-size:14px}
+img{max-width:100%}
+[hidden]{display:none!important}
+.gate{min-height:100vh;display:grid;place-items:center;padding:24px 16px}
+.gate form{width:min(380px,100%);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
+.gate h1{margin:0;font-family:var(--f-display);font-size:26px}
+.gate .err{color:var(--hot);font-size:14px;min-height:1em}
+.who-me{font-size:12px;color:var(--muted);font-family:var(--f-mono);max-width:12rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:12px;padding-block:12px 8px}
+.brand{display:flex;flex-direction:column;min-width:0;flex:1}
+.brand small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.brand h1{margin:0;font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.01em}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.tabs button{border:0;background:transparent;padding:7px 12px;border-radius:999px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.btn{border:1px solid var(--line);background:var(--surface);padding:8px 12px;border-radius:10px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:var(--muted)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.wa{background:var(--ok);color:var(--surface);border-color:var(--ok)}
+.btn.ghost{background:transparent}
+.btn.sm{padding:5px 9px;font-size:13px;border-radius:8px}
+.btn.danger{color:var(--hot);border-color:var(--hot-soft)}
+.btn:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding-block:16px 60px}
+.notice{background:var(--warn-soft);color:var(--ink);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:14px}
+.sample-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between;background:var(--info-soft);border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:14px}
+/* KPI strip */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0}
+.kpi .n{font-family:var(--f-display);font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi .l{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.kpi.alert .n{color:var(--hot)}
+@media (max-width:620px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:22px 0 10px}
+.sec-h h2{margin:0;font-family:var(--f-display);font-size:18px;font-weight:600;text-wrap:balance}
+.sec-h .c{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+/* rows */
+.list{display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;text-align:left;width:100%}
+.row:hover{border-color:var(--muted)}
+.when{font-family:var(--f-mono);font-size:12px;text-align:center;min-width:52px;line-height:1.2;color:var(--muted)}
+.when b{display:block;font-size:17px;color:var(--ink);font-family:var(--f-display)}
+.when.over b{color:var(--hot)}
+.who{min-width:0}
+.who .nm{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who .sub{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ini{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;background:var(--accent-soft);color:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;background:var(--grey-soft);color:var(--muted)}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.s-new{background:var(--info-soft);color:var(--info)}
+.s-contacted{background:var(--grey-soft);color:var(--ink)}
+.s-interested{background:var(--warn-soft);color:var(--warn)}
+.s-meeting{background:var(--accent-soft);color:var(--accent)}
+.s-proposal{background:var(--plum-soft);color:var(--plum)}
+.s-won{background:var(--ok-soft);color:var(--ok)}
+.s-nurture{background:var(--grey-soft);color:var(--muted)}
+.s-lost,.s-junk{background:var(--hot-soft);color:var(--hot)}
+.tag{font-family:var(--f-mono);font-size:11px;padding:2px 6px;border-radius:5px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:22px;text-align:center;color:var(--muted)}
+.empty h3{margin:0 0 6px;color:var(--ink);font-family:var(--f-display)}
+/* leads toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.toolbar input[type=search]{flex:1 1 220px;min-width:0;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;scrollbar-width:thin}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip .k{font-family:var(--f-mono);font-weight:500;margin-left:4px;opacity:.8}
+select,input[type=text],input[type=date],input[type=time],input[type=url],input[type=tel],input[type=email],textarea{width:100%;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--surface);min-width:0}
+textarea{resize:vertical;min-height:80px;line-height:1.45}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:480px){.grid2{grid-template-columns:minmax(0,1fr)}}
+/* calendar */
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.cal-head h2{margin:0;font-family:var(--f-display);font-size:20px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .dow{font-family:var(--f-mono);font-size:11px;text-align:center;color:var(--muted);padding:4px 0}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:10px;min-height:64px;padding:5px;cursor:pointer;display:flex;flex-direction:column;gap:3px;text-align:left;min-width:0}
+.day.out{opacity:.4}
+.day.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.day.sel{background:var(--accent-soft)}
+.day .d{font-family:var(--f-mono);font-size:12px;font-variant-numeric:tabular-nums}
+.day .ev{font-size:11px;border-radius:4px;padding:1px 4px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:600}
+.dots{display:flex;gap:3px;flex-wrap:wrap}
+.dot{width:7px;height:7px;border-radius:50%}
+.t-office{background:var(--accent-soft);color:var(--accent)} .dot.t-office{background:var(--accent)}
+.t-site{background:var(--warn-soft);color:var(--warn)} .dot.t-site{background:var(--warn)}
+.t-online{background:var(--info-soft);color:var(--info)} .dot.t-online{background:var(--info)}
+.t-call{background:var(--grey-soft);color:var(--ink)} .dot.t-call{background:var(--muted)}
+.t-send{background:var(--plum-soft);color:var(--plum)} .dot.t-send{background:var(--plum)}
+@media (max-width:620px){.day .ev{display:none}.day{min-height:48px}}
+@media (min-width:621px){.day .dots{display:none}}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);margin-top:10px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+/* insights */
+.ins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:720px){.ins{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.panel h3{margin:0 0 12px;font-family:var(--f-display);font-size:16px;font-weight:600}
+.bars{display:flex;flex-direction:column;gap:8px}
+.br{display:grid;grid-template-columns:minmax(0,9rem) minmax(0,1fr) 2.5rem;gap:10px;align-items:center;font-size:13px}
+.br .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.br .trk{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden}
+.br .fill{height:100%;background:var(--accent);border-radius:5px}
+.br .v{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(10,15,13,.45);z-index:40}
+.sheet{position:fixed;z-index:50;background:var(--bg);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
+@media (min-width:821px){.sheet{top:0;right:0;bottom:0;width:min(520px,100%);border-left:1px solid var(--line)}}
+@media (max-width:820px){.sheet{left:0;right:0;bottom:0;max-height:92%;border-radius:18px 18px 0 0}}
+.sh-top{display:flex;align-items:flex-start;gap:12px;padding:16px 16px 12px;border-bottom:1px solid var(--line);background:var(--surface);padding-top:calc(16px + env(safe-area-inset-top,0px))}
+@media (max-width:820px){.sh-top{padding-top:16px}}
+.sh-top h2{margin:0;font-family:var(--f-display);font-size:21px;line-height:1.15;text-wrap:balance}
+.sh-body{overflow-y:auto;padding:14px 16px calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{margin:0;font-family:var(--f-display);font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.kv{display:grid;grid-template-columns:minmax(0,8.5rem) minmax(0,1fr);gap:4px 10px;font-size:14px}
+.kv dt{color:var(--muted);font-size:13px}
+.kv dd{margin:0;overflow-wrap:anywhere}
+.contact{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.contact code{font-family:var(--f-mono);font-size:14px;user-select:all;background:var(--surface-2);padding:3px 7px;border-radius:6px;border:1px solid var(--line);overflow-wrap:anywhere}
+.seg{display:flex;gap:4px;flex-wrap:wrap}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.log{display:flex;flex-direction:column;gap:0;font-size:14px}
+.log li{list-style:none;display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.log li:first-child{border-top:0}
+.log time{font-family:var(--f-mono);font-size:11px;color:var(--muted);padding-top:2px}
+.log ul{margin:0;padding:0}
+.next-sum{background:var(--accent-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.next-sum b{font-family:var(--f-display)}
+.hint{font-size:12px;color:var(--muted)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-weight:600;font-size:14px;z-index:80;max-width:calc(100% - 32px)}
+.modal{position:fixed;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 24px));max-height:88%;overflow-y:auto;background:var(--bg);border-radius:16px;box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:12px}
+.modal h2{margin:0;font-family:var(--f-display);font-size:20px}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:22px;text-align:center;background:var(--surface);cursor:pointer}
+.drop.on{border-color:var(--accent);background:var(--accent-soft)}
+.map{font-size:13px;display:flex;flex-wrap:wrap;gap:6px}
+.fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:12px}
+.fchip{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent);border:0;border-radius:999px;padding:5px 10px;font-size:13px;font-weight:600;cursor:pointer;max-width:100%}
+.fchip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.count-line{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-bottom:8px}
+.br.click{cursor:pointer;border-radius:6px}
+.br.click:hover .lab{text-decoration:underline}
+.br .trk{position:relative}
+.br .fill.all{opacity:.28;position:absolute;left:0;top:0;bottom:0}
+.br .fill.ser{position:absolute;left:0;top:0;bottom:0}
+.br .v small{color:var(--muted)}
+.prof-legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin:-4px 0 12px;flex-wrap:wrap}
+.prof-legend i{display:inline-block;width:12px;height:8px;border-radius:3px;background:var(--accent);margin-right:5px;vertical-align:middle}
+.prof-legend i.f{opacity:.28}
+.heatwrap{overflow-x:auto}
+.heat{border-collapse:separate;border-spacing:3px;font-size:13px;min-width:100%}
+.heat th{font-weight:600;color:var(--muted);text-align:left;padding:4px 6px;font-size:12px;max-width:9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.heat td{text-align:center;padding:7px 6px;border-radius:6px;font-family:var(--f-mono);font-variant-numeric:tabular-nums;min-width:44px;cursor:pointer;color:var(--ink)}
+.heat td.z{color:var(--muted);cursor:default}
+.cmp-sel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.wide{grid-column:1/-1}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.pc-h{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.pc-sum{font-weight:600;margin-top:2px;text-wrap:balance}
+.pg{display:flex;flex-direction:column;gap:6px}
+.pg-l{font-size:12px;font-weight:600;color:var(--muted)}
+.pg-c{display:flex;flex-wrap:wrap;gap:6px}
+.pg-c .chip{white-space:normal;text-align:left}
+.match{font-family:var(--f-mono);font-size:11px;font-weight:500;padding:2px 7px;border-radius:999px;background:var(--accent);color:var(--accent-ink);white-space:nowrap}
+.match.part{background:var(--accent-soft);color:var(--accent)}
+.rank{font-family:var(--f-mono);font-size:12px;color:var(--muted);width:22px;text-align:right}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--hot-soft);padding:8px 10px;border-radius:10px;font-size:14px}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(16px);opacity:.6}to{transform:none;opacity:1}}}
+</style>
+</head>
+<body>
+<div id="gate" class="gate" hidden></div>
+<div id="app" hidden>
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <div class="brand"><small>Nichekala · Meta ad leads</small><h1>Lead Desk</h1></div>
+      <span class="who-me" id="meEmail"></span>
+      <button class="btn sm ghost" data-act="settings" aria-label="Message settings">Settings</button>
+      <button class="btn sm ghost" data-act="signout">Sign out</button>
+      <button class="btn pri sm" data-act="import">Import Excel</button>
+    </div>
+    <nav class="tabs" role="tablist" id="tabs">
+      <button role="tab" data-tab="today" aria-selected="true">Today</button>
+      <button role="tab" data-tab="leads" aria-selected="false">All leads</button>
+      <button role="tab" data-tab="calendar" aria-selected="false">Calendar</button>
+      <button role="tab" data-tab="insights" aria-selected="false">Insights</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <div class="empty"><h3>Opening your lead desk</h3><p>Your saved leads, statuses and follow-ups load here.</p></div>
+</main>
+<div id="layer"></div>
+<input type="file" id="fileIn" accept=".xlsx,.xls,.csv,.tsv" hidden>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- vocab ---------- */
+const STATUSES=[
+ {k:'new',l:'New'},{k:'contacted',l:'Contacted'},{k:'interested',l:'Interested'},
+ {k:'meeting',l:'Meeting fixed'},{k:'proposal',l:'Proposal sent'},{k:'won',l:'Won'},
+ {k:'nurture',l:'Follow later'},{k:'lost',l:'Not interested'},{k:'junk',l:'Junk / wrong no.'}];
+const RESPONSES=['Interested – wants a meeting','Asked for design fee / pricing','Asked for portfolio / past work',
+ 'Call back later','Not reachable / no answer','Plot not yet bought','Budget mismatch',
+ 'Location outside service area','Already has an architect','Just exploring','Wrong number'];
+const NEXT=[{k:'office',l:'Studio meeting',mins:60},{k:'site',l:'Site visit',mins:60},{k:'online',l:'Online meeting',mins:45},
+ {k:'call',l:'Phone call',mins:15},{k:'send',l:'Send portfolio / proposal',mins:15}];
+const PRI=[{k:'hot',l:'Hot'},{k:'warm',l:'Warm'},{k:'cold',l:'Cold'}];
+const TEMPLATES=[{k:'intro',l:'First hello'},{k:'confirm',l:'Meeting confirmation'},{k:'remind',l:'Day-before reminder'},
+ {k:'thanks',l:'Thank you after meeting'},{k:'nudge',l:'Gentle follow-up'}];
+const sLabel=k=>(STATUSES.find(s=>s.k===k)||STATUSES[0]).l;
+const nLabel=k=>(NEXT.find(s=>s.k===k)||{l:k}).l;
+const DEFAULT_SETTINGS={you:'Nikhil Rodrigo',role:'Principal Architect',studio:'Nichekala Architecture & Design Studio',
+ phone:'',address:'',maps:'',meetLink:''};
+
+/* ---------- state ---------- */
+let db=null, leads=new Map(), settings={...DEFAULT_SETTINGS}, loaded=false, dbState='wait';
+let tab='today', fStatus='all', fText='', sortBy='recent', openId=null, calCur=firstOfMonth(new Date()), calSel=ymd(new Date());
+let canWrite=true, downloads=null;
+let catF={}, showF=false, cmpR='', cmpC='';
+let prio={}, showPrio=false, prioTimer=null, prioMore=new Set(), showRest=false;
+
+/* ---------- utils ---------- */
+function ymd(d){const z=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())}
+function firstOfMonth(d){return new Date(d.getFullYear(),d.getMonth(),1)}
+function parseYmd(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}
+const TODAY=()=>ymd(new Date());
+function addDays(s,n){const d=parseYmd(s);d.setDate(d.getDate()+n);return ymd(d)}
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function fmtDate(s,long){if(!s)return'';const d=parseYmd(s);return long?DOW[d.getDay()]+', '+d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear():d.getDate()+' '+MON[d.getMonth()]}
+function fmtTime(t){if(!t)return'';let [h,m]=t.split(':').map(Number);const ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+String(m).padStart(2,'0')+' '+ap}
+function fmtStamp(iso){if(!iso)return'';const d=new Date(iso);if(isNaN(d))return'';return d.getDate()+' '+MON[d.getMonth()]+(d.getFullYear()!==new Date().getFullYear()?' '+String(d.getFullYear()).slice(2):'')}
+function initials(n){return (n||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'?'}
+function first(n){return (n||'').trim().split(/\s+/)[0]||'there'}
+function waNum(p){let d=String(p||'').replace(/\D/g,'');if(d.length===10)d='91'+d;if(d.length===11&&d[0]==='0')d='91'+d.slice(1);return d}
+function cleanPhone(p){return String(p||'').replace(/^p:/i,'').trim()}
+function daysBetween(a,b){return Math.round((parseYmd(b)-parseYmd(a))/864e5)}
+function rid(){return Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4)}
+function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
+async function copy(text){try{await navigator.clipboard.writeText(text);toast('Copied')}catch(e){toast('Select the text and copy it manually')}}
+
+/* ---------- config ----------
+   Paste your Supabase project URL and anon (public) key here.
+   Supabase → Project Settings → API. The anon key is safe to publish:
+   the database rules only let signed-in team members read or write. */
+const SUPABASE_URL = "";
+const SUPABASE_ANON_KEY = "";
+
+/* ---------- storage (Supabase) ---------- */
+let sb=null;
+function getCfg(){let u=SUPABASE_URL,k=SUPABASE_ANON_KEY;
+  if(!u||!k){try{const c=JSON.parse(localStorage.getItem('leaddesk.cfg')||'null');if(c){u=u||c.url;k=k||c.key}}catch(e){}}
+  return u&&k?{url:u.trim(),key:k.trim()}:null}
+function sbStore(sb){
+  const rows=new Map(); let listeners=[], emitT=null;
+  const snapDocs=()=>({docs:[...rows.entries()].map(([id,d])=>({id,data:()=>d}))});
+  const emit=()=>{clearTimeout(emitT);emitT=setTimeout(()=>listeners.forEach(f=>f(snapDocs())),40)};
+  const where=p=>{const [c,id]=p.split('/');return c==='leads'?{t:'leads',k:'id',id,lead:true}:{t:'app_settings',k:'key',id:c+'/'+id,lead:false}};
+  const fail=e=>{const x=new Error(e.message||'error');x.code=(e.code==='42501'||/row-level security/i.test(e.message||''))?'not_allowed':'unavailable';return x};
+  async function put(r,data){const {error}=await sb.from(r.t).upsert({[r.k]:r.id,data,updated_at:new Date().toISOString()});if(error)throw fail(error)}
+  const setListeners={};
+  return {
+    doc(path){const r=where(path);return{
+      async set(data){await put(r,data);if(r.lead){rows.set(r.id,data);emit()}},
+      async update(data){const base=rows.get(r.id)||{};const merged={...base,...data};await put(r,merged);rows.set(r.id,merged);emit()},
+      async delete(){const {error}=await sb.from(r.t).delete().eq(r.k,r.id);if(error)throw fail(error);if(r.lead){rows.delete(r.id);emit()}},
+      onSnapshot(next,err){(setListeners[r.id]=setListeners[r.id]||[]).push(next);
+        sb.from(r.t).select('data').eq(r.k,r.id).maybeSingle().then(({data,error})=>{if(error){err&&err(fail(error));return}
+          next({exists:!!data,data:()=>data?data.data:undefined})});
+        return ()=>{}}
+    }},
+    collection(){return{onSnapshot(next,err){listeners.push(next);
+      (async()=>{let from=0;const size=1000;
+        for(;;){const {data,error}=await sb.from('leads').select('id,data').range(from,from+size-1);
+          if(error){err&&err(fail(error));return}
+          data.forEach(x=>rows.set(x.id,x.data));if(data.length<size)break;from+=size}
+        listeners.forEach(f=>f(snapDocs()));
+        sb.channel('leads-live').on('postgres_changes',{event:'*',schema:'public',table:'leads'},pl=>{
+          if(pl.eventType==='DELETE'){if(pl.old&&pl.old.id)rows.delete(pl.old.id)}else if(pl.new){rows.set(pl.new.id,pl.new.data)}emit()}).subscribe();
+        sb.channel('settings-live').on('postgres_changes',{event:'*',schema:'public',table:'app_settings'},pl=>{
+          const n=pl.new;if(!n||!n.key)return;const id=n.key.split('/')[1];(setListeners[id]||[]).forEach(f=>f({exists:true,data:()=>n.data}))}).subscribe();
+      })();
+      return ()=>{}}}}
+  };
+}
+const gate=document.getElementById('gate'),app=document.getElementById('app');
+function showSetup(){gate.hidden=false;app.hidden=true;
+  gate.innerHTML=`<form id="cfgForm"><div class="eyebrow">One-time setup</div><h1>Connect Supabase</h1>
+   <p class="hint" style="font-size:14px">Supabase → Project Settings → API. This is saved on this device only. To set it for every device, paste both values into the top of index.html instead.</p>
+   <label class="f">Project URL<input type="url" id="cfgUrl" required placeholder="https://xxxx.supabase.co"></label>
+   <label class="f">Anon public key<input type="text" id="cfgKey" required placeholder="eyJ…"></label>
+   <button class="btn pri" type="submit">Save and continue</button></form>`;
+  document.getElementById('cfgForm').addEventListener('submit',e=>{e.preventDefault();
+    try{localStorage.setItem('leaddesk.cfg',JSON.stringify({url:val('cfgUrl'),key:val('cfgKey')}))}catch(err){}
+    location.reload()})}
+function showLogin(msg){gate.hidden=false;app.hidden=true;
+  gate.innerHTML=`<form id="loginForm"><div class="eyebrow">Nichekala · Meta ad leads</div><h1>Lead Desk</h1>
+   <label class="f">Email<input type="email" id="lgEmail" autocomplete="username" required></label>
+   <label class="f">Password<input type="password" id="lgPass" autocomplete="current-password" required></label>
+   <div class="err" id="lgErr">${esc(msg||'')}</div>
+   <button class="btn pri" type="submit" id="lgBtn">Sign in</button>
+   <button class="btn ghost" type="button" id="lgReset">Email me a password reset link</button></form>`;
+  document.getElementById('loginForm').addEventListener('submit',async e=>{e.preventDefault();const b=document.getElementById('lgBtn');b.disabled=true;
+    const {error}=await sb.auth.signInWithPassword({email:val('lgEmail'),password:document.getElementById('lgPass').value});
+    b.disabled=false;if(error){document.getElementById('lgErr').textContent=/invalid/i.test(error.message)?'Wrong email or password.':error.message}});
+  document.getElementById('lgReset').addEventListener('click',async()=>{const em=val('lgEmail');const er=document.getElementById('lgErr');
+    if(!em){er.textContent='Type your email first.';return}
+    const {error}=await sb.auth.resetPasswordForEmail(em,{redirectTo:location.origin+location.pathname});
+    er.textContent=error?error.message:'Check your inbox for the reset link.'})}
+function showNewPassword(){gate.hidden=false;app.hidden=true;
+  gate.innerHTML=`<form id="pwForm"><h1>Set a new password</h1><label class="f">New password<input type="password" id="pw1" minlength="8" required autocomplete="new-password"></label>
+   <div class="err" id="pwErr"></div><button class="btn pri" type="submit">Save password</button></form>`;
+  document.getElementById('pwForm').addEventListener('submit',async e=>{e.preventDefault();
+    const {error}=await sb.auth.updateUser({password:document.getElementById('pw1').value});
+    if(error)document.getElementById('pwErr').textContent=error.message;else location.replace(location.pathname)})}
+let started=false;
+async function startApp(session){
+  const {data:ok,error}=await sb.rpc('is_team');
+  if(error||!ok){await sb.auth.signOut();showLogin('This email is not on the Nichekala team list. Ask Nikhil to add it.');return}
+  gate.hidden=true;app.hidden=false;document.getElementById('meEmail').textContent=session.user.email||'';
+  if(started)return;started=true;
+  db=sbStore(sb);boot2()}
+async function boot(){
+  const cfg=getCfg();if(!cfg){showSetup();return}
+  if(!window.supabase){gate.hidden=false;gate.innerHTML='<div class="notice">Could not load the sign-in service. Check your internet connection and reload.</div>';return}
+  sb=window.supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  sb.auth.onAuthStateChange((ev,session)=>{
+    if(ev==='PASSWORD_RECOVERY'){showNewPassword();return}
+    if(session){setTimeout(()=>startApp(session),0)}else{if(started)location.reload();else showLogin()}});
+  const {data}=await sb.auth.getSession();if(!data.session)showLogin()}
+async function boot2(){
+  render();
+  dbState='on';
+  db.collection('leads').onSnapshot(snap=>{
+    leads=new Map(snap.docs.map(d=>[d.id,{id:d.id,...d.data()}]));loaded=true;render();
+    if(openId)refreshSheet();
+  },err=>{dbState='err';loaded=true;render()});
+  db.doc('settings/main').onSnapshot(s=>{if(s.exists)settings={...DEFAULT_SETTINGS,...s.data()}},()=>{});
+  db.doc('settings/priority').onSnapshot(s=>{if(prioTimer)return;const d=s.exists?s.data():null;prio=d&&d.sel?JSON.parse(JSON.stringify(d.sel)):{};if(loaded&&!openId)render()},()=>{});
+}
+async function patch(id,data){
+  if(!db)return false;
+  try{await db.doc('leads/'+id).update(data);return true}
+  catch(e){toast(e&&e.code==='not_allowed'?'Your account cannot change leads. Ask Nikhil.':'Could not save. Check your connection and try again.');return false}
+}
+function logEntry(kind,text){return {t:new Date().toISOString(),kind,text}}
+async function addLog(id,kind,text,extra){const L=leads.get(id);if(!L)return;const log=[...(L.log||[]),logEntry(kind,text)];return patch(id,{log,updatedAt:new Date().toISOString(),...(extra||{})})}
+
+/* ---------- derived ---------- */
+const all=()=>[...leads.values()];
+function nextOf(L){return L.next&&L.next.date?L.next:null}
+function agenda(){return all().filter(nextOf).sort((a,b)=>(a.next.date+(a.next.time||'99')).localeCompare(b.next.date+(b.next.time||'99')))}
+const closed=L=>['won','lost','junk'].includes(L.status);
+const serious=L=>['interested','meeting','proposal','won'].includes(L.status);
+
+/* ---------- lead profile fields (city + form questions) ---------- */
+const normV=v=>String(v==null?'':v).replace(/_/g,' ').replace(/\s+/g,' ').trim();
+const SKIPQ=/name|phone|mobile|e-?mail|whatsapp|number|contact|time|date/i;
+const KEEPQ=/city|locat|where|area|size|sq|floor|budget|plot|build|bhk/i;
+function rankQ(l){l=l.toLowerCase();if(l==='city')return 0;if(/locat|where/.test(l))return 1;if(/size|sq/.test(l))return 2;if(/floor/.test(l))return 3;if(/city/.test(l))return 4;if(/budget/.test(l))return 5;return 10}
+function rawVal(L,f){return f==='city'?L.city:(L.answers||{})[f.slice(2)]}
+function sqft(v){const s=String(v).toLowerCase().replace(/,/g,'');const m=s.match(/(\d+(?:\.\d+)?)/);if(!m)return null;let n=+m[1];
+  if(/ground/.test(s))n*=2400;else if(/cent/.test(s))n*=435.6;else if(/acre/.test(s))n*=43560;return n}
+function sizeBucket(v){const n=sqft(v);if(n==null)return normV(v);
+  if(n<800)return 'Under 800 sq.ft';if(n<1000)return '800–999 sq.ft';if(n<1200)return '1,000–1,199 sq.ft';if(n<1500)return '1,200–1,499 sq.ft';if(n<2400)return '1,500–2,399 sq.ft';return '2,400+ sq.ft (1 ground+)'}
+function tidy(s){s=s.replace(/\bg\s*\+\s*(\d)/gi,'G+$1').replace(/\bsq\.?\s*ft\.?/gi,'sq.ft');return s.charAt(0).toUpperCase()+s.slice(1)}
+function shownVal(L,fd){const r=normV(rawVal(L,fd.f));if(!r)return '';return tidy(fd.bucket?sizeBucket(r):r)}
+function catKey(L,fd){return shownVal(L,fd).toLowerCase()}
+function catFields(){
+  const A=all(),keys=new Map();
+  if(A.some(l=>normV(l.city)))keys.set('city','City');
+  A.forEach(l=>Object.keys(l.answers||{}).forEach(k=>{if(!keys.has('a:'+k))keys.set('a:'+k,k)}));
+  const out=[];
+  for(const [f,label] of keys){
+    if(f!=='city'&&SKIPQ.test(label)&&!KEEPQ.test(label))continue;
+    const fd={f,label:label.charAt(0).toUpperCase()+label.slice(1),bucket:false,rank:rankQ(label)};
+    const tally=()=>{const m=new Map();A.forEach(l=>{const v=shownVal(l,fd);if(!v)return;const k=v.toLowerCase();const e=m.get(k)||{k,label:v,n:0,s:0};e.n++;if(serious(l))e.s++;m.set(k,e)});return m};
+    let m=tally();
+    if(/size|sq|area/i.test(label)&&m.size>10){fd.bucket=true;m=tally()}
+    if(!m.size||m.size>40)continue;
+    fd.vals=[...m.values()].sort((a,b)=>b.n-a.n);
+    out.push(fd);
+  }
+  return out.sort((a,b)=>a.rank-b.rank||a.label.localeCompare(b.label));
+}
+/* ---------- call priority ---------- */
+function activePrio(defs){return Object.entries(prio).filter(([f,a])=>Array.isArray(a)&&a.length&&defs.some(d=>d.f===f)).map(([f,a])=>({fd:defs.find(d=>d.f===f),keys:a}))}
+function prioScore(L,act){return act.reduce((s,p)=>s+(p.keys.includes(catKey(L,p.fd))?1:0),0)}
+function savePrio(){clearTimeout(prioTimer);prioTimer=setTimeout(async()=>{
+  if(db){try{await db.doc('settings/priority').set({sel:prio})}catch(e){toast('Could not save your call priority')}}prioTimer=null},700)}
+function prioCard(defs,act){
+  const sum=act.map(p=>p.keys.map(k=>(p.fd.vals.find(v=>v.k===k)||{label:k}).label).join(' or ')).join('  ·  ');
+  const open=showPrio||!act.length;
+  let h=`<section class="pcard" aria-label="Call priority"><div class="pc-h"><div><div class="eyebrow">Call priority</div>
+   <div class="pc-sum">${act.length?esc(sum):'Choose the city, plot size and timeline you want to call first.'}</div></div>
+   ${act.length?`<button class="btn sm${open?' pri':''}" data-act="togglePrio">${open?'Done':'Edit'}</button>`:''}</div>`;
+  if(open){
+    h+=defs.map(fd=>{const many=fd.vals.length>10&&!prioMore.has(fd.f);const vs=many?fd.vals.slice(0,10):fd.vals;const sel=prio[fd.f]||[];
+      return `<div class="pg"><div class="pg-l">${esc(fd.label)}${sel.length?` · ${sel.length} chosen`:''}</div><div class="pg-c">${vs.map(v=>`<button class="chip" data-pf="${esc(fd.f)}" data-pk="${esc(v.k)}" aria-pressed="${sel.includes(v.k)}">${esc(v.label)}<span class="k">${v.n}</span></button>`).join('')}
+      ${many?`<button class="chip" data-pmore="${esc(fd.f)}">+${fd.vals.length-10} more</button>`:''}</div></div>`}).join('');
+    h+=`<p class="hint">Pick one or more options in each question. A lead that matches every question you set goes to the top. Leave a question empty to ignore it.${act.length?' <button class="btn sm ghost" data-act="clearPrio">Clear priority</button>':''}</p>`;
+  }
+  return h+'</section>';
+}
+function rowCall(L,act,i){
+  const sc=prioScore(L,act),tot=act.length;
+  const facts=(act.length?act.map(p=>p.fd):catFields().slice(0,4)).map(fd=>shownVal(L,fd)).filter(Boolean).join(' · ');
+  return `<button class="row" data-open="${esc(L.id)}" style="grid-template-columns:auto auto minmax(0,1fr) auto">
+   <span class="rank">${i+1}</span><div class="ini">${esc(initials(L.name))}</div>
+   <div class="who"><div class="nm">${esc(L.name||'Unnamed lead')}</div><div class="sub">${esc(facts||L.response||'No answers in form')}</div></div>
+   <span style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">${tot?`<span class="match${sc<tot?' part':''}">${sc}/${tot} match</span>`:''}<span class="pill s-${esc(L.status||'new')}">${esc(sLabel(L.status))}</span></span></button>`;
+}
+
+/* ---------- render ---------- */
+const main=document.getElementById('main');
+function render(){
+  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
+  if(!loaded){return}
+  let h='';
+  if(dbState==='err')h+='<div class="notice">Your saved leads could not be reached. Reload the page to try again.</div>';
+  const samples=all().filter(l=>l.sample).length;
+  if(samples)h+=`<div class="sample-bar"><span><b>${samples} sample leads</b> show how the desk works. Import your Meta sheet, then clear them.</span><button class="btn sm" data-act="clearSamples">Remove samples</button></div>`;
+  if(tab==='today')h+=viewToday();
+  else if(tab==='leads')h+=viewLeads();
+  else if(tab==='calendar')h+=viewCalendar();
+  else h+=viewInsights();
+  main.innerHTML=h;
+  const s=document.getElementById('q');if(s&&document.activeElement!==s&&fText){s.value=fText}
+}
+function emptyState(){return `<div class="empty"><h3>No leads yet</h3><p>Export leads from Meta Leads Center or Ads Manager as Excel or CSV, then tap <b>Import Excel</b>. Name, phone, email, campaign and every form answer come across.</p><button class="btn pri" data-act="import">Import Excel</button></div>`}
+
+function rowNext(L){
+  const n=L.next,t=TODAY(),over=n.date<t;
+  const d=parseYmd(n.date);
+  return `<button class="row" data-open="${esc(L.id)}">
+   <div class="when${over?' over':''}"><b>${d.getDate()}</b>${MON[d.getMonth()]}<br>${n.time?esc(fmtTime(n.time)):'—'}</div>
+   <div class="who"><div class="nm">${esc(L.name||'Unnamed lead')}</div><div class="sub"><span class="pill t-${esc(n.type)}" style="padding:1px 7px">${esc(nLabel(n.type))}</span> ${esc(n.note||n.place||'')}</div></div>
+   <span class="pill s-${esc(L.status||'new')}">${esc(sLabel(L.status))}</span></button>`;
+}
+function rowLead(L){
+  const sub=[L.city,L.campaign||L.ad,L.createdAt?fmtStamp(L.createdAt):''].filter(Boolean).join(' · ');
+  const n=nextOf(L);
+  return `<button class="row" data-open="${esc(L.id)}">
+   <div class="ini">${esc(initials(L.name))}</div>
+   <div class="who"><div class="nm">${esc(L.name||'Unnamed lead')} ${L.priority==='hot'?'<span class="tag" style="color:var(--hot)">HOT</span>':''}</div>
+   <div class="sub">${n?`Next: ${esc(nLabel(n.type))} ${esc(fmtDate(n.date))} · `:''}${esc(L.response||sub||'No response logged')}</div></div>
+   <span class="pill s-${esc(L.status||'new')}">${esc(sLabel(L.status))}</span></button>`;
+}
+function viewToday(){
+  const A=all();if(!A.length)return emptyState();
+  const t=TODAY(),wk=addDays(t,7);
+  const ag=agenda().filter(l=>!closed(l));
+  const over=ag.filter(l=>l.next.date<t),tod=ag.filter(l=>l.next.date===t),soon=ag.filter(l=>l.next.date>t&&l.next.date<=wk);
+  const fresh=A.filter(l=>(l.status||'new')==='new').sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
+  const meetWk=A.filter(l=>l.next&&['office','site','online'].includes(l.next.type)&&l.next.date>=t&&l.next.date<=wk).length;
+  const won=A.filter(l=>l.status==='won').length;
+  let h=`<div class="kpis">
+   <div class="kpi"><div class="n">${A.length}</div><div class="l">Leads in desk</div></div>
+   <div class="kpi${fresh.length?' alert':''}"><div class="n">${fresh.length}</div><div class="l">Not contacted yet</div></div>
+   <div class="kpi${over.length?' alert':''}"><div class="n">${over.length}</div><div class="l">Overdue follow-ups</div></div>
+   <div class="kpi"><div class="n">${meetWk}</div><div class="l">Meetings next 7 days</div></div></div>`;
+  const sec=(title,arr,fn,note)=>`<div class="sec-h"><h2>${title}</h2><span class="c">${arr.length}</span></div>`+(arr.length?`<div class="list">${arr.map(fn).join('')}</div>`:`<div class="empty" style="padding:14px">${note}</div>`);
+  // call queue: open leads with no follow-up booked
+  const defs=catFields(),act=activePrio(defs);
+  const queue=A.filter(l=>!closed(l)&&!nextOf(l)).map(l=>({l,s:prioScore(l,act),n:(l.status||'new')==='new'?1:0}))
+    .sort((a,b)=>b.s-a.s||b.n-a.n||(b.l.createdAt||'').localeCompare(a.l.createdAt||''));
+  if(defs.length)h+=prioCard(defs,act);
+  const callSec=(title,items,note,offset)=>`<div class="sec-h"><h2>${title}</h2><span class="c">${items.length}</span></div>`+(items.length?`<div class="list">${items.map((x,i)=>rowCall(x.l,act,i+offset)).join('')}</div>`:`<div class="empty" style="padding:14px">${note}</div>`);
+  if(act.length){
+    const best=queue.filter(x=>x.s===act.length),part=queue.filter(x=>x.s>0&&x.s<act.length),rest=queue.filter(x=>x.s===0);
+    h+=callSec('Call first · full match',best,'No waiting lead matches all your choices. Check the partial matches below.',0);
+    if(part.length)h+=callSec('Next · partial match',part,'',best.length);
+    if(rest.length)h+=showRest?callSec('Other leads waiting',rest,'',best.length+part.length):`<p style="margin-top:10px"><button class="btn sm" data-act="showRest">Show ${rest.length} other waiting lead${rest.length>1?'s':''}</button></p>`;
+  }else{
+    h+=callSec('Call these first',queue.slice(0,10),'Every lead has a follow-up booked or is closed.',0);
+    if(queue.length>10)h+=`<p class="hint" style="margin-top:8px"><button class="btn sm" data-act="showNew">See all ${fresh.length} new leads</button></p>`;
+  }
+  if(over.length)h+=sec('Overdue',over,rowNext,'');
+  h+=sec('Today · '+fmtDate(t,true),tod,rowNext,'Nothing scheduled today.');
+  h+=sec('Next 7 days',soon,rowNext,'No follow-ups booked this week. Open a lead and set its next step.');
+  if(won)h+=`<p class="hint">${won} lead${won>1?'s':''} converted to projects so far.</p>`;
+  return h;
+}
+function filtered(){
+  const q=fText.toLowerCase().trim();
+  let a=all().filter(l=>fStatus==='all'||(l.status||'new')===fStatus);
+  const defs=catFields();
+  for(const [f,k] of Object.entries(catF)){const fd=defs.find(d=>d.f===f);if(!fd||!k)continue;a=a.filter(l=>catKey(l,fd)===k)}
+  if(q)a=a.filter(l=>[l.name,l.phone,l.email,l.city,l.campaign,l.ad,l.response,JSON.stringify(l.answers||{})].join(' ').toLowerCase().includes(q));
+  if(sortBy==='prio'){const act=activePrio(defs);a.sort((x,y)=>prioScore(y,act)-prioScore(x,act)||(y.createdAt||'').localeCompare(x.createdAt||''))}
+  else if(sortBy==='recent')a.sort((x,y)=>(y.createdAt||'').localeCompare(x.createdAt||''));
+  else if(sortBy==='next')a.sort((x,y)=>((x.next&&x.next.date)||'9999').localeCompare((y.next&&y.next.date)||'9999'));
+  else a.sort((x,y)=>(x.name||'').localeCompare(y.name||''));
+  return a;
+}
+function viewLeads(){
+  const A=all();if(!A.length)return emptyState();
+  const cnt=k=>A.filter(l=>(l.status||'new')===k).length;
+  let h=`<div class="toolbar"><input type="search" id="q" placeholder="Search name, phone, locality, answer…" value="${esc(fText)}" aria-label="Search leads">
+   <select id="sortBy" style="width:auto" aria-label="Sort"><option value="recent"${sortBy==='recent'?' selected':''}>Newest first</option><option value="prio"${sortBy==='prio'?' selected':''}>Best priority match</option><option value="next"${sortBy==='next'?' selected':''}>Next step date</option><option value="name"${sortBy==='name'?' selected':''}>Name A–Z</option></select>
+   <button class="btn sm" data-act="export">Export CSV</button></div>
+   <div class="chips"><button class="chip" data-fs="all" aria-pressed="${fStatus==='all'}">All<span class="k">${A.length}</span></button>
+   ${STATUSES.map(s=>`<button class="chip" data-fs="${s.k}" aria-pressed="${fStatus===s.k}">${s.l}<span class="k">${cnt(s.k)}</span></button>`).join('')}</div>`;
+  const defs=catFields();
+  Object.keys(catF).forEach(f=>{if(!catF[f]||!defs.some(d=>d.f===f))delete catF[f]});
+  const active=Object.entries(catF);
+  if(defs.length){
+    h+=`<div class="fbar"><button class="btn sm${active.length?' pri':''}" data-act="toggleF" aria-expanded="${showF}">Filter by plot, city, floors${active.length?` · ${active.length}`:''}</button>
+     ${active.map(([f,k])=>{const fd=defs.find(d=>d.f===f);const v=fd.vals.find(x=>x.k===k);return `<button class="fchip" data-cfx="${esc(f)}" aria-label="Remove filter ${esc(fd.label)}"><span>${esc(fd.label.replace(/\?$/,''))}: ${esc(v?v.label:k)}</span>×</button>`}).join('')}
+     ${active.length?'<button class="btn sm ghost" data-act="clearF">Clear filters</button>':''}</div>`;
+    if(showF)h+=`<div class="fgrid">${defs.map((fd,i)=>`<label class="f">${esc(fd.label)}<select id="cf${i}" data-cf="${esc(fd.f)}"><option value="">All</option>${fd.vals.map(v=>`<option value="${esc(v.k)}"${catF[fd.f]===v.k?' selected':''}>${esc(v.label)} (${v.n})</option>`).join('')}</select></label>`).join('')}</div>`;
+  }
+  const f=filtered();
+  if(active.length||fStatus!=='all'||fText)h+=`<div class="count-line">${f.length} of ${A.length} leads</div>`;
+  h+=f.length?`<div class="list" id="leadList">${f.map(rowLead).join('')}</div>`:`<div class="empty">No leads match this filter.</div>`;
+  return h;
+}
+function viewCalendar(){
+  const ag=agenda(),byDay={};ag.forEach(l=>{(byDay[l.next.date]=byDay[l.next.date]||[]).push(l)});
+  const start=new Date(calCur);start.setDate(1-start.getDay());
+  let cells='';const t=TODAY();
+  for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=ymd(d);const ev=byDay[k]||[];
+    if(i===35&&d.getMonth()!==calCur.getMonth())break;
+    cells+=`<button class="day${d.getMonth()!==calCur.getMonth()?' out':''}${k===t?' today':''}${k===calSel?' sel':''}" data-day="${k}" aria-label="${fmtDate(k,true)}, ${ev.length} items">
+     <span class="d">${d.getDate()}</span>${ev.slice(0,2).map(l=>`<span class="ev t-${esc(l.next.type)}">${l.next.time?esc(fmtTime(l.next.time).replace(':00','')):''} ${esc(first(l.name))}</span>`).join('')}${ev.length>2?`<span class="hint">+${ev.length-2}</span>`:''}
+     <span class="dots">${ev.slice(0,4).map(l=>`<i class="dot t-${esc(l.next.type)}"></i>`).join('')}</span></button>`}
+  const sel=byDay[calSel]||[];
+  return `<div class="cal-head"><button class="btn sm" data-act="calPrev" aria-label="Previous month">‹</button><h2>${['January','February','March','April','May','June','July','August','September','October','November','December'][calCur.getMonth()]} ${calCur.getFullYear()}</h2><div style="display:flex;gap:6px"><button class="btn sm" data-act="calToday">Today</button><button class="btn sm" data-act="calNext" aria-label="Next month">›</button></div></div>
+   <div class="cal">${DOW.map(d=>`<div class="dow">${d}</div>`).join('')}${cells}</div>
+   <div class="legend">${NEXT.map(n=>`<span><i class="dot t-${n.k}"></i>${n.l}</span>`).join('')}</div>
+   <div class="sec-h"><h2>${fmtDate(calSel,true)}</h2><span class="c">${sel.length}</span></div>
+   ${sel.length?`<div class="list">${sel.map(rowNext).join('')}</div>`:'<div class="empty" style="padding:14px">Nothing booked this day.</div>'}`;
+}
+function bars(pairs,max){max=max||Math.max(1,...pairs.map(p=>p[1]));return `<div class="bars">${pairs.map(([l,v,c])=>`<div class="br"><span class="lab" title="${esc(l)}">${esc(l)}</span><span class="trk"><span class="fill" style="width:${(v/max*100).toFixed(1)}%;${c?'background:'+c:''}"></span></span><span class="v">${v}</span></div>`).join('')}</div>`}
+function viewInsights(){
+  const A=all();if(!A.length)return emptyState();
+  const n=A.length,contacted=A.filter(l=>(l.status||'new')!=='new').length,
+    met=A.filter(l=>['meeting','proposal','won'].includes(l.status)||(l.log||[]).some(e=>e.kind==='done')).length,
+    won=A.filter(l=>l.status==='won').length;
+  const pct=x=>n?Math.round(x/n*100)+'%':'0%';
+  const funnel=[['Leads',n],['Contacted',contacted],['Met / meeting fixed',met],['Won',won]];
+  const group=f=>{const m={};A.forEach(l=>{const k=(l[f]||'').trim()||'Not set';m[k]=(m[k]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,8)};
+  const resp={};A.forEach(l=>{if(l.response)resp[l.response]=(resp[l.response]||0)+1});
+  const qual={};A.forEach(l=>{if(['interested','meeting','proposal','won'].includes(l.status)){const k=(l.campaign||l.ad||'Not set');qual[k]=(qual[k]||0)+1}});
+  const camp=group('campaign').map(([k,v])=>[k,v]);
+  // weekly volume, last 8 weeks
+  const wk=[];const now=new Date();for(let i=7;i>=0;i--){const s=new Date(now);s.setDate(now.getDate()-now.getDay()-i*7);s.setHours(0,0,0,0);const e=new Date(s);e.setDate(s.getDate()+7);
+    wk.push(['Week of '+s.getDate()+' '+MON[s.getMonth()],A.filter(l=>{const d=new Date(l.createdAt);return d>=s&&d<e}).length])}
+  return `<div class="kpis">
+   <div class="kpi"><div class="n">${pct(contacted)}</div><div class="l">Contacted</div></div>
+   <div class="kpi"><div class="n">${pct(met)}</div><div class="l">Reached a meeting</div></div>
+   <div class="kpi"><div class="n">${won}</div><div class="l">Won projects</div></div>
+   <div class="kpi"><div class="n">${A.filter(l=>l.status==='junk').length}</div><div class="l">Junk / wrong numbers</div></div></div>
+   <div class="ins">
+   <div class="panel"><h3>Funnel</h3>${bars(funnel,n)}</div>
+   <div class="panel"><h3>Where leads stand</h3>${bars(STATUSES.map(s=>[s.l,A.filter(l=>(l.status||'new')===s.k).length]).filter(p=>p[1]))}</div>
+   <div class="panel"><h3>Leads by campaign</h3>${bars(camp)}</div>
+   <div class="panel"><h3>Serious leads by campaign</h3>${Object.keys(qual).length?bars(Object.entries(qual).sort((a,b)=>b[1]-a[1])):'<p class="hint">Mark leads Interested or Meeting fixed to see which campaign brings serious buyers.</p>'}</div>
+   <div class="panel"><h3>What leads said</h3>${Object.keys(resp).length?bars(Object.entries(resp).sort((a,b)=>b[1]-a[1])):'<p class="hint">Responses you log appear here.</p>'}</div>
+   <div class="panel"><h3>New leads per week</h3>${bars(wk)}</div>
+   </div>${viewProfile(A)}`;
+}
+function profBars(fd){const max=Math.max(1,...fd.vals.map(v=>v.n));const rows=fd.vals.slice(0,10);
+  return `<div class="bars">${rows.map(v=>`<div class="br click" role="button" tabindex="0" data-jump="${esc(fd.f)}" data-jk="${esc(v.k)}" title="See these leads">
+   <span class="lab">${esc(v.label)}</span><span class="trk"><span class="fill all" style="width:${(v.n/max*100).toFixed(1)}%"></span><span class="fill ser" style="width:${(v.s/max*100).toFixed(1)}%"></span></span>
+   <span class="v">${v.n}${v.s?` <small>·${v.s}</small>`:''}</span></div>`).join('')}</div>${fd.vals.length>10?`<p class="hint">+${fd.vals.length-10} more in the filter list</p>`:''}`}
+function viewProfile(A){
+  const defs=catFields();
+  if(!defs.length)return `<div class="sec-h"><h2>Lead profile</h2></div><div class="empty" style="padding:14px">When your Meta sheet has questions like plot location, plot size or floors, a breakdown of each appears here.</div>`;
+  if(!defs.some(d=>d.f===cmpR))cmpR=(defs.find(d=>/size|sq/i.test(d.label))||defs[0]).f;
+  if(!defs.some(d=>d.f===cmpC)||cmpC===cmpR)cmpC=(defs.find(d=>d.f!==cmpR&&(d.f==='city'||/locat|where|city/i.test(d.label)))||defs.find(d=>d.f!==cmpR)||{f:''}).f;
+  // top answer per field, as a one-line summary
+  const sum=defs.slice(0,4).map(fd=>{const t=fd.vals[0];return `<div class="kpi"><div class="n" style="font-size:19px;overflow-wrap:anywhere">${esc(t.label)}</div><div class="l">Most common · ${esc(fd.label.replace(/\?$/,''))} · ${Math.round(t.n/A.length*100)}%</div></div>`}).join('');
+  let h=`<div class="sec-h"><h2>Lead profile</h2><span class="c">from form answers</span></div>
+   <div class="kpis">${sum}</div>
+   <div class="prof-legend"><span><i class="f"></i>All leads</span><span><i></i>Serious (interested, meeting, proposal, won)</span><span>Tap a row to see those leads</span></div>
+   <div class="ins">${defs.map(fd=>`<div class="panel"><h3>${esc(fd.label)}</h3>${profBars(fd)}</div>`).join('')}`;
+  if(defs.length>1&&cmpC){
+    const R=defs.find(d=>d.f===cmpR),C=defs.find(d=>d.f===cmpC);
+    const rv=R.vals.slice(0,8),cv=C.vals.slice(0,6);
+    const cell=(rk,ck)=>A.filter(l=>catKey(l,R)===rk&&catKey(l,C)===ck).length;
+    const grid=rv.map(r=>cv.map(c=>cell(r.k,c.k)));const mx=Math.max(1,...grid.flat());
+    h+=`<div class="panel wide"><h3>Compare two answers</h3>
+     <div class="cmp-sel"><label class="f">Rows<select id="cmpR">${defs.map(d=>`<option value="${esc(d.f)}"${d.f===cmpR?' selected':''}>${esc(d.label)}</option>`).join('')}</select></label>
+     <label class="f">Columns<select id="cmpC">${defs.filter(d=>d.f!==cmpR).map(d=>`<option value="${esc(d.f)}"${d.f===cmpC?' selected':''}>${esc(d.label)}</option>`).join('')}</select></label></div>
+     <div class="heatwrap"><table class="heat"><thead><tr><th></th>${cv.map(c=>`<th title="${esc(c.label)}">${esc(c.label)}</th>`).join('')}</tr></thead><tbody>
+     ${rv.map((r,i)=>`<tr><th title="${esc(r.label)}">${esc(r.label)}</th>${cv.map((c,j)=>{const n=grid[i][j];return n?`<td style="background:color-mix(in srgb,var(--accent) ${Math.round(12+n/mx*60)}%,var(--surface))" data-pair="${esc(R.f)}|${esc(r.k)}|${esc(C.f)}|${esc(c.k)}" title="${n} leads">${n}</td>`:'<td class="z">·</td>'}).join('')}</tr>`).join('')}
+     </tbody></table></div><p class="hint">Tap a number to open those leads. Shows the top ${rv.length} × ${cv.length} answers.</p></div>`;
+  }
+  return h+'</div>';
+}
+
+/* ---------- lead sheet ---------- */
+const layer=document.getElementById('layer');
+function openLead(id){openId=id;const L=leads.get(id);if(!L)return;
+  const n=L.next||{};
+  const ans=Object.entries(L.answers||{}).filter(([k,v])=>String(v).trim());
+  layer.innerHTML=`<div class="scrim" data-act="close"></div>
+  <aside class="sheet" role="dialog" aria-modal="true" aria-labelledby="shName">
+   <div class="sh-top"><div class="ini">${esc(initials(L.name))}</div><div style="flex:1;min-width:0" id="shHead"></div><button class="btn sm ghost" data-act="close" aria-label="Close">Close</button></div>
+   <div class="sh-body">
+    <section class="card"><h3>Contact</h3>
+     ${L.phone?`<div class="contact"><code>${esc(L.phone)}</code><button class="btn sm" data-copy="${esc(L.phone)}">Copy</button><a class="btn sm wa" href="https://wa.me/${waNum(L.phone)}" target="_blank" rel="noopener">WhatsApp</a></div>`:'<p class="hint">No phone number.</p>'}
+     ${L.email?`<div class="contact"><code>${esc(L.email)}</code><button class="btn sm" data-copy="${esc(L.email)}">Copy</button></div>`:''}
+     <dl class="kv">${[['Received',L.createdAt?new Date(L.createdAt).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}):''],['City',L.city],['Campaign',L.campaign],['Ad set',L.adset],['Ad',L.ad],['Form',L.form],['Platform',L.platform]].filter(r=>r[1]).map(r=>`<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join('')}
+     ${ans.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
+    </section>
+    <section class="card"><h3>Log a response</h3>
+     <div class="grid2"><label class="f">Status<select id="fStatus">${STATUSES.map(s=>`<option value="${s.k}"${(L.status||'new')===s.k?' selected':''}>${s.l}</option>`).join('')}</select></label>
+     <label class="f">What they said<select id="fResp"><option value="">Choose a response</option>${RESPONSES.map(r=>`<option${L.response===r?' selected':''}>${esc(r)}</option>`).join('')}</select></label></div>
+     <div class="f" style="font-size:12px;font-weight:600;color:var(--muted)">Priority<div class="seg" id="fPri">${PRI.map(p=>`<button type="button" data-pri="${p.k}" aria-pressed="${(L.priority||'')===p.k}">${p.l}</button>`).join('')}</div></div>
+     <label class="f">Note (optional)<textarea id="fNote" rows="2" placeholder="e.g. 1,200 sqft plot in Porur, wants 2BHK + home office, budget around ₹45 L"></textarea></label>
+     <div class="acts"><button class="btn pri" data-act="saveResp">Save response</button></div>
+    </section>
+    <section class="card"><h3>Next step <span id="nextBadge"></span></h3>
+     <div id="nextSum"></div>
+     <div class="grid2"><label class="f">Type<select id="nType">${NEXT.map(x=>`<option value="${x.k}"${n.type===x.k?' selected':''}>${x.l}</option>`).join('')}</select></label>
+      <label class="f">Date<input type="date" id="nDate" value="${esc(n.date||'')}"></label>
+      <label class="f">Time<input type="time" id="nTime" value="${esc(n.time||'')}"></label>
+      <label class="f" id="nPlaceWrap">Place<input type="text" id="nPlace" value="${esc(n.place||'')}" placeholder="Studio / site address"></label>
+      <label class="f" id="nLinkWrap">Meeting link<input type="url" id="nLink" value="${esc(n.link||'')}" placeholder="https://meet.google.com/… or Zoom link"></label></div>
+     <label class="f">Agenda<input type="text" id="nNote" value="${esc(n.note||'')}" placeholder="e.g. Walk through Pocket Home layouts for their plot"></label>
+     <div class="acts"><button class="btn pri" data-act="saveNext">Save next step</button><span id="nextActs" class="acts"></span></div>
+     <div id="doneBox"></div>
+    </section>
+    <section class="card"><h3>Send a message</h3>
+     <div class="grid2"><label class="f">Message<select id="tpl">${TEMPLATES.map(t=>`<option value="${t.k}">${t.l}</option>`).join('')}</select></label>
+     <label class="f">Language tone<select id="tone"><option value="formal">Formal</option><option value="warm">Warm</option></select></label></div>
+     <label class="f" id="subjWrap">Email subject<input type="text" id="mSubj"></label>
+     <label class="f">Text<textarea id="mBody" rows="9"></textarea></label>
+     <div class="acts">${L.phone?`<a class="btn wa" id="waBtn" target="_blank" rel="noopener" data-act="logWa">Open in WhatsApp</a>`:''}
+      ${L.email?`<a class="btn" id="gmBtn" target="_blank" rel="noopener" data-act="logMail">Open in Gmail</a>`:''}
+      <button class="btn" data-act="copyMsg">Copy text</button></div>
+     <p class="hint">WhatsApp and Gmail open with the text filled in. You press send there; the desk notes that you opened it.</p>
+    </section>
+    <section class="card"><h3>Activity</h3><ul class="log" id="shLog"></ul></section>
+    <div id="delBox" class="acts"><button class="btn sm danger" data-act="askDel">Delete lead</button></div>
+   </div></aside>`;
+  pri=L.priority||'';
+  refreshSheet();syncNextFields();fillMsg();
+  setTimeout(()=>{const c=layer.querySelector('.sh-top .btn');c&&c.focus()},30);
+}
+let pri='';
+function refreshSheet(){
+  const L=leads.get(openId);if(!L){closeSheet();return}
+  const head=document.getElementById('shHead');if(!head)return;
+  head.innerHTML=`<h2 id="shName">${esc(L.name||'Unnamed lead')}</h2><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:5px"><span class="pill s-${esc(L.status||'new')}">${esc(sLabel(L.status))}</span>${L.priority?`<span class="tag">${esc(L.priority.toUpperCase())}</span>`:''}${L.sample?'<span class="tag">SAMPLE</span>':''}</div>`;
+  const n=nextOf(L),sum=document.getElementById('nextSum'),acts=document.getElementById('nextActs');
+  if(n){const t=TODAY(),d=daysBetween(t,n.date);
+    sum.innerHTML=`<div class="next-sum"><b>${esc(nLabel(n.type))}</b> · ${esc(fmtDate(n.date,true))}${n.time?' at '+esc(fmtTime(n.time)):''}${d<0?` <span class="pill s-lost">${-d} day${d<-1?'s':''} overdue</span>`:d===0?' <span class="pill s-meeting">Today</span>':''}${n.note?`<br>${esc(n.note)}`:''}</div>`;
+    acts.innerHTML=`<a class="btn" href="${gcal(L,n)}" target="_blank" rel="noopener">Add to Google Calendar</a><button class="btn" data-act="markDone">Mark done</button>`;
+  }else{sum.innerHTML='<p class="hint">No next step booked. Set one so this lead shows up on your calendar.</p>';acts.innerHTML=''}
+  const log=(L.log||[]).slice().reverse();
+  document.getElementById('shLog').innerHTML=log.length?log.map(e=>`<li><time>${esc(fmtStamp(e.t))}</time><span>${esc(e.text)}</span></li>`).join(''):'<li><time></time><span class="hint">Nothing logged yet.</span></li>';
+}
+function syncNextFields(){const t=val('nType');const pw=document.getElementById('nPlaceWrap'),lw=document.getElementById('nLinkWrap');if(!pw)return;
+  pw.hidden=!(t==='office'||t==='site');lw.hidden=t!=='online';
+  const p=document.getElementById('nPlace');if(t==='office'&&!p.value&&settings.address)p.value=settings.address;
+  const l=document.getElementById('nLink');if(t==='online'&&!l.value&&settings.meetLink)l.value=settings.meetLink;}
+function closeSheet(){openId=null;layer.innerHTML=''}
+const val=id=>{const e=document.getElementById(id);return e?e.value.trim():''};
+
+/* ---------- message templates ---------- */
+function draftNext(){return {type:val('nType'),date:val('nDate'),time:val('nTime'),place:val('nPlace'),link:val('nLink'),note:val('nNote')}}
+function sign(){return `${settings.you}\n${settings.role}, ${settings.studio}${settings.phone?'\n'+settings.phone:''}`}
+function build(L,tplK,tone){
+  const nm=first(L.name),n=draftNext(),S=settings;
+  const when=n.date?`${fmtDate(n.date,true)}${n.time?' at '+fmtTime(n.time):''}`:'[date and time]';
+  const hi=tone==='warm'?`Hi ${nm},`:`Dear ${L.name?('Mr./Ms. '+nm):'Sir/Madam'},`.replace('Mr./Ms. ',tone==='formal'?'':'');
+  const greet=tone==='warm'?`Hi ${nm},`:`Dear ${nm},`;
+  const where=n.type==='online'?`Online meeting link: ${n.link||'[meeting link]'}`:(n.type==='office'||n.type==='site')?`Venue: ${n.place||'[address]'}${S.maps&&n.type==='office'?'\nMap: '+S.maps:''}`:'';
+  const what=n.type==='online'?'an online meeting':n.type==='site'?'a site visit':n.type==='office'?'a meeting at our studio':n.type==='call'?'a short call':'our next conversation';
+  let subj='',body='';
+  if(tplK==='intro'){
+    subj=`Your home design enquiry – ${S.studio}`;
+    body=`${greet}\n\nGreetings from ${S.studio}, Chennai. Thank you for your interest in our home designs${L.campaign?'':''}.\n\nWe design compact, well-planned homes for plots of 1,000–1,500 sq.ft. I would be glad to understand your plot and requirements. Could you share a convenient time for a short call this week?\n\nWarm regards,\n${sign()}`;
+  }else if(tplK==='confirm'){
+    subj=`Meeting confirmed: ${when} – ${S.studio}`;
+    body=`${greet}\n\nThank you for your time. This is to confirm ${what} with ${S.studio}:\n\nDate & time: ${when}\n${where?where+'\n':''}${n.note?'Agenda: '+n.note+'\n':''}\nIf you have a plot sketch, patta/FMB or reference photos, please bring them along${n.type==='online'?' or keep them handy':''}. Kindly reply to confirm this slot suits you.\n\nWarm regards,\n${sign()}`;
+  }else if(tplK==='remind'){
+    subj=`Reminder: our meeting tomorrow – ${S.studio}`;
+    body=`${greet}\n\nA gentle reminder of ${what} scheduled for ${when}.\n${where?where+'\n':''}\nLooking forward to speaking with you.\n\nRegards,\n${sign()}`;
+  }else if(tplK==='thanks'){
+    subj=`Thank you for meeting us – next steps`;
+    body=`${greet}\n\nThank you for taking the time to meet us. It was a pleasure understanding your plans for your home.\n\nAs discussed, we will share the next steps shortly. Please feel free to reach out with any questions in the meantime.\n\nWarm regards,\n${sign()}`;
+  }else{
+    subj=`Following up on your home design enquiry`;
+    body=`${greet}\n\nI am following up on your enquiry with ${S.studio}. Whenever you are ready, we would be happy to walk you through design options suited to your plot.\n\nPlease let me know a convenient time to connect.\n\nWarm regards,\n${sign()}`;
+  }
+  return {subj,body};
+}
+function fillMsg(){const L=leads.get(openId);if(!L)return;const m=build(L,val('tpl'),val('tone'));
+  document.getElementById('mSubj').value=m.subj;document.getElementById('mBody').value=m.body;linkMsg()}
+function linkMsg(){const L=leads.get(openId);if(!L)return;const body=document.getElementById('mBody').value,subj=document.getElementById('mSubj').value;
+  const wa=document.getElementById('waBtn');if(wa)wa.href=`https://wa.me/${waNum(L.phone)}?text=${encodeURIComponent(body)}`;
+  const gm=document.getElementById('gmBtn');if(gm)gm.href=`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(L.email)}&su=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;}
+function gcal(L,n){const it=NEXT.find(x=>x.k===n.type)||NEXT[0];
+  const st=n.date.replace(/-/g,'')+'T'+(n.time||'10:00').replace(':','')+'00';
+  const sd=new Date(parseYmd(n.date));const [h,m]=(n.time||'10:00').split(':').map(Number);sd.setHours(h,m+it.mins);
+  const z=x=>String(x).padStart(2,'0');const en=`${sd.getFullYear()}${z(sd.getMonth()+1)}${z(sd.getDate())}T${z(sd.getHours())}${z(sd.getMinutes())}00`;
+  const det=[n.note,L.phone&&'Phone: '+L.phone,L.email&&'Email: '+L.email,n.link&&'Link: '+n.link].filter(Boolean).join('\n');
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(it.l+' – '+(L.name||'Lead'))}&dates=${st}/${en}&ctz=Asia/Kolkata&details=${encodeURIComponent(det)}&location=${encodeURIComponent(n.type==='online'?(n.link||''):(n.place||''))}`}
+
+/* ---------- import ---------- */
+const norm=s=>String(s).toLowerCase().replace(/[^a-z0-9]/g,'');
+const MAP={id:['id','leadid'],createdAt:['createdtime','created','date','createdat','submittedon','timestamp'],
+ name:['fullname','name','yourname','customername'],firstName:['firstname'],lastName:['lastname'],
+ phone:['phonenumber','phone','mobile','mobilenumber','whatsappnumber','whatsapp','contactnumber'],email:['email','emailaddress','workemail'],
+ city:['city','location','area','locality'],campaign:['campaignname','campaign'],adset:['adsetname','adset'],ad:['adname','ad'],
+ form:['formname','form'],platform:['platform']};
+const SKIP=['adid','adsetid','campaignid','formid','isorganic','leadstatus','inboxurl','vehicle','retailerid','partnername'];
+let pending=null;
+function openImport(){layer.innerHTML=`<div class="scrim" data-act="close"></div><div class="modal" role="dialog" aria-modal="true" aria-labelledby="impH">
+  <h2 id="impH">Import Meta leads</h2>
+  <p class="hint" style="font-size:14px">Use the Excel (.xlsx) or CSV you downloaded from Meta Leads Center or Ads Manager. Leads already in the desk are skipped, so you can re-import a newer sheet any time.</p>
+  <div class="drop" id="drop" data-act="pick" tabindex="0" role="button"><b>Choose file</b><br><span class="hint">or drop it here · .xlsx .xls .csv</span></div>
+  <div id="impOut"></div>
+  <div class="acts" style="justify-content:flex-end"><button class="btn ghost" data-act="close">Cancel</button></div></div>`;
+  const dr=document.getElementById('drop');
+  dr.addEventListener('dragover',e=>{e.preventDefault();dr.classList.add('on')});
+  dr.addEventListener('dragleave',()=>dr.classList.remove('on'));
+  dr.addEventListener('drop',e=>{e.preventDefault();dr.classList.remove('on');if(e.dataTransfer.files[0])readFile(e.dataTransfer.files[0])});
+}
+function readFile(file){
+  const out=document.getElementById('impOut');if(typeof XLSX==='undefined'){out.innerHTML='<div class="notice">The spreadsheet reader did not load. Check your connection and reopen the page.</div>';return}
+  const fr=new FileReader();fr.onload=()=>{try{
+    const wb=XLSX.read(new Uint8Array(fr.result),{type:'array',cellDates:true});
+    const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws,{defval:'',raw:true});
+    if(!rows.length){out.innerHTML='<div class="notice">That sheet has no rows. Check you exported leads, not an empty report.</div>';return}
+    const headers=Object.keys(rows[0]);const col={};const used=new Set();
+    for(const [f,keys] of Object.entries(MAP)){const h=headers.find(h=>keys.includes(norm(h))&&!used.has(h));if(h){col[f]=h;used.add(h)}}
+    const extra=headers.filter(h=>!used.has(h)&&!SKIP.includes(norm(h))&&norm(h));
+    const parsed=rows.map(r=>toLead(r,col,extra)).filter(l=>l.name||l.phone||l.email);
+    const existing=new Set(leads.keys());const phones=new Set(all().map(l=>waNum(l.phone)).filter(Boolean));
+    const fresh=[],dup=[];const seen=new Set();
+    parsed.forEach(l=>{const p=waNum(l.phone);if(existing.has(l.id)||seen.has(l.id)||(p&&phones.has(p))){dup.push(l)}else{fresh.push(l);seen.add(l.id);if(p)phones.add(p)}});
+    pending=fresh;
+    out.innerHTML=`<div class="card"><div><b>${esc(file.name)}</b> · ${rows.length} rows</div>
+     <div class="map">${Object.entries(col).map(([f,h])=>`<span class="tag">${esc(h)} → ${f}</span>`).join('')}${extra.length?`<span class="tag">${extra.length} form question${extra.length>1?'s':''} kept as answers</span>`:''}</div>
+     ${!col.name&&!col.firstName?'<div class="notice">No name column found. Leads will import, but check the sheet has a full_name column.</div>':''}
+     <div><b>${fresh.length}</b> new lead${fresh.length!==1?'s':''} to add${dup.length?` · ${dup.length} already in the desk, skipped`:''}</div>
+     <div class="acts"><button class="btn pri" data-act="doImport"${fresh.length&&canWrite&&db?'':' disabled'}>Add ${fresh.length} lead${fresh.length!==1?'s':''}</button></div><div id="impProg" class="hint"></div></div>`;
+  }catch(e){out.innerHTML='<div class="notice">This file could not be read. Save it as .xlsx or .csv and try again.</div>'}};
+  fr.readAsArrayBuffer(file);
+}
+function toDateISO(v){if(v instanceof Date&&!isNaN(v))return v.toISOString();if(typeof v==='number'){const d=new Date(Math.round((v-25569)*864e5));return isNaN(d)?'':d.toISOString()}
+  const s=String(v||'').trim();if(!s)return'';const d=new Date(s);if(!isNaN(d))return d.toISOString();
+  const m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/);if(m){const y=+m[3]<100?2000+ +m[3]:+m[3];return new Date(y,+m[2]-1,+m[1]).toISOString()}return''}
+function toLead(r,col,extra){
+  const g=f=>col[f]?String(r[col[f]]==null?'':r[col[f]]).trim():'';
+  let name=g('name');if(!name)name=[g('firstName'),g('lastName')].filter(Boolean).join(' ');
+  const phone=cleanPhone(g('phone'));const metaId=g('id').replace(/^l:/i,'');
+  let id=metaId?('m-'+metaId.replace(/[^A-Za-z0-9]/g,'')):(waNum(phone)?'p-'+waNum(phone):'r-'+rid());
+  if(id==='m-')id='r-'+rid();
+  const answers={};extra.forEach(h=>{let v=r[h];if(v instanceof Date)v=v.toISOString().slice(0,10);v=String(v==null?'':v).replace(/_/g,' ').trim();if(v)answers[h.replace(/_/g,' ').replace(/\?$/,'?').trim()]=v.slice(0,500)});
+  const created=col.createdAt?toDateISO(r[col.createdAt]):'';
+  return {id,name,phone,email:g('email'),city:g('city'),campaign:g('campaign'),adset:g('adset'),ad:g('ad'),form:g('form'),platform:g('platform'),
+    metaId,answers,createdAt:created||new Date().toISOString(),importedAt:new Date().toISOString(),status:'new',response:'',priority:'',next:null,
+    log:[logEntry('import','Imported from Meta sheet')]};
+}
+async function doImport(){
+  if(!pending||!db)return;const btn=layer.querySelector('[data-act="doImport"]');btn.disabled=true;const prog=document.getElementById('impProg');
+  let ok=0,fail=0,i=0;const list=pending.slice();
+  async function worker(){while(i<list.length){const l=list[i++];const {id,...body}=l;
+    try{await db.doc('leads/'+id).set(body);ok++}catch(e){fail++;if(e&&e.code==='not_allowed'){i=list.length}}
+    prog.textContent=`Added ${ok} of ${list.length}…`}}
+  await Promise.all([worker(),worker(),worker(),worker()]);
+  pending=null;closeSheet();toast(`Added ${ok} lead${ok!==1?'s':''}${fail?` · ${fail} failed`:''}`);tab='today';render();
+}
+
+/* ---------- settings ---------- */
+function openSettings(){const S=settings;layer.innerHTML=`<div class="scrim" data-act="close"></div><div class="modal" role="dialog" aria-modal="true" aria-labelledby="setH">
+ <h2 id="setH">Message settings</h2><p class="hint" style="font-size:14px">These fill the signature and venue in every WhatsApp and email draft.</p>
+ <div class="grid2"><label class="f">Your name<input type="text" id="sYou" value="${esc(S.you)}"></label><label class="f">Title<input type="text" id="sRole" value="${esc(S.role)}"></label></div>
+ <label class="f">Studio name<input type="text" id="sStudio" value="${esc(S.studio)}"></label>
+ <label class="f">Phone in signature<input type="tel" id="sPhone" value="${esc(S.phone)}" placeholder="+91 …"></label>
+ <label class="f">Studio address (used for studio meetings)<textarea id="sAddr" rows="2">${esc(S.address)}</textarea></label>
+ <label class="f">Google Maps link to studio<input type="url" id="sMaps" value="${esc(S.maps)}" placeholder="https://maps.app.goo.gl/…"></label>
+ <label class="f">Default online meeting link<input type="url" id="sMeet" value="${esc(S.meetLink)}" placeholder="Your personal Zoom room or Google Meet link"></label>
+ <div class="acts" style="justify-content:flex-end"><button class="btn ghost" data-act="close">Cancel</button><button class="btn pri" data-act="saveSettings">Save</button></div></div>`}
+async function saveSettings(){const S={you:val('sYou'),role:val('sRole'),studio:val('sStudio'),phone:val('sPhone'),address:val('sAddr'),maps:val('sMaps'),meetLink:val('sMeet')};
+  if(!db)return;
+  try{await db.doc('settings/main').set(S);settings={...DEFAULT_SETTINGS,...S};closeSheet();toast('Settings saved')}catch(e){toast('Could not save settings')}}
+
+/* ---------- export ---------- */
+async function exportCsv(){
+  const qs=catFields().filter(d=>d.f!=='city');
+  const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const cols=['name','phone','email','city',...qs.map(d=>d.label),'campaign','ad','status','response','priority','nextType','nextDate','nextTime','nextNote','createdAt','lastNote'];
+  const lines=[cols.map(q).join(',')].concat(filtered().map(l=>{const n=l.next||{};const notes=(l.log||[]).filter(e=>e.kind==='note');
+    return [l.name,l.phone,l.email,l.city,...qs.map(d=>normV(rawVal(l,d.f))),l.campaign,l.ad,sLabel(l.status),l.response,l.priority,n.type?nLabel(n.type):'',n.date,n.time,n.note,l.createdAt,notes.length?notes[notes.length-1].text:''].map(q).join(',')}));
+  const blob=new Blob(['\ufeff'+lines.join('\n')],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='nichekala-leads-'+TODAY()+'.csv';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',async e=>{
+  const tb=e.target.closest('#tabs button');if(tb){tab=tb.dataset.tab;render();window.scrollTo(0,0);return}
+  const op=e.target.closest('[data-open]');if(op){openLead(op.dataset.open);return}
+  const fs=e.target.closest('[data-fs]');if(fs){fStatus=fs.dataset.fs;render();return}
+  const pf=e.target.closest('[data-pf]');if(pf){const f=pf.dataset.pf,k=pf.dataset.pk;const a=new Set(prio[f]||[]);a.has(k)?a.delete(k):a.add(k);
+    if(a.size)prio[f]=[...a];else delete prio[f];showPrio=true;savePrio();const y=window.scrollY;render();window.scrollTo(0,y);return}
+  const pm=e.target.closest('[data-pmore]');if(pm){prioMore.add(pm.dataset.pmore);render();return}
+  const cfx=e.target.closest('[data-cfx]');if(cfx){delete catF[cfx.dataset.cfx];render();return}
+  const jp=e.target.closest('[data-jump]');if(jp){catF={[jp.dataset.jump]:jp.dataset.jk};fStatus='all';fText='';tab='leads';render();window.scrollTo(0,0);return}
+  const pr=e.target.closest('[data-pair]');if(pr){const [a1,b1,a2,b2]=pr.dataset.pair.split('|');catF={[a1]:b1,[a2]:b2};fStatus='all';fText='';tab='leads';render();window.scrollTo(0,0);return}
+  const dy=e.target.closest('[data-day]');if(dy){calSel=dy.dataset.day;render();return}
+  const cp=e.target.closest('[data-copy]');if(cp){copy(cp.dataset.copy);return}
+  const pb=e.target.closest('[data-pri]');if(pb){pri=pri===pb.dataset.pri?'':pb.dataset.pri;document.querySelectorAll('#fPri button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pri===pri)));return}
+  const a=e.target.closest('[data-act]');if(!a)return;const act=a.dataset.act;const L=openId&&leads.get(openId);
+  switch(act){
+   case 'close':closeSheet();break;
+   case 'signout':await sb.auth.signOut();location.reload();break;
+   case 'import':openImport();break;
+   case 'pick':document.getElementById('fileIn').click();break;
+   case 'doImport':doImport();break;
+   case 'settings':openSettings();break;
+   case 'saveSettings':saveSettings();break;
+   case 'showNew':tab='leads';fStatus='new';render();break;
+   case 'toggleF':showF=!showF;render();break;
+   case 'togglePrio':showPrio=!showPrio;render();break;
+   case 'clearPrio':prio={};showPrio=true;savePrio();render();break;
+   case 'showRest':showRest=true;render();break;
+   case 'clearF':catF={};render();break;
+   case 'export':exportCsv();break;
+   case 'calPrev':calCur=new Date(calCur.getFullYear(),calCur.getMonth()-1,1);render();break;
+   case 'calNext':calCur=new Date(calCur.getFullYear(),calCur.getMonth()+1,1);render();break;
+   case 'calToday':calCur=firstOfMonth(new Date());calSel=TODAY();render();break;
+   case 'clearSamples':{a.disabled=true;for(const l of all().filter(x=>x.sample)){try{await db.doc('leads/'+l.id).delete()}catch(err){}}toast('Sample leads removed');break}
+   case 'saveResp':{if(!L)break;const st=val('fStatus'),rs=val('fResp'),note=val('fNote');const parts=[];
+     if(st!==(L.status||'new'))parts.push('Status → '+sLabel(st));if(rs&&rs!==L.response)parts.push('Said: '+rs);if(pri!==(L.priority||''))parts.push('Priority → '+(pri||'none'));
+     const log=[...(L.log||[])];if(parts.length)log.push(logEntry('status',parts.join(' · ')));if(note)log.push(logEntry('note',note));
+     if(!parts.length&&!note){toast('Nothing changed');break}
+     if(await patch(L.id,{status:st,response:rs,priority:pri,log,updatedAt:new Date().toISOString()})){document.getElementById('fNote').value='';toast('Response saved')}break}
+   case 'saveNext':{if(!L)break;const n=draftNext();if(!n.date){toast('Pick a date for the next step');break}
+     const log=[...(L.log||[]),logEntry('next',`Booked ${nLabel(n.type)} · ${fmtDate(n.date)}${n.time?' '+fmtTime(n.time):''}`)];
+     const upd={next:n,log,updatedAt:new Date().toISOString()};
+     if(['office','site','online'].includes(n.type)&&['new','contacted','interested'].includes(L.status||'new')){upd.status='meeting';const s=document.getElementById('fStatus');if(s)s.value='meeting'}
+     if((L.status||'new')==='new'&&!upd.status){upd.status='contacted';const s=document.getElementById('fStatus');if(s)s.value='contacted'}
+     if(await patch(L.id,upd)){toast('Next step saved');document.getElementById('tpl').value='confirm';fillMsg()}break}
+   case 'markDone':{if(!L||!L.next)break;document.getElementById('doneBox').innerHTML=`<div class="card" style="background:var(--surface-2)"><label class="f">How did it go?<textarea id="doneNote" rows="2" placeholder="e.g. Liked option B, wants a quote for stilt + 2 floors"></textarea></label>
+      <div class="acts"><button class="btn pri" data-act="confirmDone">Save outcome</button><button class="btn ghost" data-act="cancelDone">Cancel</button></div><p class="hint">After saving, set the next step above so the lead stays on your calendar.</p></div>`;document.getElementById('doneNote').focus();break}
+   case 'cancelDone':document.getElementById('doneBox').innerHTML='';break;
+   case 'confirmDone':{if(!L||!L.next)break;const n=L.next,note=val('doneNote');
+     const log=[...(L.log||[]),logEntry('done',`Done: ${nLabel(n.type)} on ${fmtDate(n.date)}${note?' — '+note:''}`)];
+     if(await patch(L.id,{next:null,log,lastDone:n,updatedAt:new Date().toISOString()})){document.getElementById('doneBox').innerHTML='';['nDate','nTime','nNote'].forEach(i=>{const x=document.getElementById(i);if(x)x.value=''});document.getElementById('tpl').value='thanks';fillMsg();toast('Outcome saved')}break}
+   case 'logWa':if(L)addLog(L.id,'msg','Opened WhatsApp: '+(TEMPLATES.find(t=>t.k===val('tpl'))||{}).l);break;
+   case 'logMail':if(L)addLog(L.id,'msg','Opened Gmail draft: '+(TEMPLATES.find(t=>t.k===val('tpl'))||{}).l);break;
+   case 'copyMsg':{const s=document.getElementById('mSubj').value;const b=document.getElementById('mBody').value;copy(b);break}
+   case 'askDel':document.getElementById('delBox').innerHTML=`<div class="confirm">Delete ${esc(L.name||'this lead')} and its history? <button class="btn sm danger" data-act="doDel">Delete</button><button class="btn sm ghost" data-act="noDel">Keep</button></div>`;break;
+   case 'noDel':document.getElementById('delBox').innerHTML='<button class="btn sm danger" data-act="askDel">Delete lead</button>';break;
+   case 'doDel':{const id=L.id;closeSheet();try{await db.doc('leads/'+id).delete();toast('Lead deleted')}catch(err){toast('Could not delete')}break}
+  }
+});
+document.addEventListener('input',e=>{
+  if(e.target.id==='q'){fText=e.target.value;const list=document.getElementById('leadList');const f=filtered();
+    if(list)list.innerHTML=f.map(rowLead).join('');else render();return}
+  if(e.target.id==='mBody'||e.target.id==='mSubj')linkMsg();
+  if(['nDate','nTime','nPlace','nLink','nNote'].includes(e.target.id)){const t=val('tpl');if(t!=='intro'&&t!=='nudge')fillMsg()}
+});
+document.addEventListener('change',e=>{
+  if(e.target.id==='sortBy'){sortBy=e.target.value;render()}
+  if(e.target.dataset&&e.target.dataset.cf!==undefined){const f=e.target.dataset.cf;if(e.target.value)catF[f]=e.target.value;else delete catF[f];render();const s=document.getElementById(e.target.id);s&&s.focus();return}
+  if(e.target.id==='cmpR'){cmpR=e.target.value;if(cmpC===cmpR)cmpC='';render()}
+  if(e.target.id==='cmpC'){cmpC=e.target.value;render()}
+  if(e.target.id==='nType'){syncNextFields();fillMsg()}
+  if(e.target.id==='tpl'||e.target.id==='tone'){fillMsg();const sw=document.getElementById('subjWrap');}
+  if(e.target.id==='fileIn'&&e.target.files[0]){readFile(e.target.files[0]);e.target.value=''}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&layer.innerHTML)closeSheet();
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-jump]')){e.preventDefault();e.target.click()}
+  if(e.key==='Enter'&&e.target.id==='drop')document.getElementById('fileIn').click()});
+boot();
+})();
+</script>
+</body>
+</html>
