@@ -730,9 +730,352 @@ details.spec summary{cursor:pointer;font-weight:800;color:var(--red);font-size:1
 @media (max-width:559px){.topbar .wt{display:none}.topbar .in{gap:10px}}
 td:first-child{white-space:normal;min-width:120px}
 @media (max-width:559px){th,td{padding:8px 5px;font-size:12.5px}th{font-size:9.5px;letter-spacing:.08em}.tw{margin-left:-4px;margin-right:-4px}}
+/* ---------- guided flow ---------- */
+.blk[data-step]{display:none}
+.blk[data-step].on{display:block;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.steps button{flex:none;font:inherit;font-size:12px;font-weight:700;color:var(--grey);padding:7px 11px;border-radius:99px;display:flex;gap:6px;align-items:center;background:none;border:none;cursor:pointer;transition:background .2s,color .2s}
+.steps button i{font-style:normal;font-weight:800;color:var(--red)}
+.steps button.on{background:var(--red);color:#fff}.steps button.on i{color:#fff}
+.steps button:disabled{opacity:.4;cursor:default}
+.faces{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.fc{border:1.5px solid var(--rule);background:var(--blush);border-radius:12px;padding:9px 4px 8px;cursor:pointer;font-weight:800;font-size:13px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:1px;transition:all .15s}
+.fc:hover{border-color:var(--red)}
+.fc i{font-style:normal;font-size:16px;line-height:1;color:var(--red);display:inline-block;transition:transform .2s}
+.fc small{font-size:10px;color:var(--grey);font-weight:700}
+.fc.on{background:var(--ink);border-color:var(--ink);color:#fff}.fc.on i{color:#fff}.fc.on small{color:#bdb7b3}
+.hint{font-size:12px;color:var(--grey);margin-top:6px}
+.navrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:24px;padding-top:18px;border-top:1px solid var(--rule)}
+.navrow .pri{margin-left:auto}
+.fsteps{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 6px;margin-bottom:16px;scrollbar-width:none}
+.fsteps::-webkit-scrollbar{display:none}
+.fs{flex:1 0 84px;border:1.5px solid var(--rule);background:#fff;border-radius:12px;padding:8px 10px;text-align:left;cursor:pointer;transition:all .15s}
+.fs b{display:block;font-size:12px;font-weight:800;color:var(--ink)}
+.fs span{display:block;font-size:11px;color:var(--grey);font-variant-numeric:tabular-nums}
+.fs .mt{display:block;height:5px;background:var(--rule);border-radius:99px;overflow:hidden;margin-top:5px}
+.fs .mt i{display:block;height:100%;background:var(--red);border-radius:99px}
+.fs.near .mt i{background:var(--amber)}.fs.over .mt i{background:var(--red-deep)}.fs.over span{color:var(--red-deep)}
+.fs.on{border-color:var(--red);background:var(--pink)}
+.fs.ter{background:var(--blush)}.fs.ter.on{background:var(--pink)}
+.rm.stilt{background:var(--blush);border-style:dashed;border-color:var(--pink-2)}.rm.stilt::before{background:#fff;border:2px dashed var(--red)}
+details.adv{margin-top:18px;border:1.5px dashed var(--rule);border-radius:14px;padding:12px;background:var(--bg)}
+details.adv summary{cursor:pointer;color:var(--grey);font-weight:800;font-size:13px}
+.note{background:var(--blush);border:1px solid var(--pink-2);border-radius:12px;padding:12px 14px;font-size:13px;margin-top:14px}
+.gen{margin-top:22px;background:var(--ink);border-radius:22px;padding:22px;color:#fff;display:grid;gap:14px}
+.gen h3{font-family:var(--display);font-weight:600;font-size:26px;color:#fff;line-height:1.1}
+.gen h3 em{color:#ff8d84;font-weight:500}
+.gen p{font-size:13.5px;color:#d9d3cf}
+/* sticky nav */
+#sticky .in{display:grid;grid-template-columns:auto 1fr auto;gap:10px;padding:8px 8px 8px 8px}
+#stB{width:38px;height:38px;border-radius:50%;border:none;background:#2f2a28;color:#fff;font-size:18px;cursor:pointer}
+#stB:hover{background:#4a4341}
+#stL{align-self:center;font-size:13px;line-height:1.25}
+#stL small{display:block;color:#a9a29e;font-weight:600;font-size:11px}
+#stL .pill{display:inline-block;font-weight:800;background:var(--red);color:#fff;border-radius:99px;padding:1px 8px;margin-left:4px;font-size:11.5px}
+#stL .pill.near{background:var(--amber)}#stL .pill.over{background:#fff;color:var(--red-deep)}
+#stN{border:none;background:var(--red);color:#fff;font-weight:800;border-radius:99px;padding:10px 16px;cursor:pointer;white-space:nowrap;font-size:13.5px}
+#stN:hover{background:var(--red-deep)}
+#sticky.off{display:none}
+/* report */
+.costlines{margin-top:16px}
+.rgrid{display:grid;grid-template-columns:1fr;gap:18px}
+.vrow{display:grid;grid-template-columns:1fr;gap:3px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:13px}
+.vrow>b{font-size:14px}
+.vrow .o1{color:var(--ink);font-weight:700}.vrow .o1::before{content:"1st preference · ";color:var(--red);font-weight:800}
+.vrow .o2{color:var(--body)}.vrow .o2::before{content:"2nd preference · ";color:var(--grey);font-weight:800}
+.mlede{font-size:14px;color:var(--body);margin:-8px 0 16px}
+.brief{font-size:15px;line-height:1.6;margin-top:16px;color:var(--ink)}
+.full>p{font-size:14px;margin-top:10px}
+.note.dh b{color:var(--red-deep)}
+.excl ul{margin:8px 0 0;padding-left:18px;display:grid;gap:3px}
+.full{margin-top:18px;background:var(--pink);border-radius:24px;padding:24px 20px}
+.full h3{font-family:var(--display);font-weight:600;font-size:clamp(26px,6vw,34px);line-height:1.05;color:var(--ink)}
+.full h3 em{color:var(--red);font-weight:500}
+.full ul{list-style:none;padding:0;margin:14px 0 18px;display:grid;gap:8px;font-size:14px}
+.full li{padding-left:26px;position:relative}
+.full li::before{content:"✓";position:absolute;left:0;top:0;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center}
+.cta{display:grid;grid-template-columns:1fr;gap:10px}
+.cta .pri,.cta .wa{width:100%;font-size:15.5px;padding:15px 18px}
+.wa{font-weight:800;background:#1FA855;color:#fff;border:none;border-radius:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;box-shadow:0 10px 20px -10px rgba(31,168,85,.7);transition:background .15s,transform .15s}
+.wa:hover{background:#178a45;transform:translateY(-1px)}
+.wa svg,.pri svg{width:20px;height:20px;flex:none}
+.small-links{display:flex;gap:16px;justify-content:center;margin-top:14px;font-size:13px}
+/* email sheet */
+#mail{position:fixed;inset:0;z-index:45;background:rgba(21,19,18,.55);display:none;align-items:flex-end;justify-content:center;padding:12px}
+#mail.on{display:flex}
+#mail .gcard{width:100%;max-width:480px;max-height:92vh;overflow:auto;margin:0}
+#mail .row2{display:flex;gap:10px;margin-top:6px}
+#mail .row2 .pri{flex:1}
+@media (min-width:760px){
+  .faces{grid-template-columns:repeat(8,1fr)}
+  .rgrid{grid-template-columns:1fr 1fr;gap:30px}
+  .cta{grid-template-columns:1fr 1fr}
+  .full{padding:30px}
+  .vrow{grid-template-columns:150px 1fr}
+  .vrow .o2{grid-column:2}
+  #mail{align-items:center}
+}
+/* ---------- intro / cover page ---------- */
+#intro{position:fixed;inset:0;z-index:50;overflow-y:auto;background:var(--paper);display:none;scroll-behavior:smooth}
+#intro.on{display:block}
+.ix-wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+.ix-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:20px 0 6px}
+.ix-by{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+.ix-by b{color:var(--red)}
+.ix-hero{display:grid;grid-template-columns:1fr;gap:34px;padding:26px 0 56px;align-items:center}
+.ix-h1{font-family:var(--display);font-weight:600;font-size:clamp(46px,11vw,84px);line-height:.95;letter-spacing:-.03em;color:var(--ink);margin-top:14px}
+.ix-h1 em{color:var(--red);font-weight:500}
+.ix-lede{font-size:17px;line-height:1.6;margin-top:18px;max-width:520px}
+.ix-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;align-items:center}
+.ix-cta .pri{font-size:16px;padding:15px 22px}
+.ix-cta .ghost{padding:14px 16px;font-size:14px}
+.ix-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:18px;font-size:12px;font-weight:800;color:var(--grey);letter-spacing:.04em}
+.ix-meta span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red);margin-right:7px;vertical-align:middle}
+/* animated plot */
+.ix-demo{background:var(--blush);border:1px solid var(--pink-2);border-radius:28px;padding:20px;box-shadow:var(--shadow);max-width:420px;width:100%;justify-self:center}
+.ix-demo-k{display:flex;justify-content:space-between;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red-deep);margin-bottom:10px}
+.ix-plot{position:relative;aspect-ratio:3/4;border:2px dashed var(--grey);border-radius:8px;background:repeating-linear-gradient(135deg,transparent 0 7px,rgba(140,135,132,.12) 7px 8px)}
+.ix-plate{position:absolute;inset:16px;border:2px solid var(--red);border-radius:6px;background:rgba(210,53,42,.06);display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:1fr 1.25fr .9fr;grid-template-areas:"liv stair" "liv kit" "car car";gap:6px;padding:6px;animation:ixPlate .7s .2s both}
+.ix-t{border-radius:7px;background:#fff;border:1.5px solid var(--pink-2);display:flex;flex-direction:column;justify-content:flex-end;padding:8px;opacity:0;animation:ixTile .55s cubic-bezier(.2,.9,.3,1.25) forwards;box-shadow:0 6px 14px -10px rgba(210,53,42,.6)}
+.ix-t b{font-size:13px;font-weight:800;color:var(--ink)}
+.ix-t small{font-size:10.5px;color:var(--grey);font-weight:600}
+.ix-liv{grid-area:liv;animation-delay:1.1s}
+.ix-stair{grid-area:stair;background:var(--ink);border-color:var(--ink);animation-delay:.8s}.ix-stair b{color:#fff}.ix-stair small{color:#bdb7b3}
+.ix-kit{grid-area:kit;animation-delay:1.4s}
+.ix-car{grid-area:car;background:transparent;border:2px dashed var(--red);box-shadow:none;animation-delay:1.7s}
+.ix-road{margin-top:8px;background:var(--ink);color:#fff;text-align:center;border-radius:6px;font-size:10px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;padding:5px}
+.ix-meter{margin-top:14px}
+.ix-meter div{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;font-weight:700;color:var(--body)}
+.ix-meter div b{font-size:16px;color:var(--ink)}
+.ix-meter i{display:block;height:10px;background:var(--rule);border-radius:99px;overflow:hidden;margin:6px 0 8px}
+.ix-meter s{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--red-soft));border-radius:99px;animation:ixFill 1.6s .9s cubic-bezier(.2,.8,.2,1) forwards}
+.ix-meter small{font-size:12px;color:var(--grey)}
+@keyframes ixTile{from{opacity:0;transform:scale(.85) translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ixPlate{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@keyframes ixFill{to{width:88%}}
+/* sections */
+.ix-sec{padding:56px 0;border-top:1px solid var(--rule)}
+.ix-h2{font-family:var(--display);font-weight:600;font-size:clamp(30px,6.4vw,48px);line-height:1.04;letter-spacing:-.02em;color:var(--ink);margin:10px 0 22px;max-width:820px}
+.ix-h2 em{color:var(--red);font-weight:500}
+.ix-p{font-size:16px;line-height:1.7;max-width:720px;margin-top:-6px}
+.ix-p+.ix-p{margin-top:14px}
+.ix-two{display:grid;grid-template-columns:1fr;gap:16px}
+.ix-card{background:var(--blush);border:1px solid var(--pink-2);border-radius:22px;padding:22px}
+.ix-card h3{font-family:var(--display);font-weight:600;font-size:23px;color:var(--ink);margin-bottom:10px;line-height:1.15}
+.ix-card p{font-size:15px;line-height:1.65}
+.ix-mistakes{list-style:none;padding:0;margin:20px 0 0;display:grid;grid-template-columns:1fr;gap:8px}
+.ix-mistakes li{background:#fff;border:1.5px solid var(--rule);border-radius:14px;padding:12px 14px 12px 44px;position:relative;font-weight:700;color:var(--ink);font-size:14.5px}
+.ix-mistakes li::before{content:"×";position:absolute;left:12px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:var(--pink);color:var(--red);font-weight:800;display:grid;place-items:center;font-size:15px;line-height:1}
+.ix-q{background:var(--ink);color:#fff;border-radius:30px;padding:40px 22px;margin:8px 0}
+.ix-q .ix-h2{color:#fff}
+.ix-q .kicker{color:#ff8d84}
+.ix-qs{display:grid;grid-template-columns:1fr;gap:12px}
+.ix-qs div{border:1.5px solid #3a3432;border-radius:20px;padding:20px;display:flex;gap:16px;align-items:baseline}
+.ix-qs span{font-family:var(--display);font-size:34px;font-weight:600;color:var(--red-soft);line-height:1}
+.ix-qs p{font-family:var(--display);font-size:clamp(24px,5vw,34px);font-weight:600;line-height:1.1;color:#fff}
+.ix-qs em{color:#ff8d84;font-weight:500}
+.ix-qnote{margin-top:20px;font-size:16px;color:#d9d3cf;max-width:620px}
+.ix-feats{display:grid;grid-template-columns:1fr;gap:12px;margin-top:26px}
+.ix-feats div{border:1.5px solid var(--rule);border-radius:20px;padding:20px;background:#fff;transition:transform .2s,border-color .2s}
+.ix-feats div:hover{transform:translateY(-3px);border-color:var(--pink-2)}
+.ix-feats i{font-style:normal;font-family:var(--display);font-weight:600;font-size:28px;color:var(--red);line-height:1}
+.ix-feats h3{font-family:var(--display);font-weight:600;font-size:21px;color:var(--ink);margin:10px 0 6px}
+.ix-feats p{font-size:14px;line-height:1.6}
+.ix-honest{background:var(--pink);border-radius:30px;padding:40px 22px;margin:8px 0}
+.ix-honest p{font-size:17px;line-height:1.7;max-width:720px;color:var(--ink)}
+.ix-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:30px}
+.ix-steps div{background:var(--blush);border-radius:16px;padding:14px 16px;border:1px solid var(--pink-2)}
+.ix-steps b{display:block;font-family:var(--display);font-size:24px;color:var(--red);line-height:1}
+.ix-steps span{font-weight:800;color:var(--ink);font-size:14px}
+.ix-final{background:var(--red);color:#fff;border-radius:30px;padding:44px 22px;text-align:center;margin:8px 0 10px;position:relative;overflow:hidden}
+.ix-final::after{content:"";position:absolute;right:-70px;bottom:-70px;width:240px;height:240px;border-radius:50%;border:34px solid rgba(255,255,255,.08)}
+.ix-final h2{font-family:var(--display);font-weight:600;font-size:clamp(32px,7vw,52px);line-height:1.02;letter-spacing:-.02em;color:#fff}
+.ix-final h2 em{font-weight:500;opacity:.9}
+.ix-final p{margin-top:12px;font-size:14px;font-weight:700;opacity:.9}
+.ix-go{margin-top:22px;font:inherit;font-weight:800;font-size:16px;background:#fff;color:var(--red);border:none;border-radius:14px;padding:15px 24px;cursor:pointer;display:inline-flex;gap:10px;align-items:center;position:relative;z-index:1;transition:transform .15s}
+.ix-go:hover{transform:translateY(-2px)}
+#intro .rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+#intro .rv.in{opacity:1;transform:none}
+@media (min-width:760px){
+  .ix-hero{grid-template-columns:1.15fr 1fr;gap:48px;padding:40px 0 70px}
+  .ix-two{grid-template-columns:1fr 1fr;gap:20px}
+  .ix-start{gap:40px;align-items:start}
+  .ix-mistakes{grid-template-columns:1fr 1fr}
+  .ix-q,.ix-honest{padding:56px 48px}
+  .ix-qs{grid-template-columns:1fr 1fr}
+  .ix-feats{grid-template-columns:1fr 1fr}
+  .ix-steps{grid-template-columns:repeat(4,1fr)}
+  .ix-final{padding:60px 40px}
+}
+@media (min-width:1000px){.ix-feats{grid-template-columns:repeat(4,1fr)}}
+@media (prefers-reduced-motion:reduce){.ix-t,.ix-plate{opacity:1;animation:none}.ix-meter s{width:88%;animation:none}#intro .rv{opacity:1;transform:none}}
+@media print{#intro{display:none!important}}
+.ix-tag{display:inline-block;margin-top:-6px;font-size:12px;font-weight:800;color:var(--red-deep);background:var(--pink);border-radius:99px;padding:7px 13px}
+.ix-field{margin-top:28px;background:var(--ink);color:#fff;border-radius:24px;padding:26px 22px;position:relative;overflow:hidden}
+.ix-field::after{content:"";position:absolute;right:-50px;top:-50px;width:180px;height:180px;border-radius:50%;border:26px solid rgba(255,255,255,.05)}
+.ix-field .kicker{color:#ff8d84}
+.ix-field h3{font-family:var(--display);font-weight:600;font-size:clamp(24px,5vw,32px);line-height:1.1;margin:8px 0 12px;color:#fff}
+.ix-field p{font-size:15.5px;line-height:1.7;color:#e2dcd8;max-width:760px}
+.ix-bdb{display:grid;grid-template-columns:1fr;gap:12px;margin-top:6px}
+.ix-bdb div{position:relative;border:1.5px solid var(--rule);border-radius:22px;padding:22px;background:#fff}
+.ix-bdb div.on{border:2px solid var(--red);background:linear-gradient(180deg,var(--pink),#fff 70%);box-shadow:0 18px 36px -22px rgba(210,53,42,.55);padding-top:28px}
+.ix-bdb i{font-style:normal;font-family:var(--display);font-weight:600;font-size:30px;color:var(--red);line-height:1}
+.ix-bdb h3{font-family:var(--display);font-weight:600;font-size:28px;color:var(--ink);margin:8px 0 8px}
+.ix-bdb p{font-size:14.5px;line-height:1.6}
+.ix-badge{position:absolute;top:-11px;left:18px;background:var(--red);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:5px 10px;white-space:nowrap}
+.ix-bdb-note{margin-top:20px}
+@media (min-width:760px){.ix-bdb{grid-template-columns:repeat(3,1fr);gap:16px}.ix-field{padding:34px 36px}}
+/* guided tour */
+.help{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);background:#fff;color:var(--red);font-weight:800;font-size:14px;cursor:pointer;margin-left:6px}
+.help:hover{border-color:var(--red)}
+#tour{position:fixed;inset:0;z-index:60;display:none}
+#tour.on{display:block}
+#tour .hole{position:fixed;border-radius:14px;box-shadow:0 0 0 9999px rgba(21,19,18,.64);outline:3px solid var(--red);outline-offset:2px;pointer-events:none}
+#tour .tip{position:fixed;width:min(380px,calc(100vw - 24px));background:#fff;border-radius:18px;padding:18px 18px 14px;box-shadow:0 20px 40px -14px rgba(0,0,0,.5);animation:rise .3s both}
+#tour .tip h4{margin:6px 0 6px;font-family:var(--display);font-weight:600;font-size:21px;color:var(--ink);line-height:1.15}
+#tour .tip p{font-size:14px;color:var(--body);line-height:1.5}
+#tour .tdots{display:flex;gap:5px;margin:14px 0 12px}
+#tour .tdots i{width:7px;height:7px;border-radius:99px;background:var(--pink-2);transition:all .2s}
+#tour .tdots i.on{width:20px;background:var(--red)}
+#tour .tbtns{display:flex;align-items:center;gap:8px}
+#tour .tbtns .pri{padding:10px 16px;margin-left:auto;box-shadow:none}
+#tour .tbtns .ghost{padding:9px 12px}
+#tour .tskip{background:none;border:none;color:var(--grey);font-weight:700;font-size:13px;cursor:pointer;padding:6px 0}
+@media print{#tour{display:none!important}}
+@media print{#mail{display:none!important}.blk[data-step]{display:block!important}}
 </style>
 </head>
 <body>
+
+<div id="intro" aria-label="About Know Your Home">
+  <div class="ix-wrap">
+    <div class="ix-top"><div class="wordmark"><span class="sq"></span>Pocket Home</div><span class="ix-by">A <b>Design + Build</b> initiative by Nichekala</span></div>
+
+    <section class="ix-hero">
+      <div>
+        <div class="kicker">Pocket Home · Small plot, big living</div>
+        <h1 class="ix-h1">Know your home <em>before</em> you build it<span class="dot">.</span></h1>
+        <p class="ix-lede">Plots are getting smaller. The questions are getting bigger. <b>Will everything we want fit on our plot? And what will it cost to build?</b> Find out in about five minutes, before you spend a rupee.</p>
+        <div class="ix-cta"><button class="pri" data-act="intro-start">Start with my plot <span class="ar">→</span></button><button class="ghost" data-act="intro-why">Why we built this ↓</button></div>
+        <div class="ix-meta"><span>Free</span><span>About 5 minutes</span><span>No sign-up</span></div>
+      </div>
+      <div class="ix-demo" aria-hidden="true">
+        <div class="ix-demo-k"><span>Your plot · 40′ × 30′</span><span>Setback 1.5′</span></div>
+        <div class="ix-plot">
+          <div class="ix-plate">
+            <div class="ix-t ix-car"><b>Car park</b><small>10′ × 18′ · open</small></div>
+            <div class="ix-t ix-liv"><b>Living</b><small>14′ × 12′</small></div>
+            <div class="ix-t ix-kit"><b>Kitchen</b><small>10′ × 12′</small></div>
+            <div class="ix-t ix-stair"><b>Stairs</b><small>8′ × 16′</small></div>
+          </div>
+        </div>
+        <div class="ix-road">Road</div>
+        <div class="ix-meter"><div><span>Ground floor plate</span><b>999 sq ft</b></div><i><s></s></i><small>Every space you add fills the floor. You see what fits, and what doesn't.</small></div>
+      </div>
+    </section>
+
+    <section class="ix-sec rv" id="ix-story">
+      <div class="kicker">The story</div>
+      <h2 class="ix-h2">Plots are shrinking. <em>Homes still have to hold everything.</em></h2>
+      <div class="ix-two">
+        <div class="ix-card"><h3>Smaller plots, bigger wishlists</h3>
+          <p>Not long ago, a family home in Chennai stood on a generous ground. Today, many families build on 1,200 sq ft or less, and that plot has to hold the same hopes: a car park, a puja, a room for parents, a home office, a place for the children to grow. Every square foot now has to work harder, and there is very little room for guesswork.</p></div>
+        <div class="ix-card"><h3>Smart people, costly mistakes</h3>
+          <p>We meet doctors, engineers and business owners. They are careful people who research every purchase, yet they often start building their home with no reference point at all: a contractor's rough sketch, a figure from a relative's house, a plan from the internet. The mistakes show up later, when they are expensive to fix.</p></div>
+      </div>
+      <ul class="ix-mistakes">
+        <li>A bedroom that can't take a wardrobe</li>
+        <li>A staircase that eats into the living room</li>
+        <li>A car park that doesn't fit the car</li>
+        <li>A budget that runs out at the first floor</li>
+      </ul>
+    </section>
+
+    <section class="ix-sec rv" id="ix-pocket">
+      <div class="ix-two ix-start">
+        <div>
+          <div class="kicker">Why Pocket Home</div>
+          <h2 class="ix-h2">Small plot. <em>Big living.</em></h2>
+          <div class="ix-tag">Design + Build · Compact homes on smaller plots</div>
+        </div>
+        <div>
+          <p class="ix-p" style="margin-top:0"><b>Pocket Home</b> is a Design + Build initiative by Nichekala Architecture &amp; Design Studio, focused on compact living on smaller plots. We started it because the families who came to us were no longer building on large grounds. They had compact plots and the same big hopes for their home.</p>
+          <p class="ix-p">Designing well for a small plot is its own skill. Every foot has to earn its place, light and air have to be planned in from the first line, and the budget has nowhere to hide. Pocket Home brings design and construction under one roof, so the home that is drawn is the home that gets built, at a cost that fits your pocket.</p>
+        </div>
+      </div>
+      <div class="ix-field">
+        <div class="kicker">Born in the field</div>
+        <h3>Know Your Home is what we learnt on site.</h3>
+        <p>In first meetings and on site visits, we kept meeting the same situation: families who had already fixed a contractor, drawn a plan or set a budget before anyone had checked what their plot could actually hold. Many of the costly corrections we saw later could have been avoided with one honest conversation at the very start. Know Your Home is that conversation, made available to every homeowner.</p>
+      </div>
+    </section>
+
+    <section class="ix-sec rv" id="ix-method">
+      <div class="kicker">The Pocket Home way</div>
+      <h2 class="ix-h2">A home that fits your pocket is built in three steps, <em>in this order.</em></h2>
+      <div class="ix-bdb">
+        <div class="on"><span class="ix-badge">Know Your Home helps here</span><i>01</i><h3>Brief</h3><p>What does your family need, how much space will it take, and what can you spend? Get this right and every decision after it becomes easier.</p></div>
+        <div><i>02</i><h3>Design</h3><p>Your architect turns the brief into a plan: light, air, Vaastu, structure, and the way your family actually lives.</p></div>
+        <div><i>03</i><h3>Build</h3><p>Construction with a clear package and specification, so you know exactly what you are paying for.</p></div>
+      </div>
+      <p class="ix-p ix-bdb-note">Skip the brief, and the design is a guess. Skip the design, and the build is a guess. That is where costly surprises begin. Know Your Home helps you get the first step right: <b>your brief</b>.</p>
+    </section>
+
+    <section class="ix-q rv">
+      <div class="kicker">The two questions</div>
+      <h2 class="ix-h2">Every homeowner asks the same two questions.</h2>
+      <div class="ix-qs">
+        <div><span>01</span><p>Will all of this <em>fit</em> on my plot?</p></div>
+        <div><span>02</span><p>What will it <em>cost</em> to build?</p></div>
+      </div>
+      <p class="ix-qnote">Know Your Home answers both, honestly, before you sit down with your architect.</p>
+    </section>
+
+    <section class="ix-sec rv">
+      <div class="kicker">What it does</div>
+      <h2 class="ix-h2">We turned the hardest part of planning <em>into something you can play with.</em></h2>
+      <p class="ix-p">We researched the real sizes that homes in Chennai need: the space a staircase takes, the share of walls and passages, how big a bedroom, a kitchen or a car park must be to actually work. Then we turned it into a simple game. You build your home floor by floor, and you see exactly what goes into each floor plate.</p>
+      <div class="ix-feats">
+        <div><i>01</i><h3>Your plot, made real</h3><p>Enter your plot size and the open margins around it. See exactly how much you can build on every floor.</p></div>
+        <div><i>02</i><h3>Floor by floor</h3><p>Tap to add spaces in real sizes. Watch each floor fill up. When something won't fit, you know straight away.</p></div>
+        <div><i>03</i><h3>An honest cost</h3><p>Pick a construction package and see what your home costs to build, with the lift and the exclusions shown separately.</p></div>
+        <div><i>04</i><h3>A Vaastu guide</h3><p>Basic Vaastu pointers for the way your plot faces, for the spaces you chose.</p></div>
+      </div>
+    </section>
+
+    <section class="ix-honest rv">
+      <div class="kicker">Our promise</div>
+      <h2 class="ix-h2">No big promises. <em>Just real numbers.</em></h2>
+      <p>This is not a design, and it is not a quotation. It is an honest picture of how many spaces your plot can hold, what size they can be, and what it may cost to build. Nothing is inflated to impress you, and nothing is shrunk to sell to you.</p>
+    </section>
+
+    <section class="ix-sec rv">
+      <div class="ix-two ix-start">
+        <div>
+          <div class="kicker">A starting point</div>
+          <h2 class="ix-h2">Don't start construction <em>without a reference point.</em></h2>
+        </div>
+        <div>
+          <p class="ix-p" style="margin-top:0">The most common mistake homeowners make is starting to build with nothing to measure against. Your Know Your Home report becomes that reference: your brief. It shows what your plot can hold, floor by floor, and a realistic cost to go with it.</p>
+          <p class="ix-p">Take it to your architect and begin the conversation from what is actually possible, not from guesswork.</p>
+        </div>
+      </div>
+      <div class="ix-steps">
+        <div><b>01</b><span>Your plot</span></div>
+        <div><b>02</b><span>Stairs &amp; lift</span></div>
+        <div><b>03</b><span>Floor by floor</span></div>
+        <div><b>04</b><span>Package &amp; estimate</span></div>
+      </div>
+    </section>
+
+    <section class="ix-final rv">
+      <h2>Let's start with <em>your brief.</em></h2>
+      <p>See what your plot can hold · Free · About 5 minutes · No sign-up</p>
+      <button class="ix-go" data-act="intro-start">Start with my plot <span class="ar">→</span></button>
+    </section>
+
+    <footer class="foot"><span><b>Nichekala Architecture &amp; Design Studio</b> · Chennai</span><span>Know Your Home · a Pocket Home initiative</span></footer>
+  </div>
+</div>
 
 <div id="gate">
   <div class="gw">
@@ -740,8 +1083,8 @@ td:first-child{white-space:normal;min-width:120px}
     <div class="ghero">
       <div class="wordmark"><span class="sq"></span>Pocket Home</div>
       <h1 class="ghead">Know your<br><em>home</em><span class="dot">.</span></h1>
-      <p class="lede">Tell us about your plot. We'll help you lay out every room, floor by floor, and show you <b>what it takes to build it</b>, with a personalised report you can keep.</p>
-      <div class="chips-row"><span class="tagp">Plot & setbacks</span><span class="tagp">Room by room</span><span class="tagp">Area statement</span><span class="tagp">Package & estimate</span></div>
+      <p class="lede">Tell us about your plot. Plan your home floor by floor, and see <b>what it costs to build</b>, with a basic Vaastu guide for your plot. No sign-up needed.</p>
+      <div class="chips-row"><span class="tagp">Your plot</span><span class="tagp">Floor by floor</span><span class="tagp">Construction cost</span><span class="tagp">Vaastu guide</span></div>
       <div class="house" aria-hidden="true">
         <div class="parapet"></div>
         <div class="fl f2"><span class="tg">2F</span><span class="w"></span><span class="w wd"></span></div>
@@ -753,50 +1096,44 @@ td:first-child{white-space:normal;min-width:120px}
     <div>
       <div class="gcard">
         <div class="kicker">Let's begin</div>
-        <h2>About you <em>&amp; your plot.</em></h2>
-        <div class="fld"><label class="f" for="gName">Your name <span class="req">*</span></label><input id="gName" autocomplete="name" placeholder="e.g. Priya Raman"></div>
-        <div class="g2 fld">
-          <div><label class="f" for="gPhone">Mobile <span class="req">*</span></label><input id="gPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit number"></div>
-          <div><label class="f" for="gEmail">Email <span class="req">*</span></label><input id="gEmail" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com"></div>
-        </div>
-        <div class="g2 fld">
-          <div><label class="f" for="gLoc">Plot locality <span class="req">*</span></label><input id="gLoc" placeholder="e.g. Ayanambakkam"></div>
-          <div><label class="f" for="gCity">City</label><input id="gCity" value="Chennai" readonly></div>
-        </div>
+        <h2>Tell us about <em>your plot.</em></h2>
         <div class="g2 fld">
           <div><label class="f" for="gL">Plot depth, front to rear (ft) <span class="req">*</span></label><input id="gL" type="number" inputmode="decimal" min="0" step="0.5"></div>
           <div><label class="f" for="gW">Plot width, side to side (ft) <span class="req">*</span></label><input id="gW" type="number" inputmode="decimal" min="0" step="0.5"></div>
         </div>
         <div class="area-live" id="gArea"></div>
+        <div class="fld"><label class="f">Which way does your plot face? <span class="req">*</span></label><div class="faces" id="gFace"></div><div class="hint">The direction of the road in front of your plot. We use it for your Vaastu guide.</div></div>
+        <div class="fld"><label class="f" for="gLoc">Plot locality (optional)</label><input id="gLoc" placeholder="e.g. Ayanambakkam, Chennai"></div>
         <div class="err" id="gErr"></div>
         <button class="pri wide" data-act="start">Start planning my home <span class="ar">→</span></button>
       </div>
-      <p class="fine">We'll email your personalised report to this address. Your details are shared only with the Nichekala team, who may contact you about your home.</p>
+      <p class="fine">Free to use. See your construction estimate in about 5 minutes. <button class="link" data-act="help">Show me how</button> · <button class="link" data-act="intro">Why Know Your Home?</button></p>
     </div>
   </div>
 </div>
 
 <div class="topbar"><div class="in">
   <div class="wordmark"><span class="sq"></span><span class="wt">Know Your Home</span></div>
-  <nav class="steps" id="steps" aria-label="Sections">
-    <a href="#s1"><i>01</i>Plot</a><a href="#s2"><i>02</i>Core</a><a href="#s3"><i>03</i>Floors</a><a href="#s4"><i>04</i>Area</a><a href="#s5"><i>05</i>Package</a>
-  </nav>
+  <nav class="steps" id="steps" aria-label="Steps"></nav>
+  <button class="help" data-act="help" aria-label="Show me how to use this page" title="How to use this page">?</button>
 </div></div>
 
 <div class="wrap">
 <header class="hero">
   <div class="meta"><span><b>Pocket Home</b> &nbsp;·&nbsp; an initiative by Nichekala</span><span id="hDate">Chennai</span></div>
-  <h1>Hello, <em id="hName">there</em><span class="dot">.</span></h1>
+  <h1>Your <em>home</em><span class="dot">.</span></h1>
   <p class="lede" id="hello"></p>
 </header>
 <div class="glance" id="glance"></div>
 
-<section class="blk rv" id="s1">
+<section class="blk" data-step="1" id="s1">
   <div class="sh"><div class="num">01</div><div><div class="kicker">Your plot</div><h2>Start with <em>the ground.</em></h2><p>Your plot size and the open margins you leave around it decide how much you can build on every floor.</p></div></div>
   <div class="g2">
     <div><label class="f" for="pL">Plot depth (front to rear), ft</label><input id="pL" type="number" inputmode="decimal" min="0" step="0.5"></div>
     <div><label class="f" for="pW">Plot width (side to side), ft</label><input id="pW" type="number" inputmode="decimal" min="0" step="0.5"></div>
   </div>
+  <div class="sublabel">Plot facing</div>
+  <div class="faces" id="pFace"></div>
   <div class="sublabel">Setback all around</div>
   <div class="chips" id="sbChips"></div>
   <div class="g4">
@@ -806,67 +1143,81 @@ td:first-child{white-space:normal;min-width:120px}
     <div><label class="f" for="sbRi">Right</label><input id="sbRi" type="number" inputmode="decimal" min="0" step="0.5"></div>
   </div>
   <div class="plate" id="plateInfo"></div>
+  <div class="navrow"><button class="pri" data-act="next">Next: Stairs &amp; lift <span class="ar">→</span></button></div>
 </section>
 
-<section class="blk rv" id="s2">
-  <div class="sh"><div class="num">02</div><div><div class="kicker">The core</div><h2>Stairs, lift <em>&amp; the walls between.</em></h2><p>The staircase and lift repeat on every floor. Walls and passages take a share of every room you add.</p></div></div>
+<section class="blk" data-step="2" id="s2">
+  <div class="sh"><div class="num">02</div><div><div class="kicker">The core</div><h2>Stairs <em>&amp; lift.</em></h2><p>The staircase, and a lift if you want one, repeat on every floor.</p></div></div>
   <div class="g2">
     <div><label class="f" for="stair">Staircase</label><select id="stair"></select></div>
     <div><label class="f" for="lift">Lift</label><select id="lift"></select></div>
   </div>
-  <div class="g2" style="margin-top:14px">
-    <div><label class="f" for="wall">Walls</label><div class="rng"><input id="wall" type="range" min="10" max="20" step="0.5"><b id="wallV"></b></div></div>
-    <div><label class="f" for="circ">Passages</label><div class="rng"><input id="circ" type="range" min="0" max="15" step="0.5"><b id="circV"></b></div></div>
-  </div>
+  <div id="liftNote"></div>
+  <details class="adv"><summary>Advanced settings</summary>
+    <div class="g2" style="margin-top:14px">
+      <div><label class="f" for="wall">Walls</label><div class="rng"><input id="wall" type="range" min="10" max="20" step="0.5"><b id="wallV"></b></div></div>
+      <div><label class="f" for="circ">Passages</label><div class="rng"><input id="circ" type="range" min="0" max="15" step="0.5"><b id="circV"></b></div></div>
+    </div>
+  </details>
+  <div class="navrow"><button class="ghost" data-act="back">← Back</button><button class="pri" data-act="next">Next: Plan your floors <span class="ar">→</span></button></div>
 </section>
 
-<section class="blk rv" id="s3">
-  <div class="sh"><div class="num">03</div><div><div class="kicker">Floor by floor</div><h2>Pick your space, <em>one floor at a time.</em></h2><p>Choose a floor from the building, then tap a size to add a space. When a floor fills up, the spaces that won't fit fade out.</p></div></div>
-  <div class="fwrap">
-    <div id="tabs"></div>
-    <div id="panel"></div>
-  </div>
+<section class="blk" data-step="3" id="s3">
+  <div class="sh"><div class="num">03</div><div><div class="kicker">Floor by floor</div><h2>Plan one floor, <em>then the next.</em></h2><p>Tap a size to add a space. When you're done with a floor, tap Next and we'll take you to the one above.</p></div></div>
+  <div class="sublabel" style="margin-top:0">How many floors?</div>
+  <div class="chips" id="nChips"></div>
+  <div class="fsteps" id="fsteps"></div>
+  <div id="panel"></div>
 </section>
 
-<section class="blk rv" id="s4">
-  <div class="sh"><div class="num">04</div><div><div class="kicker">Area statement</div><h2>Every square foot, <em>accounted for.</em></h2><p>Room by room and floor by floor, including the share taken by walls and passages.</p></div></div>
-  <div id="statement"></div>
-</section>
-
-<section class="blk rv" id="s5">
-  <div class="sh"><div class="num">05</div><div><div class="kicker">Your package</div><h2>Choose how you <em>want it built.</em></h2><p>Each package is one rate per sq ft of built-up area. Pick one to see your estimate and everything it includes.</p></div></div>
+<section class="blk" data-step="4" id="s4">
+  <div class="sh"><div class="num">04</div><div><div class="kicker">Your package</div><h2>Choose how you <em>want it built.</em></h2><p>Each package is one rate per sq ft. Pick one, then generate your estimate.</p></div></div>
   <div class="pkgs" id="pkgs"></div>
-  <div id="specBox"></div>
-  <div id="cost" style="margin-top:18px"></div>
-  <div class="open-ctl"><label class="f" for="openLess">Open spaces (car park, sit-out, balcony) are charged at the package rate less ₹/sq ft</label><input id="openLess" type="number" inputmode="numeric" min="0" step="50"></div>
+  <div class="gen">
+    <div><h3>Ready to see <em>your cost?</em></h3><p id="genSum" style="margin-top:8px"></p></div>
+    <button class="pri wide" data-act="generate" id="genBtn">Generate my estimate <span class="ar">→</span></button>
+  </div>
+  <div class="navrow"><button class="ghost" data-act="back">← Back to floors</button></div>
 </section>
 
-<section class="closing" id="s6">
-  <div>
-    <div class="kicker">Your report</div>
-    <h3>That's your home<span class="dot">.</span><br><em>Take it with you.</em></h3>
-    <p>We'll send a personalised PDF with your plot, area statement, chosen package, specifications and estimate to <b id="mailTo">your email</b>.</p>
-  </div>
-  <div class="actions">
-    <button class="pri" data-act="email" id="emailBtn">Email my report <span class="ar">→</span></button>
-    <button class="ghost" data-act="pdf">Download PDF</button>
-    <button class="ghost" data-act="reset">Start over</button>
-    <div id="pdfLink"></div>
-  </div>
+<section class="blk" data-step="5" id="s5">
+  <div class="sh"><div class="num">05</div><div><div class="kicker">Your estimate</div><h2>Here's what it <em>takes to build.</em></h2><p>A quick summary of your home. Your full report has the detailed breakdown.</p></div></div>
+  <div id="report"></div>
 </section>
 
 <footer class="foot"><span><b>Nichekala Architecture &amp; Design Studio</b> · Chennai</span><span>Know Your Home · a Pocket Home initiative</span></footer>
 </div>
 
-<div id="sticky"><div class="in"><span id="stL"></span><span id="stR"></span></div></div>
+<div id="mail" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="gcard">
+    <div class="kicker">Last step</div>
+    <h2 id="mTitle">Where should we send <em>your full report?</em></h2>
+    <p class="mlede">We'll show your estimate right away and email you the full report: your home brief, area statement, cost, Vaastu guide and specifications.</p>
+    <div class="fld"><label class="f" for="mName">Your name <span class="req">*</span></label><input id="mName" autocomplete="name" placeholder="e.g. Priya Raman"></div>
+    <div class="fld"><label class="f" for="mPhone">Mobile <span class="req">*</span></label><input id="mPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit number"></div>
+    <div class="fld"><label class="f" for="mEmail">Email <span class="req">*</span></label><input id="mEmail" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com"></div>
+    <div class="fld"><label class="f" for="mLoc">Plot locality</label><input id="mLoc" placeholder="e.g. Ayanambakkam"></div>
+    <div class="err" id="mErr"></div>
+    <div class="row2"><button class="ghost" data-act="mclose">Cancel</button><button class="pri" data-act="msend" id="emailBtn">Show my estimate <span class="ar">→</span></button></div>
+    <p class="fine">Your details are shared only with the Nichekala team, who may contact you about your home.</p>
+  </div>
+</div>
+
+<div id="sticky"><div class="in"><button id="stB" data-act="back" aria-label="Back">←</button><span id="stL"></span><button id="stN" data-act="next"></button></div></div>
 <div id="toast" role="status" aria-live="polite"></div>
+<div id="tour" role="dialog" aria-modal="true" aria-live="polite"><div class="hole"></div><div class="tip"></div></div>
 
 <script>
-/* ===== EMAIL SETUP =====
-   Paste the Web app URL from your Google Apps Script deployment below (see kyh-mailer.gs).
-   Until it's set, "Email my report" downloads the PDF instead. MAIL_TOKEN must match TOKEN in the script. */
+/* ===== SETTINGS =====
+   MAIL_ENDPOINT: the Web app URL from your Google Apps Script deployment (see kyh-mailer.gs).
+   MAIL_TOKEN must match TOKEN in the script.
+   WA_NUMBER: the studio WhatsApp number with country code and no + or spaces, e.g. '919876543210'.
+   LIFT_COST: lump sum for a lift = base + perStop × number of floors it serves. EDIT TO YOUR RATES. */
 const MAIL_ENDPOINT='https://script.google.com/macros/s/AKfycbzg1AhKMApG6xnP8_3VgmoZB-DP3PhkiY8QNM0v5xZgGi3tTuux82PSpss5OQQ9J-PeyA/exec';
 const MAIL_TOKEN='pocket-home-kyh';
+const WA_NUMBER='';
+const LIFT_COST={p4:{base:650000,perStop:60000},p6:{base:800000,perStop:75000}};
+const EXCLUSIONS=['Sump','Septic tank','Compound wall and gate','Overhead tank']; // charged separately, listed in the app and the PDF
 const SPECS=[["Structure", "Concrete grade", "M20", "M25 (stronger)", "M25 / M30 (strongest)"], ["Structure", "Floor height (floor to floor)", "10 ft", "10 ft", "11 ft"], ["Structure", "Cement", "Zuari / Dalmia – 53 Grade", "UltraTech / ACC / Ambuja – 53 Grade Premium", "UltraTech / Birla / ACC Premium – 53 Grade Ultra Premium"], ["Structure", "Steel", "ARS / Sangam / Pulkit / Suryadev – Fe550D", "ARS or equal – Fe550D", "Tata Tiscon SD – Fe550D"], ["Structure", "Steel covered in package", "2.9 kg per sq.ft", "3.0 kg per sq.ft", "4.0 kg per sq.ft"], ["Structure", "Walls", "Chamber bricks – 9\" outside, 4\" inside", "Wire-cut bricks – 9\" outside, 4\" inside", "Wire-cut bricks – 9\" outside, 4.5\" inside"], ["Structure", "Foundation depth", "Up to 5 ft", "Up to 5 ft", "Up to 7 ft"], ["Structure", "Plinth (base) height", "3 ft above ground", "3 ft above ground", "5 ft above ground"], ["Structure", "Plastering", "Inside walls, outside walls (2 coats) and ceilings", "Inside walls, outside walls (2 coats) and ceilings", "Inside walls, outside walls (2 coats) and ceilings"], ["Structure", "Sand", "M-Sand for walls, P-Sand for plastering", "M-Sand for walls, P-Sand for plastering", "M-Sand for walls, P-Sand for plastering"], ["Structure", "Terrace waterproofing", "Included (Fosroc / Dr. Fixit)", "Included (Fosroc / Dr. Fixit)", "Included (Fosroc / Dr. Fixit)"], ["Structure", "Terrace weather-proof layer", "Included", "Included", "Included"], ["Structure", "Bathroom & balcony waterproofing", "Included", "Included", "Included"], ["Kitchen", "Counter top", "Granite, 2 ft wide – up to ₹130/sq.ft", "Thicker granite, 2 ft wide – up to ₹170/sq.ft", "Granite / Quartz, 2'6\" wide – up to ₹270/sq.ft"], ["Kitchen", "Wall tiles above counter", "Ceramic, 2 ft high – up to ₹45/sq.ft", "Designer ceramic, 2 ft high – up to ₹55/sq.ft", "Imported / designer, 2.5 ft high – up to ₹75/sq.ft"], ["Kitchen", "Sink", "Steel single bowl – up to ₹4,000", "Premium steel (Franke) – up to ₹5,500", "Imported (Franke / Blanco) – up to ₹20,000"], ["Kitchen", "Tap", "Hindware / Cera – up to ₹1,500", "Jaquar – up to ₹2,500", "Kohler / Grohe – up to ₹4,000"], ["Kitchen", "Utility area tap", "Parryware / Hindware – up to ₹800", "Jaquar – up to ₹1,200", "Kohler / Grohe – up to ₹2,000"], ["Kitchen", "Water purifier point", "1 point near the sink", "1 point near the sink", "1 point near the sink"], ["Kitchen", "Washing machine point", "1 inlet + 1 outlet in utility area", "1 inlet + 1 outlet in utility area", "1 inlet + 1 outlet in utility area"], ["Kitchen", "Exhaust fan", "Point & opening only (fan by owner)", "Point & opening only (fan by owner)", "Point & opening only (fan by owner)"], ["Bathroom", "Wall tiles", "Ceramic, 7 ft high – up to ₹35/sq.ft", "Designer ceramic, 7 ft high – up to ₹55/sq.ft", "Imported / designer, full height – up to ₹75/sq.ft"], ["Bathroom", "Floor tiles", "Anti-skid – up to ₹35/sq.ft", "Anti-skid – up to ₹50/sq.ft", "Premium / designer anti-skid – up to ₹65/sq.ft"], ["Bathroom", "Sanitaryware brand", "Hindware / Cera", "Jaquar", "Kohler / Grohe / Jaquar / Duravit"], ["Bathroom", "Sanitaryware budget", "₹35,000 per 1,000 sq.ft", "₹45,000 per 1,000 sq.ft", "₹65,000 per 1,000 sq.ft"], ["Bathroom", "Fittings in each bathroom", "Floor-mount toilet, health faucet, wash basin with mixer, overhead shower", "Wall-hung / floor toilet, health faucet, designer basin with mixer, rain shower + hand shower", "Wall-hung toilet with hidden tank, health faucet, table-top basin, rain shower, hand shower + body jets"], ["Bathroom", "Water pipes (CPVC)", "Orbit", "Orbit", "Ashirvad / Supreme (premium)"], ["Bathroom", "Rainwater pipes", "2 pipes (6\") per 1,000 sq.ft of plot", "2 pipes (6\") per 1,000 sq.ft of plot", "2 pipes (6\") per 1,000 sq.ft of plot"], ["Bathroom", "Sewage line", "Up to 10 ft to main drain (road cutting extra)", "Up to 10 ft to main drain (road cutting extra)", "Up to 10 ft to main drain (road cutting extra)"], ["Bathroom", "Exhaust fan", "Point & opening only (fan by owner)", "Point & opening only (fan by owner)", "Point & opening only (fan by owner)"], ["Flooring", "Living & dining", "2'x2' vitrified tiles / granite – up to ₹55/sq.ft", "2'x2' double-charged vitrified / premium granite – up to ₹70/sq.ft", "Large tiles (2'x4', 4'x4') / Italian marble – up to ₹100/sq.ft"], ["Flooring", "Bedrooms & kitchen", "2'x2' vitrified tiles / granite – up to ₹55/sq.ft", "2'x2' double-charged vitrified – up to ₹70/sq.ft", "Large tiles / premium granite – up to ₹100/sq.ft"], ["Flooring", "Staircase", "Sadarahalli granite – up to ₹70/sq.ft", "Sadarahalli / Kota granite – up to ₹85/sq.ft", "Italian marble / anti-skid granite – up to ₹150/sq.ft"], ["Flooring", "Car parking", "Anti-skid tiles – up to ₹40/sq.ft", "Heavy-duty anti-skid – up to ₹50/sq.ft", "Anti-skid / Kota stone – up to ₹65/sq.ft"], ["Flooring", "Balconies & open areas", "Anti-skid tiles – up to ₹40/sq.ft", "Anti-skid tiles – up to ₹50/sq.ft", "Designer anti-skid / deck tiles – up to ₹65/sq.ft"], ["Flooring", "Wall tiles (utility / dado)", "Ceramic – up to ₹40/sq.ft", "Ceramic – up to ₹50/sq.ft", "Designer ceramic / porcelain – up to ₹100/sq.ft"], ["Flooring", "Skirting", "Matching tile, 4 inch high", "Matching tile, 4 inch high", "Matching tile, 4 inch high"], ["Flooring", "Paving around the house", "2 ft wide all around", "2 ft wide all around", "2 ft wide all around"], ["Flooring", "Terrace tiles", "Extra cost", "Extra cost", "Extra cost"], ["Flooring", "Upgrade: Indian marble", "Extra ₹70/sq.ft", "Extra ₹70/sq.ft", "Extra ₹100/sq.ft"], ["Flooring", "Upgrade: Italian marble", "Extra ₹70/sq.ft + ₹30 treatment", "Extra ₹70/sq.ft + ₹30 treatment", "Extra ₹70/sq.ft + ₹30 treatment"], ["Doors & Windows", "Main door", "Flush door with teak veneer – up to ₹22,000", "Flush door with premium teak veneer – up to ₹28,000", "Solid teak / premium teak veneer with CNC design – up to ₹80,000"], ["Doors & Windows", "Main door frame & size", "Sal wood, 3'6\" x 7'", "Teak wood, 3'6\" x 7'", "Teak wood (thicker), 4' x 8'"], ["Doors & Windows", "Main door lock & hardware", "Europa / Godrej lock – up to ₹1,500", "Yale / Godrej premium lock – up to ₹2,500, steel hardware", "Yale digital lock – up to ₹5,000, designer steel hardware"], ["Doors & Windows", "Bedroom doors", "Flush door with laminate, sal frame – up to ₹10,000", "Flush door with premium laminate, sal frame – up to ₹13,000", "Flush door with natural veneer, teak frame – up to ₹18,000"], ["Doors & Windows", "Bathroom doors", "Waterproof WPC – up to ₹13,000", "Waterproof WPC – up to ₹15,000", "Premium WPC / glass-panel – up to ₹18,000"], ["Doors & Windows", "Windows", "UPVC (Jindal) – ₹520/sq.ft", "UPVC (Fenesta / Prominance) with glass + mesh – ₹650/sq.ft", "Premium UPVC (Fenesta / Rehau), toughened glass + steel mesh – ₹800/sq.ft"], ["Doors & Windows", "Window grills", "MS grill, painted – up to ₹150/sq.ft", "Stainless steel, polished – up to ₹350/sq.ft", "Designer stainless steel – up to ₹450/sq.ft"], ["Doors & Windows", "Sunshades (chajjas)", "1 ft sunshade over every window", "1 ft sunshade over every window", "1 ft sunshade over every window"], ["Electrical", "Wires (fire-proof)", "Havells / Finolex", "Havells Lifeline", "Havells Lifeline Plus / Polycab"], ["Electrical", "Switches", "Anchor Roma or equal", "Legrand Myrius / Schneider Zencelo", "Legrand Arteor / Schneider Unica (designer range)"], ["Electrical", "Living & dining", "2 fan, 4 light, 4 plug points, 1 TV point", "2 fan, 5 light, 6 plug points, 1 TV point, 1 internet point", "2 fan, 6 light, 8 plug points, 1 TV point, 2 internet points, 1 USB charger"], ["Electrical", "Each bedroom", "1 fan, 3 light, 4 plug points, 1 AC point", "1 fan, 4 light, 5 plug points, 1 AC point, 1 internet point", "1 fan, 5 light, 6 plug points, 2 AC points, 2 internet points, 1 USB charger"], ["Electrical", "Kitchen", "2 light, 5 appliance points", "3 light, 6 appliance points (incl. chimney)", "4 light, 8 appliance points (incl. chimney & dishwasher)"], ["Electrical", "Each bathroom", "2 light, 1 geyser point, 1 plug point", "3 light (incl. mirror light), 1 geyser point, 1 plug point", "4 light (mirror & niche), 1 geyser point, 2 plug points, 1 shaver socket"], ["Electrical", "Common areas (parking, stairs, balcony)", "5 light points per 1,000 sq.ft", "5 light points per 1,000 sq.ft", "8 light points per 1,000 sq.ft"], ["Electrical", "Two-way switch", "1 per room & staircase", "1 per room & staircase", "1 per room & staircase"], ["Electrical", "MCB board & earthing", "1 per house (Indoasian)", "1 per house (Indoasian)", "1 per house (Indoasian)"], ["Electrical", "Calling bell", "1 per house (extra cost)", "1 per house (extra cost)", "1 per house (extra cost)"], ["Electrical", "UPS / inverter wiring", "Extra cost", "Extra cost", "Extra cost"], ["Electrical", "EB connection", "Owner's scope", "Owner's scope", "Owner's scope"], ["Painting", "Inside walls & ceilings", "Birla putty + Tractor Emulsion", "Birla White putty + Royale Luxury Emulsion", "Birla White putty + Royale Aspira / Dulux Velvet Touch"], ["Painting", "Outside walls", "Asian primer + Apex Exterior", "Asian primer + Apex Ultima", "Asian primer + Apex Ultima Protek / Berger WeatherCoat"], ["Painting", "Colours allowed", "2 per room, 6 in total", "3 per room, 8 in total", "4 per room, 12 in total + colour consultation"], ["Painting", "Grills & railings", "Anti-rust coat + enamel paint", "Anti-rust coat + enamel paint", "Anti-rust coat + enamel paint"], ["Others", "Overhead water tank", "Sintex 1,500 litres", "Sintex 2,000 litres", "Sintex Premium 2,000 litres"], ["Others", "Staircase railing", "MS simple design – up to ₹300/sq.ft", "Stainless steel, modern design – up to ₹380/sq.ft", "Aluminium designer railing with glass – up to ₹500/sq.ft"], ["Others", "Balcony / terrace railings", "Extra – up to ₹300/sq.ft (MS)", "Extra – up to ₹380/sq.ft (SS)", "Included – up to ₹500/sq.ft (aluminium + glass)"], ["Others", "Terrace parapet wall", "3 ft high", "3 ft high", "3.5 ft high"], ["Others", "Termite treatment", "Included", "Included", "Included (premium treatment)"], ["Others", "Rainwater harvesting", "Extra – ₹30,000", "Included", "Included"], ["Others", "Stone drain covers", "Extra – up to ₹300/sq.ft", "Included", "Included"], ["Others", "Septic tank", "Extra – ₹22/litre (block), ₹30/litre (RCC)", "Extra – ₹25/litre (block), ₹35/litre (RCC)", "RCC tank up to 2,000 litres included; more at ₹29/litre"], ["Others", "Lofts", "Extra – ₹340/sq.ft", "Extra – ₹350/sq.ft", "1 kitchen loft included; more at ₹380/sq.ft"], ["Others", "Pooja room door", "Extra – ₹24,000", "Extra – ₹26,000", "1 included; more at ₹30,000 each"], ["Others", "Front elevation", "Plaster + paint only (cladding & design elements extra)", "Plaster + paint only (cladding & design elements extra)", "Plaster + paint only (cladding & design elements extra)"], ["Others", "Site safety net during work", "Included", "Included", "Included"], ["Extras (charged separately)", "Extra sump capacity", "₹14/litre (brick), ₹25/litre (RCC)", "₹14/litre (block), ₹25/litre (RCC)", "Not mentioned"], ["Extras (charged separately)", "Gate & compound wall", "Extra, as per design", "Extra, as per design", "Extra, as per design"], ["Extras (charged separately)", "Extra foundation depth", "₹45/sq.ft for every extra foot", "₹45/sq.ft for every extra foot", "₹45/sq.ft for every extra foot"], ["Extras (charged separately)", "Rocky soil digging", "₹35/cu.ft", "₹35/cu.ft", "₹35/cu.ft"], ["Extras (charged separately)", "Extra plinth height / low-lying site filling", "₹65,000 per ft (30x40 plot)", "₹65,000 per ft (30x40 plot)", "₹65,000 per ft (30x40 plot)"], ["Extras (charged separately)", "Soil removal (tight sites)", "₹3,000 per tractor load", "₹3,000 per tractor load", "₹3,000 per tractor load"]]; // [section, item, essential, smart, signature]
 const PKGS=[
  {id:'essential',name:'Essential',rate:2300,col:2,tag:'A sound, well-built home with trusted everyday brands.'},
@@ -876,6 +1227,7 @@ const PKGS=[
 const HL=[['Structure','Concrete grade','Concrete'],['Structure','Cement','Cement'],['Structure','Steel','Steel'],['Structure','Walls','Walls'],['Flooring','Living & dining','Living & dining floor'],['Bathroom','Sanitaryware brand','Sanitaryware'],['Doors & Windows','Windows','Windows'],['Painting','Inside walls & ceilings','Interior paint']];
 const FLOOR_NAMES=['Ground Floor','First Floor','Second Floor','Third Floor','Fourth Floor'];
 const SHORT=['GF','FF','SF','TF','4F'];
+const STEPS=['Plot','Stairs & lift','Floors','Package','Estimate'];
 const STAIRS={none:{n:'No staircase'},spiral:{n:'Spiral',l:6,w:6},compact:{n:'Dog-legged compact',l:7,w:14},standard:{n:'Dog-legged standard',l:8,w:16},lavish:{n:'Dog-legged lavish',l:9,w:18}};
 const LIFTS={none:{n:'No lift'},p4:{n:'4-passenger',l:5,w:6},p6:{n:'6-passenger',l:6,w:7}};
 const LIB=[
@@ -904,20 +1256,52 @@ const LIB=[
  {cat:'Terrace',key:'tutil',name:'Terrace utility room',where:'terrace',v:[['Standard',8,10],['Compact',6,8]]},
  {cat:'Terrace',key:'pergola',name:'Covered pergola',open:1,where:'terrace',v:[['Lavish',12,14],['Standard',10,12],['Compact',8,10]]}
 ];
+
+/* ===== VAASTU =====
+   Directions are compass directions. relOf() turns them into a place on the plot
+   (front/rear/left/right) as seen standing on the road, looking at the plot. */
+const FACES=['N','NE','E','SE','S','SW','W','NW'];
+const ANG={N:0,NE:45,E:90,SE:135,S:180,SW:225,W:270,NW:315};
+const DIRN={N:'North',NE:'North-east',E:'East',SE:'South-east',S:'South',SW:'South-west',W:'West',NW:'North-west'};
+const RELN={0:'Front, road side',45:'Front-left corner',90:'Left side',135:'Rear-left corner',180:'Rear',225:'Rear-right corner',270:'Right side',315:'Front-right corner'};
+const ENTRY={N:['NE','N'],E:['NE','E'],S:['SE','S'],W:['NW','W'],NE:['N','E'],NW:['N','W'],SE:['E','S'],SW:['W','S']};
+// [space, best, also good, avoid, tip]; the main entrance options come from ENTRY for the plot facing
+const VAASTU=[
+ ['Main entrance','','','The south-west corner','Keep the entrance well lit and free of clutter.'],
+ ['Living','N','E','South-west','Keep the north and east sides of the living more open than the rest.'],
+ ['Kitchen','SE','NW','North-east, and directly opposite a toilet','Plan the stove so you cook facing east.'],
+ ['Dining','W','E','South-west corner','Place it close to the kitchen.'],
+ ['Master bedroom','SW','S','North-east and south-east','Sleep with your head towards the south.'],
+ ['Other bedrooms','W','NW','North-east',"North-west suits guests and grown children."],
+ ['Puja','NE','E','South, under the staircase, or next to a toilet','Face east or north while praying.'],
+ ['Toilets','NW','W','North-east, south-west corner and the centre',''],
+ ['Staircase','SW','S','North-east and the centre','Let the stairs turn clockwise as you climb.'],
+ ['Study','W','E','South-east','Sit facing north or east while working.'],
+ ['Car park / portico','NW','SE','South-west',''],
+ ['Utility / wash','NW','SE','North-east',''],
+ ['Balcony / sit-out','N','E','South-west',''],
+ ['Overhead water tank','SW','W','North-east and the centre',''],
+ ['Sump / borewell','NE','N','South-west and south-east','']
+];
+const relOf=d=>RELN[(ANG[d]-ANG[S.facing]+360)%360];
+const vText=d=>`${DIRN[d]} (${relOf(d).toLowerCase()})`;
+function vRows(){return VAASTU.map(r=>r[0]==='Main entrance'?[r[0],ENTRY[S.facing][0],ENTRY[S.facing][1],r[3],r[4]]:r)}
+
 const KEY='kyh-pocket-home-v1';
-function defState(){return{client:{name:'',phone:'',email:'',locality:''},started:false,L:40,W:30,sb:{f:1.5,r:1.5,l:1.5,ri:1.5},wall:14,circ:8,stair:'standard',lift:'none',floors:[[],[],[]],terrace:[],pkg:'smart',openLess:200,active:0}}
+function defState(){return{client:{name:'',phone:'',email:'',locality:''},facing:'',started:false,step:1,L:40,W:30,sb:{f:1.5,r:1.5,l:1.5,ri:1.5},wall:14,circ:8,stair:'standard',lift:'none',floors:[[],[],[]],terrace:[],pkg:'smart',active:0,generated:false,seen:{}}}
 let S=defState();
-try{const sv=JSON.parse(localStorage.getItem(KEY));if(sv&&Array.isArray(sv.floors))S=Object.assign(defState(),sv)}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+// Progress is kept for this browser tab only (survives a refresh). Opening the link fresh always starts from the beginning.
+try{localStorage.removeItem(KEY)}catch(e){} // clear progress saved by older versions
+try{const sv=JSON.parse(sessionStorage.getItem(KEY));if(sv&&Array.isArray(sv.floors))S=Object.assign(defState(),sv)}catch(e){}
+function save(){try{sessionStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 let uid=Date.now();
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const f0=n=>Math.round(n).toLocaleString('en-IN');
 const inr=n=>'₹'+Math.round(n).toLocaleString('en-IN');
-const band=n=>{const S5=5e5,lo=Math.max(S5,Math.ceil(n/S5)*S5);return[lo,lo+S5]};
+const band=n=>{const L=1e5,lo=Math.floor(n/L)*L;return[lo,lo+2*L]}; // e.g. 42.4L -> 42L - 44L
 const fmtL=n=>n>=1e7?'₹'+(n/1e7).toFixed(2).replace(/\.?0+$/,'')+' Cr':'₹'+Math.round(n/1e5)+'L';
 const rangeTxt=n=>{const[a,b]=band(n);return fmtL(a)+' – '+fmtL(b)};
-const lakh=n=>n>=1e7?(n/1e7).toFixed(2)+' Cr':(n/1e5).toFixed(2)+' L';
 function ft(x){x=+x;const f=Math.floor(x),i=Math.round((x-f)*12);return i?`${f}′${i}″`:`${f}′`}
 const isT=i=>i===S.floors.length;
 const itemsOf=i=>isT(i)?S.terrace:S.floors[i];
@@ -926,66 +1310,90 @@ const PK=id=>PKGS.find(p=>p.id===id)||PKGS[1];
 const spec=(sec,item,col)=>{const r=SPECS.find(x=>x[0]===sec&&x[1]===item);return r?r[col]:''};
 function plate(){const pl=Math.max(0,S.L-S.sb.f-S.sb.r),pw=Math.max(0,S.W-S.sb.l-S.sb.ri);return{pl,pw,a:pl*pw}}
 function coreList(T){const o=[];const s=STAIRS[S.stair];if(s&&s.l)o.push({name:T?'Staircase headroom':'Staircase block',variant:s.n,l:s.l,w:s.w});const L=LIFTS[S.lift];if(L&&L.l)o.push({name:T?'Lift overrun':'Lift shaft',variant:L.n,l:L.l,w:L.w});return o}
-function calc(items,T){
+// Stilt: when the ground floor has parking and a floor above, the rest of the ground floor plate
+// (not taken by enclosed spaces, core or other open spaces) is costed at the open rate.
+const hasStilt=i=>i===0&&S.floors.length>1&&S.floors[0].some(x=>x.key==='car'||x.key==='bike');
+function calc(items,T,i){
   const core=coreList(T);let room=0,open=0,coreA=0;
-  items.forEach(i=>{const a=i.l*i.w;i.open?open+=a:room+=a});
+  items.forEach(x=>{const a=x.l*x.w;x.open?open+=a:room+=a});
   core.forEach(c=>coreA+=c.l*c.w);
-  const circ=room*S.circ/100, walls=(room+coreA+circ)*S.wall/100, encBU=room+coreA+circ+walls;
-  return{core,room,open,coreA,circ,walls,encBU,used:encBU+open};
+  const circ=room*S.circ/100, walls=(room+coreA+circ)*S.wall/100, encBU=room+coreA+circ+walls, used=encBU+open;
+  const stilt=hasStilt(i)?Math.max(0,plate().a-used):0;
+  // Roof slab area = what this floor actually covers. Terrace: only the head room (and lift overrun / terrace rooms); the open terrace is not charged.
+  const slab=T?encBU:used+stilt;
+  return{core,room,open,coreA,circ,walls,encBU,used,stilt,slab};
 }
 function status(used,P){if(used>P+0.01)return'over';if(P&&used/P>0.9)return'near';return'ok'}
 function libFor(i){const T=isT(i);return LIB.filter(x=>T?(x.where==='terrace'||x.t):(x.where==='terrace'?false:x.where==='gf'?i===0:true))}
 function totals(){
-  const n=S.floors.length,rows=[];let enc=0,open=0;
-  for(let i=0;i<=n;i++){const c=calc(itemsOf(i),isT(i));rows.push({i,c});enc+=c.encBU;open+=c.open}
-  return{rows,enc,open,all:enc+open};
+  const n=S.floors.length,rows=[];let enc=0,open=0,stilt=0,slab=0;
+  for(let i=0;i<=n;i++){const c=calc(itemsOf(i),isT(i),i);rows.push({i,c});enc+=c.encBU;if(!isT(i))open+=c.open;stilt+=c.stilt;slab+=c.slab}
+  return{rows,enc,open,stilt,all:slab}; // all = total roof slab area, the basis of the cost
 }
-const openRate=p=>Math.max(0,p.rate-S.openLess);
-const costFor=(p,tt=totals())=>tt.enc*p.rate+tt.open*openRate(p);
-function allItems(){return[...S.floors.flat(),...S.terrace]}
+const liftStops=()=>S.floors.length;
+function liftCost(){const c=LIFT_COST[S.lift];return c?c.base+c.perStop*liftStops():0}
+// Building cost = total roof slab area x package rate (one rate for enclosed and open covered areas). Lift is added on top.
+function costParts(p,tt=totals()){const building=tt.all*p.rate,lift=liftCost();return{building,lift,total:building+lift}}
+const slabName=i=>isT(i)?'Head room roof slab':`${fname(i)} roof slab`;
+const costFor=(p,tt=totals())=>costParts(p,tt).total;
+const faceTxt=()=>S.facing?DIRN[S.facing]+' facing':'';
 
-// ---------- gate ----------
+// ---------- facing chips ----------
+function faceChips(cur,act){return FACES.map(d=>`<button class="fc ${cur===d?'on':''}" data-act="${act}" data-d="${d}" aria-pressed="${cur===d}"><i style="transform:rotate(${ANG[d]}deg)">↑</i>${d}<small>${DIRN[d]}</small></button>`).join('')}
+
+// ---------- start screen ----------
+let gFacing='';
 function gateArea(){const l=parseFloat($('#gL').value)||0,w=parseFloat($('#gW').value)||0;$('#gArea').innerHTML=l&&w?`<span>Plot area · ${ft(l)} × ${ft(w)}</span><b>${f0(l*w)} sq ft</b>`:'<span>Enter the plot depth and width to see your plot area.</span>'}
-function openGate(){const c=S.client;$('#gName').value=c.name;$('#gPhone').value=c.phone;$('#gEmail').value=c.email;$('#gLoc').value=c.locality;$('#gL').value=S.L;$('#gW').value=S.W;$('#gErr').textContent='';gateArea();$('#gate').classList.add('on');window.scrollTo(0,0)}
+function renderGateFace(){$('#gFace').innerHTML=faceChips(gFacing,'gface')}
+function openGate(){$('#gLoc').value=S.client.locality;$('#gL').value=S.L;$('#gW').value=S.W;gFacing=S.facing;$('#gErr').textContent='';gateArea();renderGateFace();$('#gate').classList.add('on');window.scrollTo(0,0);autoTour()}
 ['#gL','#gW'].forEach(id=>$(id).addEventListener('input',gateArea));
 const validEmail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 const validPhone=v=>{const d=String(v).replace(/[\s-]/g,'').replace(/^(\+91|0091|0)/,'');return /^[6-9]\d{9}$/.test(d)};
 function startPlan(){
-  const name=$('#gName').value.trim(),loc=$('#gLoc').value.trim(),l=parseFloat($('#gL').value),w=parseFloat($('#gW').value),ph=$('#gPhone').value.trim(),em=$('#gEmail').value.trim();
+  const loc=$('#gLoc').value.trim(),l=parseFloat($('#gL').value),w=parseFloat($('#gW').value);
   let err='';
-  if(!name)err='Please enter your name.';else if(!loc)err='Please enter your plot locality in Chennai.';else if(!(l>0&&w>0))err='Please enter the plot depth and width in feet.';else if(!validPhone(ph))err='Please enter a valid 10-digit mobile number.';else if(!validEmail(em))err='Please enter a valid email address. Your report will be sent here.';
+  if(!(l>0&&w>0))err='Please enter the plot depth and width in feet.';else if(!gFacing)err='Please pick the direction your plot faces.';
   if(err){$('#gErr').textContent=err;return}
-  S.client={name,phone:ph,email:em,locality:loc};S.L=l;S.W=w;S.started=true;
-  $('#gate').classList.remove('on');syncInputs();renderAll();
+  if(S.L!==l||S.W!==w||S.facing!==gFacing)S.generated=false;
+  S.client.locality=loc;S.L=l;S.W=w;S.facing=gFacing;
+  if(!S.started){S.started=true;S.step=1}
+  $('#gate').classList.remove('on');syncInputs();renderAll();window.scrollTo(0,0);autoTour();
 }
 
 // ---------- inputs ----------
-const binds=[['pL','L'],['pW','W'],['wall','wall'],['circ','circ'],['openLess','openLess']];
+const binds=[['pL','L'],['pW','W'],['wall','wall'],['circ','circ']];
 const sbBinds=[['sbF','f'],['sbR','r'],['sbL','l'],['sbRi','ri']];
 function syncInputs(){
   binds.forEach(([id,k])=>$('#'+id).value=S[k]);
   sbBinds.forEach(([id,k])=>$('#'+id).value=S.sb[k]);
   $('#stair').value=S.stair;$('#lift').value=S.lift;
 }
+function changed(){S.generated=false;renderAll()}
 $('#stair').innerHTML=Object.entries(STAIRS).map(([k,v])=>`<option value="${k}">${v.n}${v.l?` · ${v.l}×${v.w} (${v.l*v.w} sq ft)`:''}</option>`).join('');
 $('#lift').innerHTML=Object.entries(LIFTS).map(([k,v])=>`<option value="${k}">${v.n}${v.l?` · ${v.l}×${v.w} (${v.l*v.w} sq ft)`:''}</option>`).join('');
-binds.forEach(([id,k])=>$('#'+id).addEventListener('input',e=>{S[k]=parseFloat(e.target.value)||0;renderAll()}));
-sbBinds.forEach(([id,k])=>$('#'+id).addEventListener('input',e=>{S.sb[k]=parseFloat(e.target.value)||0;renderAll()}));
-$('#stair').addEventListener('change',e=>{S.stair=e.target.value;renderAll()});
-$('#lift').addEventListener('change',e=>{S.lift=e.target.value;renderAll()});
+binds.forEach(([id,k])=>$('#'+id).addEventListener('input',e=>{S[k]=parseFloat(e.target.value)||0;changed()}));
+sbBinds.forEach(([id,k])=>$('#'+id).addEventListener('input',e=>{S.sb[k]=parseFloat(e.target.value)||0;changed()}));
+$('#stair').addEventListener('change',e=>{S.stair=e.target.value;changed()});
+$('#lift').addEventListener('change',e=>{S.lift=e.target.value;changed()});
 
 // ---------- render ----------
-function renderHello(){const c=S.client;const mt=$('#mailTo');if(mt)mt.textContent=c.email||'your email';$('#hName').textContent=c.name?c.name.split(' ')[0]:'there';
+function renderSteps(){
+  $('#steps').innerHTML=STEPS.map((t,k)=>{const n=k+1;return `<button data-act="go" data-s="${n}" class="${S.step===n?'on':''}" ${n===5&&!S.generated?'disabled':''}><i>0${n}</i>${t}</button>`}).join('');
+  document.querySelectorAll('.blk[data-step]').forEach(b=>b.classList.toggle('on',+b.dataset.step===S.step));
+  const on=$('#steps .on');if(on&&on.parentNode.scrollTo)on.parentNode.scrollTo({left:on.offsetLeft-20,behavior:'smooth'});
+}
+function renderHello(){const c=S.client;
   $('#hDate').textContent=(c.locality?c.locality+' · ':'')+'Chennai';
-  $('#hello').innerHTML=c.name?`Here's your home for the <b>${f0(S.L*S.W)} sq ft</b> plot in ${esc(c.locality)}. Work through the five steps below, then download your personalised report. <button class="link" data-act="edit">Edit details</button>`:'Plan your home space by space.'}
-function renderGlance(){const tt=totals(),P=plate(),p=PK(S.pkg),plot=S.L*S.W;
-  $('#glance').innerHTML=`<div class="lbl">At a glance · updates as you plan</div>
+  $('#hello').innerHTML=`A <b>${f0(S.L*S.W)} sq ft</b>${S.facing?`, ${DIRN[S.facing].toLowerCase()}-facing`:''} plot${c.locality?' in '+esc(c.locality):''}. <button class="link" data-act="edit">Change</button>`}
+function renderGlance(){const tt=totals(),P=plate(),plot=S.L*S.W;
+  $('#glance').innerHTML=`<div class="lbl">At a glance</div>
   <div class="r"><div class="fl">Plot area</div><div class="v">${f0(plot)}<small>sq ft</small></div></div>
   <div class="r"><div class="fl">Floor plate</div><div class="v">${f0(P.a)}<small>sq ft</small></div></div>
-  <div class="r"><div class="fl">Built-up · G+${S.floors.length-1}</div><div class="v">${f0(tt.all)}<small>sq ft</small></div></div>
-  <div class="r hot"><div class="fl">${p.name} estimate</div><div class="v">${tt.all?rangeTxt(costFor(p,tt)):'–'}</div></div>`}
+  <div class="r"><div class="fl">Floors</div><div class="v">G+${S.floors.length-1}</div></div>
+  <div class="r hot"><div class="fl">Built-up so far</div><div class="v">${f0(tt.all)}<small>sq ft</small></div></div>`}
 function renderPlate(){
   const P=plate(),plot=S.L*S.W,lost=plot?(1-P.a/plot)*100:0;
+  $('#pFace').innerHTML=faceChips(S.facing,'face');
   const same=[S.sb.f,S.sb.r,S.sb.l,S.sb.ri].every(v=>v===S.sb.f)?S.sb.f:null;
   $('#sbChips').innerHTML=[0,1,1.5,2,3,5].map(v=>`<button class="chip ${same===v?'on':''}" data-act="sb" data-v="${v}">${v===0?'None':ft(v)}</button>`).join('');
   const mx=Math.max(S.W,S.L)||1,fw=S.W/mx*100,fh=S.L/mx*100,pc=(a,b)=>b?Math.max(0,a/b*100):0;
@@ -993,29 +1401,38 @@ function renderPlate(){
   <div><div class="k">Buildable floor plate</div><div class="v">${f0(P.a)}<small>sq ft per floor</small></div><div class="d">${ft(P.pw)} × ${ft(P.pl)} on your ${ft(S.W)} × ${ft(S.L)} plot · ${lost.toFixed(1)}% left open as setbacks</div></div>`;
   $('#wallV').textContent=S.wall+'%';$('#circV').textContent=S.circ+'%';
 }
+function renderCore(){const L=LIFTS[S.lift];
+  $('#liftNote').innerHTML=L.l?`<div class="note">A ${L.n.toLowerCase()} lift serving ${liftStops()} floor${liftStops()>1?'s':''} will be added to your estimate as a separate item.</div>`:''}
 function row(x,core){
   return `<div class="rm ${x.open?'isopen':''} ${core?'core':''} ${!core&&x.id===lastAdded?'new':''}"><div><b>${esc(x.name)}</b><span>${x.variant?esc(x.variant)+' · ':''}${ft(x.l)} × ${ft(x.w)}${core?' · every floor':''}${x.open?' · open':''}</span></div><div class="ia">${f0(x.l*x.w)}<small>sq ft</small></div>${core?'<span class="lock">core</span>':`<button class="x" data-act="rm" data-id="${x.id}" aria-label="Remove ${esc(x.name)}">×</button>`}</div>`;
+}
+function nextLabel(){
+  if(S.step===1)return'Next: Stairs & lift';
+  if(S.step===2)return'Next: Plan floors';
+  if(S.step===3){const n=S.floors.length,i=S.active;return i<n-1?`Next: ${FLOOR_NAMES[i+1]}`:i===n-1?'Next: Terrace':'Next: Package'}
+  return'Generate estimate';
 }
 function renderFloors(){
   const P=plate().a,n=S.floors.length;
   if(S.active>n)S.active=n;
-  const fl=i=>{const c=calc(itemsOf(i),isT(i)),pct=P?Math.min(100,c.used/P*100):0,st=status(c.used,P);
-    return `<button class="tfl ${isT(i)?'ter':''} ${i===S.active?'on':''} ${st}" data-act="tab" data-i="${i}" aria-pressed="${i===S.active}"><span class="tg">${isT(i)?'T':SHORT[i]}</span><span><span class="nm">${fname(i)}</span><span class="mt"><i style="width:${pct}%"></i></span></span><span class="q">${f0(c.used)}<small>of ${f0(P)}</small></span></button>`};
-  let t='<div class="tower"><div class="par"></div>'+fl(n);
-  if(n<5)t+=`<button class="addfl" data-act="addfloor">+ Add a floor</button>`;
-  for(let i=n-1;i>=0;i--)t+=fl(i);
-  t+=`<div class="pl"></div><div class="gr"></div><div class="cap">G+${n-1} · tap a floor to plan it</div></div>`;
-  $('#tabs').innerHTML=t;
-  const i=S.active,T=isT(i),items=itemsOf(i),c=calc(items,T),left=P-c.used,pct=P?Math.min(100,c.used/P*100):0,st=status(c.used,P);
-  let h=`<div class="fhead"><div><div class="kicker">${T?'Roof level':'Now planning'}</div><h3>${fname(i)}<span class="dot">.</span></h3><div class="mute">Floor plate ${f0(P)} sq ft${T?' · open terrace is not costed':''}</div></div>${(!T&&i>0&&i===n-1)?`<button class="ghost" data-act="rmfloor">Remove floor</button>`:''}</div>`;
+  $('#nChips').innerHTML=[1,2,3,4,5].map(k=>`<button class="chip ${n===k?'on':''}" data-act="nfloors" data-n="${k}">${k===1?'Ground only':'G+'+(k-1)}</button>`).join('');
+  let fs='';
+  for(let i=0;i<=n;i++){const c=calc(itemsOf(i),isT(i),i),st=status(c.used,P),pct=P?Math.min(100,c.used/P*100):0;
+    fs+=`<button class="fs ${isT(i)?'ter':''} ${i===S.active?'on':''} ${st}" data-act="tab" data-i="${i}" aria-pressed="${i===S.active}"><b>${isT(i)?'Terrace':SHORT[i]}</b><span>${f0(c.used)} / ${f0(P)}</span><span class="mt"><i style="width:${pct}%"></i></span></button>`}
+  $('#fsteps').innerHTML=fs;
+  const i=S.active,T=isT(i),items=itemsOf(i),c=calc(items,T,i),left=P-c.used,pct=P?Math.min(100,c.used/P*100):0,st=status(c.used,P);
+  let h=`<div class="fhead"><div><div class="kicker">${T?'Roof level':`Floor ${i+1} of ${n}`}</div><h3>${fname(i)}<span class="dot">.</span></h3><div class="mute">Floor plate ${f0(P)} sq ft${T?' · open terrace is not costed':''}</div></div>${(!T&&i>0)?`<button class="ghost" data-act="copy">Copy from floor below</button>`:''}</div>`;
   h+=`<div class="meter ${st}"><i style="width:${pct}%"></i></div>`;
   h+=`<div class="stats"><div><span>Enclosed</span><b>${f0(c.room)}</b></div><div><span>Core</span><b>${f0(c.coreA)}</b></div><div><span>Circulation</span><b>${f0(c.circ)}</b></div><div><span>Walls</span><b>${f0(c.walls)}</b></div><div><span>Open / Semi-covered</span><b>${f0(c.open)}</b></div><div class="left ${st}"><span>${left<0?'Over by':'Left'}</span><b>${f0(Math.abs(left))}</b></div></div>`;
   if(st==='over')h+=`<div class="alert">This floor is ${f0(-left)} sq ft over the floor plate. Remove or downsize a space, or reduce the setbacks.</div>`;
   h+='<div class="items">';
   c.core.forEach(x=>h+=row(x,true));
   items.forEach(x=>h+=row(x,false));
-  if(!c.core.length&&!items.length)h+='<div class="empty">Nothing on this floor yet. Tap a placard below to add a space.</div>';
+  if(c.stilt>0.5)h+=`<div class="rm stilt"><div><b>Rest of the stilt</b><span>Parking and driveway under the floor above · open</span></div><div class="ia">${f0(c.stilt)}<small>sq ft</small></div><span class="lock">auto</span></div>`;
+  if(!c.core.length&&!items.length)h+='<div class="empty">Nothing on this floor yet. Tap a size below to add a space.</div>';
   h+='</div>';
+  {const dh=!T&&dhSuggest().find(s=>s.i===i);if(dh)h+=`<div class="note dh"><b>Idea: a double-height space.</b> ${dhText(dh)}</div>`}
+  if(i===0&&n>1&&!c.stilt&&!items.some(x=>x.open))h+=`<p class="hint">Planning a stilt? Add a car park. The rest of the ground floor is then counted as open parking.</p>`;
   const cats={};libFor(i).forEach(x=>(cats[x.cat]=cats[x.cat]||[]).push(x));
   for(const k in cats){
     h+=`<h4 class="cat">${k}</h4><div class="plac">`;
@@ -1030,56 +1447,162 @@ function renderFloors(){
     h+='</div>';
   }
   h+=`<details class="custom"><summary>+ Add a custom space</summary><div class="cf"><input id="cn" placeholder="Space name"><input id="cl" type="number" inputmode="decimal" placeholder="L (ft)"><input id="cw" type="number" inputmode="decimal" placeholder="W (ft)"><label><input type="checkbox" id="co"> Open / no four walls</label><button class="pri" data-act="custom">Add</button></div></details>`;
+  h+=`<div class="navrow"><button class="ghost" data-act="back">← ${i>0?fname(i-1):'Stairs & lift'}</button><button class="pri" data-act="next">${nextLabel()} <span class="ar">→</span></button></div>`;
   $('#panel').innerHTML=h;
 }
-function tr(x,op){return `<tr class="${op?'op':''}"><td>${esc(x.name)}${x.variant?` <span class="mute">(${esc(x.variant)})</span>`:''}</td><td>${ft(x.l)} × ${ft(x.w)}</td><td>${f0(x.l*x.w)}</td></tr>`}
-function renderStatement(){
-  const P=plate().a,tt=totals();let h='';
-  tt.rows.forEach(({i,c})=>{
-    const items=itemsOf(i),op=items.filter(x=>x.open);
-    h+=`<div class="tw"><table><caption>${fname(i)}</caption><thead><tr><th>Space</th><th>Size</th><th>Sq ft</th></tr></thead><tbody>`;
-    c.core.forEach(x=>h+=tr(x));items.filter(x=>!x.open).forEach(x=>h+=tr(x));
-    h+=`<tr class="sub"><td>Circulation (${S.circ}% of enclosed)</td><td></td><td>${f0(c.circ)}</td></tr><tr class="sub"><td>Walls (${S.wall}%)</td><td></td><td>${f0(c.walls)}</td></tr><tr class="tot"><td>Enclosed built-up</td><td></td><td>${f0(c.encBU)}</td></tr>`;
-    if(op.length){op.forEach(x=>h+=tr(x,true));h+=`<tr class="tot"><td>Open / semi-covered</td><td></td><td>${f0(c.open)}</td></tr>`}
-    h+=`<tr class="grand"><td>Floor total${c.used>P+0.01?' ⚠ over plate':''}</td><td>of ${f0(P)}</td><td>${f0(c.used)}</td></tr></tbody></table></div>`;
-  });
-  const plot=S.L*S.W;
-  h+=`<div class="sum"><div><span>Plot area</span><b>${f0(plot)}</b></div><div><span>Enclosed built-up</span><b>${f0(tt.enc)}</b></div><div><span>Open / semi-covered</span><b>${f0(tt.open)}</b></div><div><span>Total area · FAR</span><b>${f0(tt.all)} · ${plot?(tt.all/plot).toFixed(2):'–'}</b></div></div>`;
-  $('#statement').innerHTML=h;
-}
-let specOpen=false;
-document.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('spec'))specOpen=e.target.open},true);
 function renderPackages(){
-  const tt=totals();
   $('#pkgs').innerHTML=PKGS.map((p,k)=>{const on=S.pkg===p.id;return `<button class="pk ${on?'on':''}" data-act="pkg" data-p="${p.id}" aria-pressed="${on}">
     <div class="tier">${[0,1,2].map(j=>`<i class="${j<=k?'f':''}"></i>`).join('')}</div>
     <div class="pkn">${p.name}</div>
     <div class="pkr">${inr(p.rate)}<small>/ sq ft</small></div>
     <div class="pkt">${p.tag}</div>
     <ul>${HL.map(h=>`<li><span>${h[2]}</span>${esc(spec(h[0],h[1],p.col))}</li>`).join('')}</ul>
-    <div class="pkc">${on?'<span class="sel">Selected</span>':'<span class="mute">Your estimate</span>'}<b>${tt.all?rangeTxt(costFor(p,tt)):'–'}</b></div></button>`}).join('');
-  const p=PK(S.pkg),groups={};SPECS.forEach(r=>(groups[r[0]]=groups[r[0]]||[]).push(r));
-  let h='',n=0;
-  for(const g in groups){n++;h+=`<div class="sgrp"><h5>${esc(g)}<span>${String(n).padStart(2,'0')}</span></h5>${groups[g].map(r=>`<div class="srow"><b>${esc(r[1])}</b><span>${esc(r[p.col])}</span></div>`).join('')}</div>`}
-  $('#specBox').innerHTML=`<details class="spec" ${specOpen?'open':''}><summary>See everything in ${p.name} · ${SPECS.length} items</summary>${h}</details>`;
+    <div class="pkc">${on?'<span class="sel">Selected</span>':'<span class="mute">Tap to choose</span>'}</div></button>`}).join('');
+  const p=PK(S.pkg),tt=totals();
+  $('#genSum').innerHTML=`${f0(tt.all)} sq ft across G+${S.floors.length-1} · ${p.name} package${S.lift!=='none'?' · with lift':''}`;
 }
-function renderCost(){
-  const tt=totals(),p=PK(S.pkg),or=openRate(p);let ce=0,co=0;
-  let h='';
-  h+=`<div class="tw"><table><caption>Cost by floor · ${p.name}</caption><thead><tr><th>Floor</th><th>Enclosed</th><th>Open</th><th>Cost</th></tr></thead><tbody>`;
-  tt.rows.forEach(({i,c})=>{const a=c.encBU*p.rate,b=c.open*or;ce+=a;co+=b;h+=`<tr><td>${fname(i)}</td><td>${f0(c.encBU)}</td><td>${f0(c.open)}</td><td>${inr(a+b)}</td></tr>`});
-  h+=`<tr class="sub"><td>Enclosed @ ${inr(p.rate)}</td><td>${f0(tt.enc)}</td><td></td><td>${inr(ce)}</td></tr><tr class="sub"><td>Open @ ${inr(or)}</td><td></td><td>${f0(tt.open)}</td><td>${inr(co)}</td></tr>`;
-  h+=`<tr class="grand"><td>Total</td><td>${f0(tt.enc)}</td><td>${f0(tt.open)}</td><td>${inr(ce+co)}</td></tr></tbody></table></div>`;
-  const tot=ce+co,[lo,hi]=band(tot);
-  const est=`<div class="estimate"><div class="k">Estimated cost of construction · ${p.name}</div><div class="v">${tt.all?`${fmtL(lo)}<em>to</em>${fmtL(hi)}`:'–'}</div><div class="s">Calculated at <b>${inr(tot)}</b> on ${f0(tt.all)} sq ft built-up</div></div><div style="height:18px"></div>`;
-  $('#cost').innerHTML=est+h;
+// Double-height suggestion: an upper floor that leaves room unused over a living / dining / lounge / foyer below
+const DH_MIN=80; // sq ft of unused upper floor before we suggest it
+function dhSuggest(){
+  const P=plate().a,out=[];
+  for(let i=1;i<S.floors.length;i++){
+    const free=P-calc(S.floors[i],false,i).used;
+    const below=[...new Set(S.floors[i-1].filter(x=>['living','dining','lounge','foyer'].includes(x.key)).map(x=>x.name.toLowerCase()))];
+    if(free>=DH_MIN&&below.length&&S.floors[i].length)out.push({i,free,below}); // only floors the client has started planning
+  }
+  return out;
+}
+const andList=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' and '+a[a.length-1];
+const dhText=s=>`The ${fname(s.i).toLowerCase()} leaves about ${f0(s.free)} sq ft unused. Instead of leaving it as left-over space, it can become a double-height space over the ${andList(s.below)} on the ${fname(s.i-1).toLowerCase()}, bringing in more light, air and a sense of space. A double-height area has no slab, so it doesn't add to your estimate.`;
+// Home brief: a plain summary of the home and what goes on each floor
+const pl=(n,w)=>`${n} ${w}${n===1?'':'s'}`;
+function homeBrief(){
+  const tt=totals(),all=S.floors.flat(),cnt=k=>all.filter(x=>x.key===k).length,n=S.floors.length;
+  const beds=cnt('master')+cnt('bed'),toilets=cnt('toilet')+cnt('ctoilet')+cnt('powder'),cars=cnt('car');
+  const parts=[];
+  if(beds)parts.push(pl(beds,'bedroom'));if(toilets)parts.push(pl(toilets,'toilet'));
+  if(cars)parts.push(`parking for ${pl(cars,'car')}`);if(cnt('bike'))parts.push('a two-wheeler bay');
+  if(cnt('living'))parts.push('a living room');if(cnt('dining'))parts.push('a dining area');if(cnt('lounge'))parts.push('a family lounge');
+  if(cnt('kitchen'))parts.push('a kitchen');if(cnt('puja'))parts.push('a puja');if(cnt('study'))parts.push('a study');
+  if(cnt('gym'))parts.push('a gym');if(cnt('theatre'))parts.push('a home theatre');if(cnt('balcony')||cnt('sitout'))parts.push('outdoor sit-out space');
+  if(S.lift!=='none')parts.push('a lift');
+  let text=`A ${n===1?'ground-floor':'G+'+(n-1)} home of about ${f0(tt.all)} sq ft${beds?` (${beds} BHK)`:''} on a ${f0(S.L*S.W)} sq ft${S.facing?', '+DIRN[S.facing].toLowerCase()+'-facing':''} plot${S.client.locality?' in '+S.client.locality:''}.`;
+  if(parts.length)text+=` It has ${andList(parts)}.`;
+  if(tt.stilt>0.5)text+=' Part of the ground floor is open stilt parking, under the floor above.';
+  const floors=tt.rows.filter(({i})=>itemsOf(i).length||!isT(i)).map(({i,c})=>{
+    const g={};itemsOf(i).forEach(x=>g[x.name]=(g[x.name]||0)+1);
+    const list=Object.entries(g).map(([k,v])=>v>1?`${k} x${v}`:k);
+    if(c.core.length)list.unshift(isT(i)?'Staircase head room':'Staircase'+(S.lift!=='none'?' and lift':''));
+    if(c.stilt>0.5)list.push('Open stilt parking');
+    return{i,name:isT(i)?'Terrace':fname(i),spaces:list.join(', ')||'-',slab:c.slab};
+  });
+  return{text,floors};
+}
+// Ideas to consider: practical pointers based on the plan
+function ideas(){
+  const all=S.floors.flat(),cnt=k=>all.filter(x=>x.key===k).length,beds=cnt('master')+cnt('bed'),out=[];
+  dhSuggest().forEach(s=>out.push(['A double-height space',dhText(s)]));
+  if(beds&&cnt('toilet')<beds&&!cnt('ctoilet'))out.push(['A toilet within reach of every bedroom','Not every bedroom has an attached toilet. If space allows, give each bedroom its own; otherwise plan a common toilet close to the bedrooms.']);
+  if(!cnt('puja'))out.push(['A place for prayer','A puja does not need a full room. A 3′ × 3′ niche in the north-east of the living or foyer works well.']);
+  if(cnt('kitchen')&&!cnt('utility'))out.push(['A utility next to the kitchen','A small utility or wash area beside the kitchen takes the vessel washing and the washing machine, and keeps the kitchen clean.']);
+  if(!cnt('balcony')&&!cnt('sitout'))out.push(['Somewhere to sit outdoors','A sit-out or balcony on the north or east side brings in morning light and gives the family a place to sit outside.']);
+  if(S.floors.length>=3&&S.lift==='none')out.push(['Room for a lift later','For a G+2 or taller home, keep space for a lift shaft now, even if you add the lift later. It is much harder to find the space afterwards.']);
+  out.push(['Make use of your terrace','Your terrace can hold a garden, solar panels or rainwater harvesting. Terrace waterproofing is included in every package.']);
+  return out;
+}
+// Vaastu rows for the spaces the client actually added (plus the main entrance and staircase)
+const VMAP={living:'Living',lounge:'Living',kitchen:'Kitchen',dining:'Dining',master:'Master bedroom',bed:'Other bedrooms',puja:'Puja',toilet:'Toilets',ctoilet:'Toilets',powder:'Toilets',study:'Study',car:'Car park / portico',bike:'Car park / portico',utility:'Utility / wash',sitout:'Balcony / sit-out',balcony:'Balcony / sit-out'};
+function chosenVaastu(){
+  const k=new Set(['Main entrance']);[...S.floors.flat(),...S.terrace].forEach(x=>VMAP[x.key]&&k.add(VMAP[x.key]));
+  if(S.stair!=='none')k.add('Staircase');
+  return vRows().filter(r=>k.has(r[0]));
+}
+function renderReport(){
+  if(S.step!==5){$('#report').innerHTML='';return}
+  const tt=totals(),p=PK(S.pkg),cp=costParts(p,tt),[lo,hi]=band(cp.total),L=LIFTS[S.lift],n=S.floors.length;
+  let h=`<div class="estimate"><div class="k">Estimated cost of construction · ${p.name} package</div><div class="v">${fmtL(lo)}<em>to</em>${fmtL(hi)}</div><div class="s">For <b>${f0(tt.all)} sq ft</b> built-up across G+${n-1}${cp.lift?', including the lift':''}</div></div>`;
+  h+=`<p class="brief">${esc(homeBrief().text)}</p>`;
+  h+=`<div class="tw costlines"><table><thead><tr><th>Item</th><th>Amount</th></tr></thead><tbody>
+    <tr><td>Building construction · ${p.name}</td><td>${inr(cp.building)}</td></tr>
+    ${cp.lift?`<tr><td>Lift · ${L.n}, ${liftStops()} floors</td><td>${inr(cp.lift)}</td></tr>`:''}
+    <tr class="grand"><td>Total</td><td>${inr(cp.total)}</td></tr></tbody></table></div>`;
+  h+=`<div class="note excl"><b>Not included in this estimate.</b> These are charged separately:<ul>${EXCLUSIONS.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
+  h+=`<div class="rgrid"><div><div class="sublabel">Area by floor</div><div class="tw"><table><thead><tr><th>Floor</th><th>Enclosed</th><th>Open</th><th>Total</th></tr></thead><tbody>`;
+  tt.rows.forEach(({i,c})=>{const T=isT(i),o=T?0:c.open+c.stilt;if(c.slab>0.5)h+=`<tr><td>${T?'Head room':fname(i)}</td><td>${f0(c.encBU)}</td><td>${o>0.5?f0(o):'–'}</td><td>${f0(c.slab)}</td></tr>`});
+  h+=`<tr class="grand"><td>Total</td><td>${f0(tt.enc)}</td><td>${f0(tt.open+tt.stilt)}</td><td>${f0(tt.all)} sq ft</td></tr></tbody></table></div>
+  <p class="hint">Open areas are car parks, sit-outs, balconies and the parking under the floor above. On the terrace, only the head room is counted.</p>${dhSuggest().map(s=>`<div class="note dh"><b>Suggestion: a double-height space.</b> ${dhText(s)}</div>`).join('')}</div>`;
+  if(S.facing){
+    h+=`<div><div class="sublabel">Vaastu for your ${DIRN[S.facing].toLowerCase()}-facing plot</div><p class="hint">For the spaces in your plan. Left and right are as you stand on the road, looking at your plot.</p><div style="margin-top:4px">`;
+    chosenVaastu().forEach(r=>{h+=`<div class="vrow"><b>${r[0]}</b><span class="o1">${vText(r[1])}</span><span class="o2">${vText(r[2])}</span></div>`});
+    h+=`</div></div>`;
+  }
+  h+=`</div>`;
+  h+=`<div class="full"><div class="kicker">Your full report</div><h3>The complete picture, <em>in your inbox.</em></h3>
+  <p>We are emailing your full report to <b>${esc(S.client.email||'you')}</b>. It includes:</p>
+  <ul><li>Your home brief: what goes on each floor</li><li>Space-by-space area statement for every floor</li><li>Cost by roof slab, and how all three packages compare</li><li>Complete Vaastu guide for ${VAASTU.length} spaces, with what to avoid</li><li>${pl(ideas().length,'idea')} to consider for your home</li><li>Full ${p.name} specification · ${SPECS.length} items</li></ul>
+  <div class="cta"><button class="pri" data-act="pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>Download full report</button>
+  <a class="wa" id="waBtn" href="${waLink()}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.2-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3Z"/></svg>Chat on WhatsApp</a></div>
+  <div id="pdfLink" style="margin-top:12px;font-size:13px">${mailStatus}</div>
+  <div class="small-links"><button class="link" data-act="resend">Email it again</button><button class="link" data-act="go" data-s="3">Change my plan</button><button class="link" data-act="reset">Start over</button></div></div>`;
+  $('#report').innerHTML=h;
 }
 function renderSticky(){
-  const P=plate().a,i=S.active,c=calc(itemsOf(i),isT(i)),st=status(c.used,P),left=P-c.used;
-  $('#stL').textContent=`${fname(i)} · ${f0(c.used)} / ${f0(P)} sq ft`;
-  const r=$('#stR');r.className=st;r.textContent=left<0?`${f0(-left)} over`:`${f0(left)} left`;
+  const st=$('#sticky');
+  if(!S.started||S.step===5){st.classList.add('off');return}
+  st.classList.remove('off');
+  let l='';
+  if(S.step===1)l=`Floor plate<small>${f0(plate().a)} sq ft per floor</small>`;
+  else if(S.step===2){const c=calc([],false);l=`Stairs${S.lift!=='none'?' & lift':''}<small>${f0(c.coreA)} sq ft on every floor</small>`}
+  else if(S.step===3){const P=plate().a,i=S.active,c=calc(itemsOf(i),isT(i),i),s=status(c.used,P),left=P-c.used;
+    l=`${fname(i)}<span class="pill ${s}">${left<0?f0(-left)+' over':f0(left)+' left'}</span><small>${f0(c.used)} of ${f0(P)} sq ft</small>`}
+  else l=`${PK(S.pkg).name} package<small>${inr(PK(S.pkg).rate)} per sq ft</small>`;
+  $('#stL').innerHTML=l;$('#stN').textContent=nextLabel()+' →';
 }
-function renderAll(){renderHello();renderGlance();renderPlate();renderFloors();renderStatement();renderPackages();renderCost();renderSticky();save()}
+function renderAll(){renderSteps();renderHello();renderGlance();renderPlate();renderCore();renderFloors();renderPackages();renderReport();renderSticky();save()}
+
+// ---------- navigation ----------
+function go(n){if(n===5&&!S.generated)return;S.step=n;renderAll();window.scrollTo(0,0);autoTour()}
+function overFloor(){const P=plate().a;return totals().rows.find(r=>r.c.used>P+0.01)}
+function next(){
+  if(S.step===1)return go(2);
+  if(S.step===2){S.active=0;return go(3)}
+  if(S.step===3){
+    const P=plate().a,i=S.active,c=calc(itemsOf(i),isT(i),i);
+    if(c.used>P+0.01){toast(`${fname(i)} is over the floor plate. Remove or downsize a space first.`,true);return}
+    if(i<S.floors.length){S.active++;renderAll();$('#s3').scrollIntoView({behavior:'smooth'});return}
+    return go(4);
+  }
+  if(S.step===4)return requestGenerate();
+}
+function back(){
+  if(S.step===1)return openGate();
+  if(S.step===2)return go(1);
+  if(S.step===3){if(S.active>0){S.active--;renderAll();$('#s3').scrollIntoView({behavior:'smooth'});return}return go(2)}
+  if(S.step===4){S.active=S.floors.length;return go(3)}
+  go(4);
+}
+function readyToGenerate(){
+  if(!totals().rows.some(r=>itemsOf(r.i).length)){toast('Add a few spaces to your floors first.',true);S.active=0;go(3);return false}
+  const o=overFloor();if(o){toast(`${fname(o.i)} is over the floor plate. Fix it, then generate again.`,true);S.active=o.i;go(3);return false}
+  return true;
+}
+// Generate asks for name, mobile and email first; submitting shows the estimate and emails the full report.
+function requestGenerate(){if(readyToGenerate())openMail()}
+function generate(){if(!readyToGenerate())return;S.generated=true;mailStatus='';go(5)}
+function setFloors(k){
+  const n=S.floors.length;if(k===n)return;
+  if(k<n){const lost=S.floors.slice(k).filter(f=>f.length).length;if(lost&&!confirm(`Remove the top ${n-k} floor${n-k>1?'s':''} and their spaces?`))return;S.floors=S.floors.slice(0,k)}
+  else while(S.floors.length<k)S.floors.push([]);
+  if(S.active>S.floors.length)S.active=S.floors.length;
+  changed();
+}
+function copyBelow(){
+  const i=S.active,src=S.floors[i-1].filter(x=>{const sp=LIB.find(l=>l.key===x.key);return !(sp&&sp.where==='gf')});
+  if(!src.length){toast(`${fname(i-1)} has no spaces to copy.`,true);return}
+  if(S.floors[i].length&&!confirm(`Replace the spaces on ${fname(i)} with a copy of ${fname(i-1)}?`))return;
+  S.floors[i]=src.map(x=>Object.assign({},x,{id:++uid}));changed();
+  toast(`Copied ${src.length} space${src.length>1?'s':''} from ${fname(i-1)}`);
+}
 
 // ---------- actions ----------
 let lastAdded=null;
@@ -1087,189 +1610,355 @@ let tT;function toast(m,bad){const t=$('#toast');t.textContent=m;t.className='on
 function tryAdd(it,btn){
   const items=itemsOf(S.active),T=isT(S.active),P=plate().a,before=calc(items,T).used,after=calc([...items,it],T).used;
   if(after>P+0.01){toast(`No room for ${it.name}: needs ${f0(after-before)} sq ft, only ${f0(Math.max(0,P-before))} left`,true);if(btn){btn.classList.remove('shake');void btn.offsetWidth;btn.classList.add('shake')}return}
-  items.push(it);lastAdded=it.id;renderAll();lastAdded=null;toast(`${it.name} added to ${fname(S.active)}`);
+  items.push(it);lastAdded=it.id;changed();lastAdded=null;toast(`${it.name} added to ${fname(S.active)}`);
 }
 document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
+  const b=e.target.closest('[data-act]');if(!b||b.disabled)return;const a=b.dataset.act;
   if(a==='start')startPlan();
   else if(a==='edit')openGate();
+  else if(a==='gface'){gFacing=b.dataset.d;renderGateFace()}
+  else if(a==='face'){S.facing=b.dataset.d;changed()}
+  else if(a==='next')next();
+  else if(a==='back')back();
+  else if(a==='go')go(+b.dataset.s);
+  else if(a==='generate')requestGenerate();
   else if(a==='tab'){S.active=+b.dataset.i;renderAll()}
-  else if(a==='addfloor'){if(S.floors.length<5){S.floors.push([]);S.active=S.floors.length-1;renderAll()}}
-  else if(a==='rmfloor'){if(S.floors[S.active].length&&!confirm(`Remove ${fname(S.active)} and its spaces?`))return;S.floors.splice(S.active,1);renderAll()}
+  else if(a==='nfloors')setFloors(+b.dataset.n);
+  else if(a==='copy')copyBelow();
   else if(a==='add'){const sp=LIB.find(x=>x.key===b.dataset.k),v=sp.v[+b.dataset.v];tryAdd({id:++uid,key:sp.key,name:sp.name,variant:v[0],l:v[1],w:v[2],open:!!sp.open},b)}
-  else if(a==='rm'){const arr=itemsOf(S.active),k=arr.findIndex(x=>String(x.id)===b.dataset.id);if(k>-1)arr.splice(k,1);renderAll()}
+  else if(a==='rm'){const arr=itemsOf(S.active),k=arr.findIndex(x=>String(x.id)===b.dataset.id);if(k>-1)arr.splice(k,1);changed()}
   else if(a==='custom'){const nm=$('#cn').value.trim()||'Custom space',l=parseFloat($('#cl').value),w=parseFloat($('#cw').value);if(!(l>0&&w>0)){toast('Enter length and width in feet',true);return}tryAdd({id:++uid,key:'custom',name:nm,variant:'Custom',l,w,open:$('#co').checked})}
-  else if(a==='sb'){const v=+b.dataset.v;S.sb={f:v,r:v,l:v,ri:v};syncInputs();renderAll()}
-  else if(a==='pkg'){S.pkg=b.dataset.p;renderAll()}
-  else if(a==='pdf')exportPDF();
-  else if(a==='email')emailReport();
-  else if(a==='csv')csv();
+  else if(a==='sb'){const v=+b.dataset.v;S.sb={f:v,r:v,l:v,ri:v};syncInputs();changed()}
+  else if(a==='pkg'){S.pkg=b.dataset.p;changed()}
+  else if(a==='pdf')downloadReport();
+  else if(a==='resend')emailReport();
+  else if(a==='mclose')$('#mail').classList.remove('on');
+  else if(a==='msend')sendFromMail();
+  else if(a==='intro-start')closeIntro();
+  else if(a==='intro-why')$('#ix-story').scrollIntoView({behavior:'smooth'});
+  else if(a==='intro')openIntro();
+  else if(a==='help')startTour(tourKey());
+  else if(a==='tnext')tourMove(1);
+  else if(a==='tback')tourMove(-1);
+  else if(a==='tskip')endTour();
   else if(a==='reset'){if(confirm('Clear everything and start over?')){S=defState();syncInputs();renderAll();openGate()}}
 });
-function csv(){
-  const L=[['Floor','Space','Type','Length ft','Width ft','Area sq ft','Category']];
-  totals().rows.forEach(({i,c})=>{
-    c.core.forEach(x=>L.push([fname(i),x.name,x.variant,x.l,x.w,x.l*x.w,'Core']));
-    itemsOf(i).forEach(x=>L.push([fname(i),x.name,x.variant,x.l,x.w,x.l*x.w,x.open?'Open':'Enclosed']));
-    L.push([fname(i),'Circulation','','','',c.circ.toFixed(1),'Allowance']);
-    L.push([fname(i),'Walls','','','',c.walls.toFixed(1),'Allowance']);
-    L.push([fname(i),'FLOOR TOTAL','','','',c.used.toFixed(1),'']);
-  });
-  const s=L.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([s],{type:'text/csv'}));a.download='area-statement.csv';a.click();
+$('#mail').addEventListener('click',e=>{if(e.target.id==='mail')$('#mail').classList.remove('on')});
+
+// ---------- WhatsApp ----------
+function waLink(){
+  const tt=totals(),p=PK(S.pkg),c=S.client;
+  const msg=`Hi Nichekala, I just used Know Your Home. My plot is ${f0(S.L*S.W)} sq ft (${S.L} x ${S.W} ft)${S.facing?', '+faceTxt().toLowerCase():''}${c.locality?', in '+c.locality:''}. I planned G+${S.floors.length-1}, ${f0(tt.all)} sq ft built-up, ${p.name} package${S.lift!=='none'?' with a lift':''}. My estimate is ${rangeTxt(costFor(p,tt))}. I'd like to know more.`;
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
 
-// ---------- PDF report ----------
+// ---------- email sheet ----------
+function openMail(){const c=S.client;$('#mName').value=c.name;$('#mPhone').value=c.phone;$('#mEmail').value=c.email;$('#mLoc').value=c.locality;$('#mErr').textContent='';$('#mail').classList.add('on');setTimeout(()=>$('#mName').focus(),50)}
+function sendFromMail(){
+  const name=$('#mName').value.trim(),ph=$('#mPhone').value.trim(),em=$('#mEmail').value.trim(),loc=$('#mLoc').value.trim();
+  let err='';
+  if(!name)err='Please enter your name.';else if(!validPhone(ph))err='Please enter a valid 10-digit mobile number.';else if(!validEmail(em))err='Please enter a valid email address. Your report will be sent here.';
+  if(err){$('#mErr').textContent=err;return}
+  S.client={name,phone:ph,email:em,locality:loc};save();
+  $('#mail').classList.remove('on');
+  generate();
+  emailReport();
+}
+
+// ---------- PDF report (the full report) ----------
 const pt=s=>String(s).replace(/₹\s?/g,'Rs. ').replace(/[–—]/g,'-').replace(/′/g,"'").replace(/″/g,'"').replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/[^\x00-\xFF]/g,'');
 function ftP(x){x=+x;const f=Math.floor(x),i=Math.round((x-f)*12);return i?`${f}'${i}"`:`${f}'`}
 const rs=n=>'Rs. '+Math.round(n).toLocaleString('en-IN');
 const rsRange=n=>pt(rangeTxt(n));
-const rsL=n=>n>=1e7?'Rs. '+(n/1e7).toFixed(2)+' Cr':'Rs. '+(n/1e5).toFixed(2)+' Lakh';
 function reportRef(now=new Date()){const initials=(S.client.name||'X').split(/\s+/).map(w=>w[0]||'').join('').toUpperCase().slice(0,3);
   return `KYH-${String(now.getFullYear()).slice(2)}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${initials}`}
 function buildPDF(){
   const doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
-  const W=210,M=14,G=[210,53,42],SOFT=[252,235,232],INK=[21,19,18],MUTE=[140,135,132],RULE=[236,231,229];
-  const tt=totals(),pl=plate(),p=PK(S.pkg),plot=S.L*S.W,c=S.client,cost=costFor(p,tt),now=new Date();
+  const W=210,H=297,M=16,CW=W-2*M,LH=1.45;
+  const G=[210,53,42],SOFT=[252,235,232],PINK2=[247,214,209],BLUSH=[254,245,243],INK=[21,19,18],BODY=[42,39,37],MUTE=[140,135,132],RULE=[236,231,229],WHITE=[255,255,255];
+  const tt=totals(),P=plate(),p=PK(S.pkg),plot=S.L*S.W,c=S.client,cp=costParts(p,tt),now=new Date(),hb=homeBrief(),n=S.floors.length,lf=LIFTS[S.lift],st=STAIRS[S.stair];
+  const first=(c.name||'').trim().split(/\s+/)[0]||'there';
   const dateStr=now.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
-  const ref=reportRef(now);
-  let y;
-  const need=h=>{if(y+h>280){doc.addPage();y=18}};
-  const sec=t=>{need(22);const m=String(t).match(/^(\d+)\.\s*(.*)$/);const num=m?m[1].padStart(2,'0'):'',ttl=m?m[2]:t;
-    doc.setFont('times','bold');doc.setFontSize(20);doc.setTextColor(...G);if(num)doc.text(num,M,y+2);
-    doc.setFontSize(15);doc.setTextColor(...INK);doc.text(pt(ttl),M+(num?13:0),y+2);
-    doc.setDrawColor(...INK);doc.setLineWidth(.5);doc.line(M,y+4.5,W-M,y+4.5);doc.setFont('helvetica','normal');y+=10};
-  const sub=t=>{need(14);doc.setFont('times','bold');doc.setFontSize(12);doc.setTextColor(...INK);doc.text(pt(t),M,y);doc.setFont('helvetica','normal');y+=2};
-  const para=(t,size=9,color=MUTE)=>{doc.setFontSize(size);doc.setTextColor(...color);const lines=doc.splitTextToSize(pt(t),W-2*M);need(lines.length*4.2+2);doc.text(lines,M,y+3);y+=lines.length*4.2+3;doc.setTextColor(...INK)};
-  const clean=r=>r.map(v=>typeof v==='string'?pt(v):(v&&typeof v==='object'&&typeof v.content==='string'?Object.assign({},v,{content:pt(v.content)}):v));
-  const tbl=(head,body,opts={})=>{doc.autoTable(Object.assign({startY:y,head:head?[clean(head)]:undefined,body:body.map(clean),margin:{left:M,right:M,top:16,bottom:16},theme:'grid',
-    styles:{font:'helvetica',fontSize:8.5,cellPadding:1.8,lineColor:RULE,lineWidth:.2,textColor:INK,overflow:'linebreak'},
-    headStyles:{fillColor:G,textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[254,245,243]}},opts));y=doc.lastAutoTable.finalY+7};
-  const kv=rows=>tbl(null,rows,{columnStyles:{0:{cellWidth:58,fontStyle:'bold',fillColor:[254,245,243]}},alternateRowStyles:{}});
+  const ref=reportRef(now),face=S.facing?DIRN[S.facing]:'';
+  const all=S.floors.flat(),cnt=k=>all.filter(x=>x.key===k).length,beds=cnt('master')+cnt('bed'),toil=cnt('toilet')+cnt('ctoilet')+cnt('powder'),cars=cnt('car');
+  let y=0,sn=0;
+  const T=s=>pt(s);
+  const font=(f,s,sz,col)=>{doc.setFont(f,s);doc.setFontSize(sz);if(col)doc.setTextColor(...col)};
+  const fill=col=>doc.setFillColor(...col),draw=col=>doc.setDrawColor(...col);
+  const lh=sz=>sz*0.3528*LH;
+  const newPage=()=>{doc.addPage();y=22};
+  const need=h=>{if(y+h>272)newPage()};
+  const wrap=(s,w,sz,f='helvetica',st='normal')=>{doc.setFont(f,st);doc.setFontSize(sz);return doc.splitTextToSize(T(s),w)}; // measure in the font it is printed in
+  const text=(s,x,yy,o={})=>doc.text(typeof s==='string'?T(s):s,x,yy,Object.assign({lineHeightFactor:LH},o));
+  const para=(s,{size=10,color=BODY,style='normal',face:f='helvetica',w=CW,x=M,gap=3}={})=>{font(f,style,size,color);const L=wrap(s,w,size,f,style);need(L.length*lh(size)+2);text(L,x,y+size*0.35);y+=L.length*lh(size)+gap};
+  const kicker=(s,col=G,x=M)=>{font('helvetica','bold',7.5,col);text(s.toUpperCase(),x,y,{charSpace:.5});y+=5};
+  const opener=(title,tag)=>{need(48);const num=String(++sn).padStart(2,'0');
+    font('times','bold',46,G);text(num,M,y+14);
+    font('times','bold',25,INK);text(title,M+31,y+8);
+    font('times','italic',12.5,MUTE);text(tag,M+31,y+15.5);
+    fill(G);doc.rect(M,y+21.5,24,1.4,'F');draw(RULE);doc.setLineWidth(.3);doc.line(M+26,y+22.2,W-M,y+22.2);y+=32};
+  const tile=(x,y0,w,h,label,value,sub,{hot=false,size=18,bg=null}={})=>{
+    fill(bg||(hot?G:BLUSH));doc.roundedRect(x,y0,w,h,3,3,'F');
+    font('helvetica','bold',7,hot?WHITE:G);text(label.toUpperCase(),x+5,y0+7.5,{charSpace:.4});
+    font('helvetica','bold',size,hot?WHITE:INK);text(value,x+5,y0+7.5+size*0.42);
+    if(sub){font('helvetica','normal',8,hot?WHITE:MUTE);text(wrap(sub,w-10,8)[0],x+5,y0+h-5)}};
+  const clean=r=>r.map(v=>typeof v==='string'?T(v):(v&&typeof v==='object'&&typeof v.content==='string'?Object.assign({},v,{content:T(v.content)}):v));
+  const tbl=(head,body,opts={})=>{doc.autoTable(Object.assign({startY:y,head:head?[clean(head)]:undefined,body:body.map(clean),margin:{left:M,right:M,top:20,bottom:18},theme:'striped',
+    styles:{font:'helvetica',fontSize:9,cellPadding:{top:2.3,bottom:2.3,left:3,right:3},textColor:BODY,overflow:'linebreak'},
+    headStyles:{fillColor:SOFT,textColor:G,fontStyle:'bold',fontSize:8},alternateRowStyles:{fillColor:BLUSH}},opts));y=doc.lastAutoTable.finalY+8};
+  const logo=(x,y0,s=1)=>{fill(G);doc.roundedRect(x,y0,9*s,9*s,1.6*s,1.6*s,'F');fill(WHITE);doc.rect(x+2.3*s,y0+4.6*s,4.4*s,3*s,'F');doc.triangle(x+1.6*s,y0+4.8*s,x+4.5*s,y0+2*s,x+7.4*s,y0+4.8*s,'F')};
 
-  // header band
-  doc.setFillColor(...SOFT);doc.rect(0,0,W,46,'F');
-  doc.setFillColor(...G);doc.roundedRect(M,11,7,7,1.3,1.3,'F');doc.setFillColor(255,255,255);doc.rect(M+1.8,14.6,3.4,2.4,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...G);doc.text('POCKET HOME',M+10,14.2);
-  doc.setFont('helvetica','normal');doc.setTextColor(...MUTE);doc.text('an initiative by Nichekala Architecture & Design Studio',M+10,18);
-  doc.setFontSize(8);doc.text(pt(dateStr.toUpperCase()),W-M,14.2,{align:'right'});doc.text(ref,W-M,18,{align:'right'});
-  doc.setFont('times','bold');doc.setFontSize(30);doc.setTextColor(...INK);doc.text('Know your ',M,35);
-  let hx=M+doc.getTextWidth('Know your ');doc.setFont('times','bolditalic');doc.setTextColor(...G);doc.text('home',hx,35);hx+=doc.getTextWidth('home');doc.setFont('times','bold');doc.text('.',hx,35);
-  y=56;doc.setTextColor(...INK);doc.setFont('times','bold');doc.setFontSize(16);
-  doc.text(pt(`A personalised report for ${c.name||'you'}`),M,y);
-  y+=6;doc.setFont('helvetica','normal');doc.setFontSize(9.5);doc.setTextColor(...MUTE);
-  doc.text(pt([`${c.locality?c.locality+', ':''}Chennai`,c.phone,c.email].filter(Boolean).join('   ·   ')),M,y);
-  // key figures
-  y+=7;const kf=[['Plot area',f0(plot)+' sq ft'],['Total built-up',f0(tt.all)+' sq ft'],['Package',p.name],['Estimated cost',rsRange(cost)]];
-  const bw=(W-2*M-9)/4;
-  kf.forEach((k,i)=>{const x=M+i*(bw+3),hot=i===3;doc.setFillColor(...(hot?G:SOFT));doc.roundedRect(x,y,bw,20,2.5,2.5,'F');doc.setFont('helvetica','bold');doc.setTextColor(...(hot?[255,255,255]:G));doc.setFontSize(7);doc.text(k[0].toUpperCase(),x+3.5,y+6.5);doc.setTextColor(...(hot?[255,255,255]:INK));doc.setFontSize(12.5);doc.text(pt(k[1]),x+3.5,y+14.5);doc.setFont('helvetica','normal')});
-  y+=27;
+  /* ===== COVER ===== */
+  fill(SOFT);doc.rect(0,0,W,H,'F');
+  draw(PINK2);doc.setLineWidth(16);doc.circle(W+18,92,74,'S');doc.setLineWidth(7);doc.circle(W+18,92,44,'S');
+  fill(G);doc.circle(W-34,150,3,'F');
+  logo(M,18);font('helvetica','bold',9,G);text('POCKET HOME',M+12,22.2,{charSpace:.6});
+  font('helvetica','normal',8,MUTE);text('A Design + Build initiative by Nichekala',M+12,26.6);
+  font('helvetica','normal',8,MUTE);text(dateStr.toUpperCase(),W-M,22.2,{align:'right',charSpace:.3});text(ref,W-M,26.6,{align:'right'});
+  font('times','bold',60,INK);text('Know your',M,90);
+  font('times','bolditalic',60,G);text('home',M,113);let hx=M+doc.getTextWidth('home');font('times','bold',60,G);text('.',hx,113);
+  font('times','italic',17,BODY);text('Small plot. Big living.',M,127);
+  font('helvetica','bold',7.5,G);text('A HOME BRIEF PREPARED FOR',M,147,{charSpace:.6});
+  font('times','bold',27,INK);text(c.name||'You',M,158);
+  font('helvetica','normal',10,MUTE);text([c.locality?c.locality+', Chennai':'Chennai',c.phone,c.email].filter(Boolean).join('   ·   '),M,165.5);
+  let y0=178;
+  fill(G);doc.roundedRect(M,y0,CW,48,4,4,'F');
+  font('helvetica','bold',7.5,WHITE);text('ESTIMATED COST OF CONSTRUCTION',M+8,y0+11,{charSpace:.6});
+  font('helvetica','bold',36,WHITE);text(rsRange(cp.total),M+8,y0+29);
+  font('helvetica','normal',10,WHITE);text(`${p.name} package${cp.lift?'  ·  including the lift':''}  ·  calculated ${rs(cp.total)}`,M+8,y0+40);
+  const tw=(CW-8)/3,ty=y0+54;
+  tile(M,ty,tw,36,'Built-up area',`${f0(tt.all)} sq ft`,'total roof slab area',{size:19,bg:WHITE});
+  tile(M+tw+4,ty,tw,36,'Your plot',`${f0(plot)} sq ft`,`${ftP(S.L)} x ${ftP(S.W)}${face?'  ·  '+face+' facing':''}`,{size:19,bg:WHITE});
+  tile(M+2*(tw+4),ty,tw,36,'Your home',`G+${n-1}${beds?'  ·  '+beds+' BHK':''}`,`${pl(toil,'toilet')}${cars?'  ·  '+pl(cars,'car park'):''}`,{size:19,bg:WHITE});
+  font('helvetica','normal',8,MUTE);text('Nichekala Architecture & Design Studio  ·  Chennai',M,286);text('Know Your Home',W-M,286,{align:'right'});
 
-  sec('1. Plot & setbacks');
-  kv([['Plot location',`${c.locality||'-'}, Chennai`],['Plot dimensions',`${ftP(S.L)} x ${ftP(S.W)} (depth x width)`],['Plot area',`${f0(plot)} sq ft`],
-      ['Setbacks considered',`Front ${ftP(S.sb.f)}  ·  Rear ${ftP(S.sb.r)}  ·  Left ${ftP(S.sb.l)}  ·  Right ${ftP(S.sb.ri)}`],
-      ['Buildable floor plate',`${ftP(pl.pl)} x ${ftP(pl.pw)} = ${f0(pl.a)} sq ft per floor`],['Area given to setbacks',`${f0(plot-pl.a)} sq ft (${plot?((1-pl.a/plot)*100).toFixed(1):0}% of plot)`]]);
+  /* ===== LETTER ===== */
+  newPage();y=30;
+  kicker('A note for you');
+  font('times','bold',32,INK);text(`Dear ${first},`,M,y+9);y+=22;
+  [`Congratulations on taking the first step towards your new home. Building a home is one of the biggest decisions a family makes, and you have started it the right way: by understanding what your plot can hold before anything is drawn or built.`,
+   `This report is your home brief. It sets out the spaces you planned, floor by floor, how much area they add up to, what your home may cost to build with the ${p.name} package${face?`, and basic Vaastu pointers for your ${face.toLowerCase()}-facing plot`:''}. We have also added a few ideas you may want to think about.`,
+   `Treat it as a starting point, not a final plan. Take it to your architect, talk it through with your family, and let it guide the decisions ahead.`,
+   `All the best for your new home. We would be glad to help you take the next step.`].forEach(s=>para(s,{size:11.5,gap:4.5}));
+  y+=2;font('helvetica','normal',11,BODY);text('Warm regards,',M,y);y+=9;
+  font('times','bolditalic',17,G);text('Nikhil Rodrigo',M,y);y+=6;
+  font('helvetica','normal',9,MUTE);text('Principal Architect  ·  Pocket Home by Nichekala',M,y);y+=16;
+  // your home at a glance
+  kicker('Your home at a glance');y+=1;
+  const bl=wrap(hb.text,CW-24,12,'times','italic'),bh=bl.length*lh(12)+16;
+  fill(BLUSH);doc.roundedRect(M,y,CW,bh,4,4,'F');fill(G);doc.rect(M,y,2.2,bh,'F');
+  font('times','bold',40,G);text('"',M+6,y+15);
+  font('times','italic',12,INK);text(bl,M+16,y+10);y+=bh+6;
+  const gw=(CW-12)/4;
+  [['Bedrooms',String(beds)],['Toilets',String(toil)],['Car parks',String(cars)],['Floors',`G+${n-1}`]].forEach(([k,v],j)=>tile(M+j*(gw+4),y,gw,28,k,v,null,{size:24}));
+  y+=36;
 
-  sec('2. Building configuration');
-  const st=STAIRS[S.stair],lf=LIFTS[S.lift];
-  kv([['Building',`G+${S.floors.length-1} with terrace`],['Staircase',st.l?`${st.n}, ${ftP(st.l)} x ${ftP(st.w)} (${f0(st.l*st.w)} sq ft per floor)`:'None'],
-      ['Lift',lf.l?`${lf.n}, ${ftP(lf.l)} x ${ftP(lf.w)} (${f0(lf.l*lf.w)} sq ft per floor)`:'None'],
-      ['Wall allowance',`${S.wall}% of enclosed carpet area`],['Circulation allowance',`${S.circ}% of enclosed carpet area`]]);
+  /* ===== 01 FLOOR BY FLOOR ===== */
+  newPage();
+  opener('Your home, floor by floor','What goes on each floor of your home.');
+  hb.floors.forEach(f=>{
+    const r=tt.rows.find(x=>x.i===f.i),T_=isT(f.i),sl=wrap(f.spaces,CW-82,9.5),h=Math.max(30,18+sl.length*lh(9.5)+6);
+    need(h+5);
+    draw(RULE);doc.setLineWidth(.4);fill(T_?WHITE:BLUSH);doc.roundedRect(M,y,CW,h,3,3,'FD');
+    fill(T_?INK:G);doc.roundedRect(M+5,y+5,17,17,2.5,2.5,'F');
+    font('helvetica','bold',10,WHITE);text(T_?'T':SHORT[f.i],M+13.5,y+15.6,{align:'center'});
+    font('times','bold',15,INK);text(f.name,M+27,y+11.5);
+    font('helvetica','normal',9.5,BODY);text(sl,M+27,y+18);
+    font('helvetica','bold',19,INK);text(f0(f.slab),W-M-6,y+14,{align:'right'});
+    font('helvetica','normal',7.5,MUTE);text(T_?'sq ft · head room':'sq ft roof slab',W-M-6,y+19,{align:'right'});
+    if(!T_&&P.a){const u=Math.min(1,(r.c.used+r.c.stilt)/P.a),bx=W-M-46;
+      fill(RULE);doc.roundedRect(bx,y+h-9,40,2.4,1.2,1.2,'F');fill(G);doc.roundedRect(bx,y+h-9,Math.max(2.4,40*u),2.4,1.2,1.2,'F');
+      font('helvetica','normal',7,MUTE);text(`${Math.round(u*100)}% of the floor plate used`,W-M-6,y+h-4,{align:'right'})}
+    y+=h+5;
+  });
+  need(20);fill(INK);doc.roundedRect(M,y,CW,16,3,3,'F');
+  font('helvetica','bold',7.5,WHITE);text('TOTAL BUILT-UP  ·  ROOF SLAB AREA',M+6,y+9.6,{charSpace:.5});
+  font('helvetica','bold',17,WHITE);text(`${f0(tt.all)} sq ft`,W-M-6,y+10.8,{align:'right'});y+=24;
+  font('helvetica','normal',8.5,MUTE);para('Use this brief as your starting point with your architect. It shows what your plot can hold, floor by floor, before any design begins.',{size:9,color:MUTE});
 
-  sec('3. Area statement');
+  /* ===== 02 PLOT ===== */
+  need(120);if(y>40)y+=4;
+  opener('Your plot & building','Start with the ground.');
+  const boxW=72,boxH=86,sc=Math.min(boxW/(S.W||1),boxH/(S.L||1)),pw=S.W*sc,ph=S.L*sc,px=M,py=y+4;
+  doc.setLineDashPattern([1.6,1.2],0);draw(MUTE);doc.setLineWidth(.5);doc.rect(px,py,pw,ph,'S');doc.setLineDashPattern([],0);
+  fill(SOFT);draw(G);doc.setLineWidth(.7);doc.rect(px+S.sb.l*sc,py+S.sb.r*sc,P.pw*sc,P.pl*sc,'FD');
+  font('helvetica','bold',12,G);text(`${f0(P.a)} sq ft`,px+S.sb.l*sc+P.pw*sc/2,py+S.sb.r*sc+P.pl*sc/2,{align:'center'});
+  font('helvetica','normal',7.5,MUTE);text('buildable per floor',px+S.sb.l*sc+P.pw*sc/2,py+S.sb.r*sc+P.pl*sc/2+4.5,{align:'center'});
+  font('helvetica','normal',8,MUTE);text(ftP(S.W),px+pw/2,py-1.8,{align:'center'});text(ftP(S.L),px+pw+2.5,py+ph/2,{angle:-90});
+  fill(INK);doc.rect(px,py+ph+3,pw,6,'F');font('helvetica','bold',6.5,WHITE);text(`ROAD${face?'  ·  '+face.toUpperCase()+' FACING':''}`,px+pw/2,py+ph+7.2,{align:'center',charSpace:.4});
+  const kx=M+boxW+14;let ky=y+2;
+  [['Location',`${c.locality||'-'}, Chennai`],['Plot facing',face?face+' facing':'-'],['Plot size',`${ftP(S.L)} x ${ftP(S.W)} (depth x width)  ·  ${f0(plot)} sq ft`],
+   ['Setbacks',`Front ${ftP(S.sb.f)}  ·  Rear ${ftP(S.sb.r)}  ·  Left ${ftP(S.sb.l)}  ·  Right ${ftP(S.sb.ri)}`],['Buildable floor plate',`${ftP(P.pl)} x ${ftP(P.pw)} = ${f0(P.a)} sq ft per floor`],
+   ['Building',`G+${n-1} with terrace`],['Staircase',st.l?`${st.n}, ${ftP(st.l)} x ${ftP(st.w)}`:'None'],['Lift',lf.l?`${lf.n}, serving ${liftStops()} floors`:'None'],
+   ['Allowances',`Walls ${S.wall}%  ·  Passages ${S.circ}%`]].forEach(([k,v])=>{
+     font('helvetica','bold',7,G);text(k.toUpperCase(),kx,ky,{charSpace:.4});font('helvetica','normal',10,INK);const vl=wrap(v,W-M-kx,10);text(vl,kx,ky+5);ky+=7+vl.length*lh(10)+1.5});
+  y=Math.max(py+ph+16,ky)+4;
+
+  /* ===== 03 AREA STATEMENT ===== */
+  newPage();
+  opener('Area statement','Every square foot, accounted for.');
   tt.rows.forEach(({i,c:fc})=>{
-    const items=itemsOf(i),body=[],kinds=[];
+    const items=itemsOf(i),body=[],kinds=[];if(fc.slab<0.5&&!items.length)return;
     const add=(r,k)=>{body.push(r);kinds.push(k)};
     fc.core.forEach(x=>add([x.name+` (${x.variant})`,`${ftP(x.l)} x ${ftP(x.w)}`,f0(x.l*x.w)],'row'));
     items.filter(x=>!x.open).forEach(x=>add([x.name+(x.variant?` (${x.variant})`:''),`${ftP(x.l)} x ${ftP(x.w)}`,f0(x.l*x.w)],'row'));
-    add([`Circulation (${S.circ}% of enclosed)`,'',f0(fc.circ)],'sub');add([`Walls (${S.wall}%)`,'',f0(fc.walls)],'sub');
+    add([`Passages (${S.circ}% of enclosed)`,'',f0(fc.circ)],'sub');add([`Walls (${S.wall}%)`,'',f0(fc.walls)],'sub');
     add(['Enclosed built-up','',f0(fc.encBU)],'tot');
     const op=items.filter(x=>x.open);
-    if(op.length){op.forEach(x=>add([x.name+(x.variant?` (${x.variant})`:'')+' - open',`${ftP(x.l)} x ${ftP(x.w)}`,f0(x.l*x.w)],'row'));add(['Open / semi-covered','',f0(fc.open)],'tot')}
-    add([`${fname(i)} total`,`of ${f0(pl.a)} plate`,f0(fc.used)],'grand');
-    sub(fname(i));
-    tbl(['Space','Size','Area (sq ft)'],body,{columnStyles:{1:{cellWidth:38},2:{cellWidth:30,halign:'right'}},
+    if(op.length||fc.stilt>0.5){op.forEach(x=>add([x.name+(x.variant?` (${x.variant})`:'')+(isT(i)?' - open, not charged':' - open'),`${ftP(x.l)} x ${ftP(x.w)}`,f0(x.l*x.w)],'row'));
+      if(fc.stilt>0.5)add(['Rest of the stilt (parking & driveway) - open','',f0(fc.stilt)],'row');
+      if(!isT(i))add(['Open / semi-covered','',f0(fc.open+fc.stilt)],'tot')}
+    need(34);fill(INK);doc.roundedRect(M,y,CW,11,2,2,'F');
+    font('times','bold',13,WHITE);text(isT(i)?'Terrace':fname(i),M+5,y+7.6);
+    font('helvetica','bold',10,WHITE);text(`${f0(fc.slab)} sq ft ${isT(i)?'head room':'roof slab'}`,W-M-5,y+7.4,{align:'right'});y+=13;
+    tbl(['Space','Size','Area (sq ft)'],body,{columnStyles:{1:{cellWidth:36},2:{cellWidth:28,halign:'right'}},
       didParseCell:d=>{if(d.section!=='body')return;const k=kinds[d.row.index];
         if(k==='sub'){d.cell.styles.textColor=MUTE;d.cell.styles.fontStyle='italic'}
-        if(k==='tot'){d.cell.styles.fontStyle='bold';d.cell.styles.fillColor=[243,241,235]}
-        if(k==='grand'){d.cell.styles.fontStyle='bold';d.cell.styles.fillColor=SOFT}}});
+        if(k==='tot'){d.cell.styles.fontStyle='bold';d.cell.styles.textColor=INK;d.cell.styles.fillColor=SOFT}}});
   });
-  sub('Area summary');
-  kv([['Plot area',`${f0(plot)} sq ft`],['Floor plate (after setbacks)',`${f0(pl.a)} sq ft`],['Enclosed built-up',`${f0(tt.enc)} sq ft`],['Open / semi-covered area',`${f0(tt.open)} sq ft`],['Total built-up area',`${f0(tt.all)} sq ft`],['Floor area ratio (FAR)',plot?(tt.all/plot).toFixed(2):'-']]);
+  need(34);const sw=(CW-12)/4;
+  tile(M,y,sw,28,'Enclosed',`${f0(tt.enc)}`,'sq ft',{size:17});
+  tile(M+sw+4,y,sw,28,'Open / covered',`${f0(tt.open+tt.stilt)}`,'sq ft',{size:17});
+  tile(M+2*(sw+4),y,sw,28,'Total built-up',`${f0(tt.all)}`,'sq ft roof slab',{size:17,hot:true});
+  tile(M+3*(sw+4),y,sw,28,'Floor area ratio',plot?(tt.all/plot).toFixed(2):'-','built-up / plot',{size:17});y+=36;
 
-  sec(`4. Cost of construction - ${p.name} package`);
-  const or=openRate(p),cb=[];let ce=0,co=0;
-  tt.rows.forEach(({i,c:fc})=>{const a=fc.encBU*p.rate,b=fc.open*or;ce+=a;co+=b;cb.push([fname(i),f0(fc.encBU),f0(fc.open),rs(a+b)])});
-  cb.push([`Enclosed @ ${rs(p.rate)}/sq ft`,f0(tt.enc),'',rs(ce)]);cb.push([`Open / semi-covered @ ${rs(or)}/sq ft`,'',f0(tt.open),rs(co)]);
-  cb.push(['Total',f0(tt.enc),f0(tt.open),rs(ce+co)]);
-  const nb=cb.length;
-  tbl(['Floor','Enclosed (sq ft)','Open (sq ft)','Cost'],cb,{columnStyles:{1:{halign:'right'},2:{halign:'right'},3:{halign:'right',cellWidth:38}},
-    didParseCell:d=>{if(d.section!=='body')return;if(d.row.index===nb-1){d.cell.styles.fontStyle='bold';d.cell.styles.fillColor=SOFT}else if(d.row.index>=nb-3){d.cell.styles.textColor=MUTE}}});
-  need(22);doc.setFillColor(...G);doc.roundedRect(M,y,W-2*M,18,2,2,'F');doc.setTextColor(255);doc.setFontSize(9);
-  doc.text(pt(`Estimated cost of construction · ${p.name} package`),M+5,y+6.5);
-  doc.setFont('helvetica','bold');doc.setFontSize(15);doc.text(rsRange(ce+co),M+5,y+14);
-  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text(pt(`Calculated ${rs(ce+co)}`),W-M-5,y+14,{align:'right'});
-  doc.setTextColor(...INK);y+=25;
-  sub('How your plan compares across packages');
-  tbl(['Package','Rate (enclosed)','Rate (open)','Estimated range for your plan'],PKGS.map(q=>[q.name+(q.id===p.id?'  (chosen)':''),rs(q.rate)+'/sq ft',rs(openRate(q))+'/sq ft',rsRange(costFor(q,tt))]),
-    {columnStyles:{3:{halign:'right'}},didParseCell:d=>{if(d.section==='body'&&PKGS[d.row.index].id===p.id){d.cell.styles.fontStyle='bold';d.cell.styles.fillColor=SOFT}}});
+  /* ===== 04 COST ===== */
+  newPage();
+  opener('Cost of construction','What it takes to build your home.');
+  fill(G);doc.roundedRect(M,y,CW,44,4,4,'F');
+  font('helvetica','bold',7.5,WHITE);text(`ESTIMATED COST  ·  ${p.name.toUpperCase()} PACKAGE`,M+8,y+11,{charSpace:.5});
+  font('helvetica','bold',38,WHITE);text(rsRange(cp.total),M+8,y+29.5);
+  font('helvetica','normal',9.5,WHITE);text(`${rs(p.rate)} per sq ft of roof slab${cp.lift?'  ·  including the lift':''}  ·  calculated ${rs(cp.total)}`,M+8,y+38);y+=52;
+  kicker('How it adds up');y+=2;
+  const slabs=tt.rows.filter(r=>r.c.slab>0.5),mx=Math.max(...slabs.map(r=>r.c.slab)),bx0=M+58,bwm=CW-58-40;
+  slabs.forEach(({i,c:fc})=>{need(13);
+    font('helvetica','bold',10,INK);text(slabName(i).replace(' roof slab',''),M,y+3.5);
+    font('helvetica','normal',8,MUTE);text(`${f0(fc.slab)} sq ft roof slab`,M,y+8);
+    fill(RULE);doc.roundedRect(bx0,y+1.5,bwm,5,2.5,2.5,'F');fill(isT(i)?INK:G);doc.roundedRect(bx0,y+1.5,Math.max(5,bwm*fc.slab/mx),5,2.5,2.5,'F');
+    font('helvetica','bold',10.5,INK);text(rs(fc.slab*p.rate),W-M,y+5.6,{align:'right'});y+=11.5});
+  if(cp.lift){need(13);font('helvetica','bold',10,INK);text('Lift',M,y+3.5);font('helvetica','normal',8,MUTE);text(`${lf.n}, ${liftStops()} floors · lump sum`,M,y+8);
+    font('helvetica','bold',10.5,INK);text(rs(cp.lift),W-M,y+5.6,{align:'right'});y+=11.5}
+  draw(INK);doc.setLineWidth(.5);doc.line(M,y,W-M,y);y+=8;
+  font('times','bold',15,INK);text('Total',M,y);font('helvetica','bold',15,G);text(rs(cp.total),W-M,y,{align:'right'});y+=11;
+  need(36);kicker('Charged separately');
+  const ew=(CW-9)/4;EXCLUSIONS.forEach((x,k)=>{const ex=M+k*(ew+3);fill(BLUSH);draw(PINK2);doc.setLineWidth(.4);doc.roundedRect(ex,y,ew,18,3,3,'FD');
+    font('helvetica','bold',8,G);text(String(k+1).padStart(2,'0'),ex+4,y+6.5);const xl=wrap(x,ew-8,9.5,'helvetica','bold');font('helvetica','bold',9.5,INK);text(xl,ex+4,y+12.5)});
+  y+=22;para('These are not part of the estimate above and are charged separately.',{size:8.5,color:MUTE});y+=2;
+  need(42);kicker('How your plan compares');y+=2;
+  const pw3=(CW-8)/3;PKGS.forEach((q,k)=>{const qx=M+k*(pw3+4),on=q.id===p.id;
+    fill(on?SOFT:WHITE);draw(on?G:RULE);doc.setLineWidth(on?.9:.4);doc.roundedRect(qx,y,pw3,33,3,3,'FD');
+    if(on){fill(G);doc.roundedRect(qx+pw3-27,y-3,24,6.5,3,3,'F');font('helvetica','bold',6.5,WHITE);text('YOUR CHOICE',qx+pw3-15,y+1.4,{align:'center',charSpace:.3})}
+    font('times','bold',16,INK);text(q.name,qx+5,y+11);font('helvetica','normal',8.5,MUTE);text(`${rs(q.rate)} per sq ft`,qx+5,y+17);
+    font('helvetica','bold',13,on?G:INK);text(rsRange(costFor(q,tt)),qx+5,y+27)});
+  y+=40;
 
-  doc.addPage();y=18;
-  sec(`5. What the ${p.name} package includes`);
+  /* ===== 05 VAASTU ===== */
+  if(S.facing){
+    newPage();
+    opener('Vaastu guide',`Basic pointers for your ${face.toLowerCase()}-facing plot.`);
+    para('Each space has a first and a second preference. Directions are compass directions, with where that falls on your plot: left and right are as you stand on the road, looking at your plot.',{size:9.5});
+    const vb=wrap(`Your plot faces ${face}, so the road is on the ${face.toLowerCase()} side. Keep the north and east sides lighter and more open, the south and west sides heavier, and the centre of the house open: no toilet, staircase or heavy column there.`,CW-14,9.5);
+    const vh=vb.length*lh(9.5)+10;need(vh);fill(SOFT);doc.roundedRect(M,y,CW,vh,3,3,'F');font('helvetica','normal',9.5,INK);text(vb,M+7,y+7.5);y+=vh+6;
+    const mine=new Set(chosenVaastu().map(r=>r[0])),rows=vRows().sort((a,b)=>(mine.has(b[0])?1:0)-(mine.has(a[0])?1:0));
+    const cw2=(CW-6)/2;
+    const cardH=r=>{const tl=r[4]?wrap(r[4],cw2-12,8,'helvetica','italic').length:0,al=wrap('Avoid: '+r[3],cw2-12,8).length;return 12+tl*lh(8)+23+al*lh(8)+3};
+    for(let k=0;k<rows.length;k+=2){
+      const pair=rows.slice(k,k+2),rh=Math.max(...pair.map(cardH));need(rh+4);
+      pair.forEach((r,j)=>{const cx=M+j*(cw2+6),on=mine.has(r[0]);let cy=y+8;
+        fill(on?BLUSH:WHITE);draw(on?PINK2:RULE);doc.setLineWidth(.4);doc.roundedRect(cx,y,cw2,rh,3,3,'FD');if(on){fill(G);doc.rect(cx,y+3,1.8,rh-6,'F')}
+        font('times','bold',12.5,INK);text(r[0],cx+6,cy);
+        if(on){font('helvetica','bold',6,G);text('IN YOUR PLAN',cx+cw2-5,y+6,{align:'right',charSpace:.3})}
+        cy+=4.5;if(r[4]){const tl=wrap(r[4],cw2-12,8,'helvetica','italic');font('helvetica','italic',8,MUTE);text(tl,cx+6,cy);cy+=tl.length*lh(8)+1}
+        font('helvetica','bold',7,G);text('1ST PREFERENCE',cx+6,cy+2.5,{charSpace:.3});font('helvetica','bold',9.5,INK);text(vText(r[1]),cx+6,cy+7.5);cy+=10.5;
+        font('helvetica','bold',7,MUTE);text('2ND PREFERENCE',cx+6,cy+2.5,{charSpace:.3});font('helvetica','normal',9.5,BODY);text(vText(r[2]),cx+6,cy+7.5);cy+=13.5;
+        font('helvetica','normal',8,MUTE);text(wrap('Avoid: '+r[3],cw2-12,8),cx+6,cy)});
+      y+=rh+4;
+    }
+    para('This is general Vaastu guidance. Your architect will balance it with light, ventilation, the shape of your plot and local building rules.',{size:8.5,color:MUTE});
+  }
+
+  /* ===== 06 IDEAS ===== */
+  y+=6;need(70);
+  opener('Ideas to consider','Things worth thinking about with your architect.');
+  ideas().forEach(([title,body],k)=>{const bl2=wrap(body,CW-30,9.8),h=17+bl2.length*lh(9.8)+3;need(h+4);
+    fill(BLUSH);doc.roundedRect(M,y,CW,h,3,3,'F');
+    fill(G);doc.circle(M+9,y+9,4.6,'F');font('helvetica','bold',9,WHITE);text(String(k+1),M+9,y+10.6,{align:'center'});
+    font('times','bold',13.5,INK);text(title,M+18,y+10.3);font('helvetica','normal',9.8,BODY);text(bl2,M+18,y+16.5);y+=h+4});
+  para('These are suggestions, not part of the estimate.',{size:8.5,color:MUTE});
+
+  /* ===== 07 PACKAGE ===== */
+  newPage();
+  opener(`The ${p.name} package`,`Exactly what you are paying for: ${SPECS.length} items.`);
+  const hw=(CW-12)/4;HL.slice(0,4).forEach((h,j)=>{const hx2=M+j*(hw+4);fill(BLUSH);doc.roundedRect(hx2,y,hw,24,3,3,'F');
+    font('helvetica','bold',7,G);text(h[2].toUpperCase(),hx2+4,y+7,{charSpace:.4});const sl2=wrap(spec(h[0],h[1],p.col),hw-8,8.8,'helvetica','bold').slice(0,3);font('helvetica','bold',8.8,INK);text(sl2,hx2+4,y+12.5)});
+  y+=31;
   let cur='';const sb=[];
-  SPECS.forEach(r=>{if(r[0]!==cur){cur=r[0];sb.push([{content:cur.toUpperCase(),colSpan:2,styles:{fillColor:SOFT,textColor:G,fontStyle:'bold',fontSize:8}}])}sb.push([r[1],r[p.col]])});
-  tbl(['Item',`${p.name} specification`],sb,{columnStyles:{0:{cellWidth:56,fontStyle:'bold'}},alternateRowStyles:{}});
+  SPECS.forEach(r=>{if(r[0]!==cur){cur=r[0];sb.push([{content:cur.toUpperCase(),colSpan:2,styles:{fillColor:INK,textColor:WHITE,fontStyle:'bold',fontSize:8}}])}sb.push([r[1],r[p.col]])});
+  tbl(null,sb,{columnStyles:{0:{cellWidth:54,fontStyle:'bold',textColor:INK}}});
 
-  sec('6. Notes');
-  [`The cost is shown as a range (${rsRange(ce+co)}) based on the calculated figure of ${rs(ce+co)}, rounded up to allow for design development and market variation.`,
-   'This is an indicative estimate based on the spaces you selected and the built-up area they generate. The final cost is confirmed after detailed design, structural design and a soil investigation.',
-   `Enclosed spaces (four walls and a roof) are charged at the ${p.name} rate of ${rs(p.rate)}/sq ft. Open or covered spaces such as car parks, sit-outs and balconies are charged at ${rs(or)}/sq ft.`,
+  /* ===== 08 GOOD TO KNOW ===== */
+  need(70);y+=4;
+  opener('Good to know','The fine print, in plain words.');
+  [`The cost is shown as a range (${rsRange(cp.total)}) starting from the calculated figure of ${rs(cp.total)}, to allow for design development and market variation.`,
+   'This is an indicative estimate based on the spaces you selected and the area they generate. The final cost is confirmed after detailed design, structural design and a soil investigation.',
+   `The building is charged on the roof slab area of each floor at the ${p.name} rate of ${rs(p.rate)}/sq ft. This covers the plinth, the parking and every covered space, with or without walls. On the terrace, only the head room roof is charged; the open terrace is not.`,
+   tt.stilt>0.5?`Part of your ground floor is open stilt parking. The ${f0(tt.stilt)} sq ft under the floor above, beyond the spaces you added, is part of the ground floor roof slab.`:'',
+   cp.lift?`The lift is a lump-sum allowance of ${rs(cp.lift)} for a ${lf.n.toLowerCase()} lift serving ${liftStops()} floors. The final price depends on the make and model chosen.`:'',
    "Amounts marked 'up to' are allowances. If you pick something costlier, you pay only the difference.",
-   'Items marked as extra in the specification, statutory approvals, EB and water connections, compound wall and gate, and interiors are not part of this estimate.',
-   'Room sizes are typical planning sizes and will be refined during design.'].forEach(n=>para('- '+n,9,INK));
-  y+=2;para(`Prepared for ${c.name||'you'} on ${dateStr}. Reference ${ref}.`,8.5,MUTE);
+   `Charged separately, not part of this estimate: ${EXCLUSIONS.join(', ').toLowerCase()}.`,
+   'Items marked as extra in the specification, statutory approvals, EB and water connections, and interiors are also not part of this estimate.',
+   'Space sizes are typical planning sizes and will be refined during design.'].filter(Boolean).forEach(s=>{
+     const L=wrap(s,CW-8,9.5);need(L.length*lh(9.5)+3);fill(G);doc.circle(M+1.5,y+2.2,1.1,'F');font('helvetica','normal',9.5,BODY);text(L,M+6,y+3.3);y+=L.length*lh(9.5)+3});
+
+  /* ===== CLOSING ===== */
+  newPage();y=32;
+  kicker('What happens next');
+  font('times','bold',34,INK);text('Your brief is ready.',M,y+10);font('times','bolditalic',34,G);text('Now, the design.',M,y+24);y+=40;
+  const s3=(CW-8)/3;[['01','Brief','What your family needs, what it takes and what it costs.',true],['02','Design','Your architect turns the brief into a plan for the way you live.',false],['03','Build','Construction with a clear package and specification.',false]].forEach(([nn,t2,d2,done],j)=>{
+    const sx=M+j*(s3+4);fill(done?G:WHITE);draw(done?G:RULE);doc.setLineWidth(.5);doc.roundedRect(sx,y,s3,54,3,3,'FD');
+    font('times','bold',24,done?WHITE:G);text(nn,sx+6,y+13);font('times','bold',17,done?WHITE:INK);text(t2,sx+6,y+23);
+    font('helvetica','normal',9,done?WHITE:BODY);text(wrap(d2,s3-12,9),sx+6,y+30);
+    if(done){fill(WHITE);doc.roundedRect(sx+s3-22,y+5,17,6.5,3,3,'F');font('helvetica','bold',6.5,G);text('DONE',sx+s3-13.5,y+9.4,{align:'center',charSpace:.4})}});
+  y+=64;
+  para('Bring this report to your first meeting with your architect. If you would like to talk it through with us, simply reply to the email this report came with, or message us on WhatsApp from the Know Your Home page.',{size:11});
+  y+=14;
+  fill(SOFT);doc.roundedRect(M,y,CW,58,4,4,'F');
+  font('times','bolditalic',26,G);text(wrap(`All the best for your new home, ${first}.`,CW-20,26,'times','bolditalic'),W/2,y+22,{align:'center'});
+  font('times','italic',14,BODY);text('Small plot. Big living.',W/2,y+44,{align:'center'});y+=70;
+  logo(W/2-4.5,y);y+=16;font('helvetica','bold',8,G);text('POCKET HOME',W/2,y,{align:'center',charSpace:.6});
+  font('helvetica','normal',8,MUTE);text('A Design + Build initiative by Nichekala Architecture & Design Studio, Chennai',W/2,y+5,{align:'center'});
+  text(`Prepared for ${c.name||'you'} on ${dateStr}  ·  Reference ${ref}`,W/2,y+10,{align:'center'});
 
   const pages=doc.getNumberOfPages();
-  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(7.5);doc.setTextColor(...MUTE);doc.setDrawColor(...RULE);doc.line(M,286,W-M,286);
-    doc.text('Know Your Home  ·  Pocket Home by Nichekala Architecture & Design Studio, Chennai',M,290.5);
-    const pg=`${String(i).padStart(2,'0')} / ${String(pages).padStart(2,'0')}`;doc.setFont('helvetica','bold');doc.setTextColor(...G);doc.text(pg,W-M,290.5,{align:'right'});doc.setFont('helvetica','normal')}
+  for(let i=2;i<=pages;i++){doc.setPage(i);draw(RULE);doc.setLineWidth(.3);doc.line(M,284,W-M,284);
+    font('helvetica','normal',7.5,MUTE);text('Know Your Home  ·  Pocket Home by Nichekala',M,289);
+    font('helvetica','bold',7.5,G);text(`${String(i).padStart(2,'0')} / ${String(pages).padStart(2,'0')}`,W-M,289,{align:'right'})}
   return doc;
 }
-function readyCheck(verb){
-  if(!window.jspdf||!window.jspdf.jsPDF){toast('Could not load the PDF engine. Opening the print view instead.',true);setTimeout(()=>window.print(),900);return false}
-  const tt=totals();if(!tt.rows.some(r=>itemsOf(r.i).length)){toast(`Add a few spaces first, then ${verb} your report.`,true);return false}
-  const over=tt.rows.filter(r=>r.c.used>plate().a+0.01);
-  if(over.length&&!confirm(`${over.map(r=>fname(r.i)).join(', ')} is over the floor plate. ${verb[0].toUpperCase()+verb.slice(1)} the report anyway?`))return false;
-  return true;
-}
 const reportName=()=>`Know-Your-Home_${(S.client.name||'Home').replace(/[^\w]+/g,'-')}.pdf`;
+let mailStatus='';
+function setStatus(h){mailStatus=h;const el=$('#pdfLink');if(el)el.innerHTML=h}
 function offerDownload(doc,msg,auto){
   const fn=reportName(),url=URL.createObjectURL(doc.output('blob'));
   if(auto){const a=document.createElement('a');a.href=url;a.download=fn;a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}
-  $('#pdfLink').innerHTML=`${msg} <a href="${url}" target="_blank" rel="noopener" download="${fn}">Open your PDF</a>.`;
+  setStatus(`${msg} <a href="${url}" target="_blank" rel="noopener" download="${fn}">Open your PDF</a>.`);
 }
-function exportPDF(){
-  if(!readyCheck('download'))return;
-  try{offerDownload(buildPDF(),"Report ready. If the download didn't start:",true);toast('Your report is ready')}
-  catch(e){console.error(e);toast('Could not build the PDF. Opening the print view instead.',true);setTimeout(()=>window.print(),900)}
+function downloadReport(){
+  if(!window.jspdf||!window.jspdf.jsPDF){toast('Could not load the PDF engine. Please refresh the page.',true);return}
+  try{offerDownload(buildPDF(),'Your full report has been downloaded.',true);toast('Your full report is ready')}
+  catch(e){console.error(e);toast('Could not build the PDF. Please try again.',true)}
 }
 async function emailReport(){
   const c=S.client;
-  if(!validEmail(c.email)){toast('Add your email address first.',true);openGate();return}
-  if(!readyCheck('email'))return;
-  if(!MAIL_ENDPOINT||/PASTE/.test(MAIL_ENDPOINT)){
-    toast('Email sending is not set up yet, so your report has been downloaded instead.',true);
-    try{offerDownload(buildPDF(),'Email is not connected yet. Your report has been downloaded.',true)}catch(e){console.error(e)}
-    return;
-  }
-  const btn=$('#emailBtn'),label=btn.innerHTML;btn.disabled=true;btn.innerHTML='Sending…';
-  $('#pdfLink').textContent='Preparing and sending your report…';
+  if(!window.jspdf||!window.jspdf.jsPDF){toast('Could not load the PDF engine. Please refresh the page and try again.',true);return}
+  setStatus(`Sending your full report to <b>${esc(c.email)}</b>…`);
   let doc;
   try{
     doc=buildPDF();
+    if(!MAIL_ENDPOINT)throw new Error('Email is not set up');
     const tt=totals(),p=PK(S.pkg),cost=costFor(p,tt);
     const payload={token:MAIL_TOKEN,name:c.name,email:c.email,phone:c.phone,locality:c.locality,city:'Chennai',
-      plot:`${f0(S.L*S.W)} sq ft (${S.L} x ${S.W} ft)`,floors:`G+${S.floors.length-1}`,builtup:Math.round(tt.all),
+      plot:`${f0(S.L*S.W)} sq ft (${S.L} x ${S.W} ft)${S.facing?', '+faceTxt():''}`,floors:`G+${S.floors.length-1}${S.lift!=='none'?' with lift':''}`,builtup:Math.round(tt.all),
       package:p.name,range:rangeTxt(cost),calculated:Math.round(cost),ref:reportRef(),
       filename:reportName(),pdf:doc.output('datauristring').split(',')[1]};
     const body=JSON.stringify(payload);let ok=false,detail='';
@@ -1282,21 +1971,90 @@ async function emailReport(){
     }
     if(!ok)throw new Error(detail||'send failed');
     offerDownload(doc,`Sent to <b>${esc(c.email)}</b>. It can take a minute to arrive, so check your spam folder too.`,false);
-    toast('Your report is on its way');
+    toast('Your full report is on its way');
   }catch(e){
     console.error(e);
     toast("We couldn't send the email right now. Your report has been downloaded instead.",true);
     if(doc)offerDownload(doc,"We couldn't send the email right now, so your report has been downloaded.",true);
-  }finally{btn.disabled=false;btn.innerHTML=label}
+  }
 }
-syncInputs();renderAll();
-(function(){const blks=document.querySelectorAll('.blk.rv');
+// ---------- guided tour ----------
+// Shown the first time a visitor reaches each page (once per visit); the ? button replays it.
+// Each tip: [element to highlight, title, text]
+const TOUR={
+ gate:[
+  ['#gate .g2','Enter your plot size','Type the depth (front to rear) and the width (side to side) of your plot, in feet. The plot area appears just below.'],
+  ['#gFace','Which way does it face?','Tap the direction of the road in front of your plot. We use it to give you a Vaastu guide.'],
+  ['#gate [data-act=start]','Start planning','Tap here to move on. It takes about 5 minutes to plan your home and see the cost.']],
+ 1:[
+  ['#sbChips','Choose your setbacks','This is the open margin left around your building. Tap one size for all four sides, or type each side in the boxes below.'],
+  ['#plateInfo','Your buildable area','This is how much you can build on each floor, after the setbacks.'],
+  ['#sticky','Move to the next step','Use this bar at the bottom of the screen. Next takes you forward, the arrow takes you back.']],
+ 2:[
+  ['#stair','Pick a staircase','Choose the staircase size. It repeats on every floor.'],
+  ['#lift','Want a lift?','Choose a lift if you need one. Its cost is shown as a separate item in your estimate.'],
+  ['#sticky','Next: your floors','Tap Next when you are ready to plan the spaces on each floor.']],
+ 3:[
+  ['#nChips','How many floors?','Choose Ground only, G+1, G+2 and so on.'],
+  ['#fsteps','Your floors','Each floor is shown here with a bar that fills up as you add spaces. We take you through them one by one, from the ground floor up.'],
+  ['#panel .plac','Add spaces','Tap a size to add that space to this floor. Sizes that won’t fit on the floor fade out.'],
+  ['#panel .stats','Watch what’s left','This shows how much of the floor is used and how much is left.'],
+  ['#sticky','Done with this floor?','Tap Next to plan the floor above. On upper floors, “Copy from floor below” saves time.']],
+ 4:[
+  ['#pkgs','Choose a package','Compare the three packages and tap one to choose it. Each has one rate per sq ft.'],
+  ['#genBtn','See your cost','Tap Generate my estimate. We will ask for your name, mobile and email, show your estimate here, and email you the full report.']],
+ 5:[
+  ['#report .estimate','Your estimate','This is the estimated cost of building your home with the package you chose.'],
+  ['#report .excl','Charged separately','These items are not part of the estimate and are charged separately.'],
+  ['#report .rgrid','Area and Vaastu','The area of each floor, and Vaastu tips for the spaces in your plan.'],
+  ['#report .cta','Your full report','Your full report is on its way to your email. You can also download it here, or chat with us on WhatsApp to know more.']]
+};
+let tour=null;
+const tourKey=()=>$('#gate').classList.contains('on')?'gate':String(S.step);
+function autoTour(){if($('#intro').classList.contains('on'))return;const k=tourKey();if((S.started||k==='gate')&&!S.seen[k])startTour(k)}
+function startTour(k){
+  const steps=(TOUR[k]||[]).filter(s=>{const el=$(s[0]);return el&&el.getClientRects().length});
+  if(!steps.length)return;
+  S.seen[k]=true;save();
+  tour={k,steps,i:0};$('#tour').classList.add('on');showTour();if(!following)follow();
+}
+function tourMove(d){if(!tour)return;const n=tour.i+d;if(n<0)return;if(n>=tour.steps.length)return endTour();tour.i=n;showTour()}
+function endTour(){tour=null;$('#tour').classList.remove('on')}
+function showTour(){
+  const[sel,title,text]=tour.steps[tour.i],n=tour.steps.length,last=tour.i===n-1,el=$(sel);
+  $('#tour .tip').innerHTML=`<div class="kicker">Step ${tour.i+1} of ${n}</div><h4>${title}</h4><p>${text}</p>
+   <div class="tdots">${tour.steps.map((_,j)=>`<i class="${j===tour.i?'on':''}"></i>`).join('')}</div>
+   <div class="tbtns"><button class="tskip" data-act="tskip">Skip guide</button>${tour.i?'<button class="ghost" data-act="tback">Back</button>':''}<button class="pri" data-act="tnext">${last?'Got it':'Next'}</button></div>`;
+  if(getComputedStyle(el).position!=='fixed'&&el.scrollIntoView)el.scrollIntoView({block:'center',behavior:'instant'});
+  placeTour();
+  setTimeout(()=>{const b=$('#tour [data-act=tnext]');if(b)b.focus()},50);
+}
+function placeTour(){
+  if(!tour)return;
+  const r=$(tour.steps[tour.i][0]).getBoundingClientRect(),pad=6,vw=window.innerWidth,vh=window.innerHeight;
+  Object.assign($('#tour .hole').style,{left:r.left-pad+'px',top:r.top-pad+'px',width:r.width+2*pad+'px',height:r.height+2*pad+'px'});
+  const tip=$('#tour .tip'),tw=tip.offsetWidth||360,th=tip.offsetHeight||200;
+  let top=r.bottom+pad+12;if(top+th>vh-8)top=r.top-pad-12-th;if(top<8)top=Math.max(8,vh-th-8);
+  tip.style.top=top+'px';tip.style.left=Math.min(Math.max(12,r.left),vw-tw-12)+'px';
+}
+// keep the highlight on its target while fonts load or the layout shifts
+let following=false;
+function follow(){if(!tour){following=false;return}following=true;placeTour();requestAnimationFrame(follow)}
+document.addEventListener('keydown',e=>{if(!tour)return;if(e.key==='Escape')endTour();else if(e.key==='ArrowRight')tourMove(1);else if(e.key==='ArrowLeft')tourMove(-1)});
+
+// ---------- cover page ----------
+// Shown to every new visitor before the start screen; "Why Know Your Home?" on the start screen reopens it.
+function openIntro(){endTour();const el=$('#intro');el.classList.add('on');el.scrollTop=0;
+  const blks=el.querySelectorAll('.rv');
   if(!('IntersectionObserver' in window)){blks.forEach(b=>b.classList.add('in'));return}
-  const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}}),{threshold:.06});blks.forEach(b=>o.observe(b));
-  const links=[...document.querySelectorAll('#steps a')];
-  const o2=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on)a.parentNode.scrollTo({left:a.offsetLeft-20,behavior:'smooth'})})}),{rootMargin:'-40% 0px -55% 0px'});
-  document.querySelectorAll('section.blk').forEach(s=>o2.observe(s));})();
-if(!S.started)openGate();
+  const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}}),{root:el,threshold:.08});
+  blks.forEach(b=>o.observe(b))}
+function closeIntro(){$('#intro').classList.remove('on');S.seen.intro=true;save();if(!S.started||!S.facing)openGate();else autoTour()}
+
+if(S.step===5&&!S.generated)S.step=4;
+syncInputs();renderAll();
+if(!S.seen.intro)openIntro();
+if(!S.started||!S.facing)openGate();else autoTour();
 </script>
 </body>
 </html>
