@@ -1134,48 +1134,80 @@ details.adv summary{cursor:pointer;color:var(--grey);font-weight:800;font-size:1
 .kv-c2 path{fill:var(--kv-red)}.kv-c2 b{background:var(--kv-red)}.kv-c2{animation-delay:-3s}
 @keyframes kvDrift{to{transform:translate(18px,-14px)}}
 @keyframes kvBob{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-8px) rotate(var(--rot,0deg))}}
-/* drawing sheet */
-.kv-sheet{position:relative;z-index:2;margin:44px auto 0;max-width:880px;background:var(--kv-card);border:1px solid var(--kv-line);border-radius:var(--kv-r);box-shadow:0 30px 60px -30px rgba(20,22,26,.45);overflow:hidden;text-align:left;animation:rise .8s .4s both}
-.kv-sheet-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--kv-line);font-size:12.5px;font-weight:700;color:var(--kv-mute)}
-.kv-dots{display:flex;gap:6px}.kv-dots i{width:10px;height:10px;border-radius:50%;background:#FF5F57}.kv-dots i:nth-child(2){background:#FEBC2E}.kv-dots i:nth-child(3){background:#28C840}
-.kv-sheet-r{margin-left:auto;display:none}
-.kv-sheet-body{display:grid;grid-template-columns:1fr;background-color:#FBFAF7;background-image:linear-gradient(var(--kv-blue-soft) 1px,transparent 1px),linear-gradient(90deg,var(--kv-blue-soft) 1px,transparent 1px);background-size:22px 22px}
-.kv-plan{display:block;width:100%;max-width:380px;margin:0 auto;padding:22px 18px 8px}
-.kv-d{fill:none;stroke:var(--kv-ink);stroke-dasharray:1;stroke-dashoffset:1;stroke-linecap:round;stroke-linejoin:round;animation:kvDraw 1.2s cubic-bezier(.4,0,.2,1) forwards}
-.kv-plot{stroke:var(--kv-mute);stroke-width:1.5;stroke-dasharray:1;animation-delay:.5s}
-.kv-plate{stroke:var(--kv-red);stroke-width:3;animation-delay:1.2s}
-.kv-wall{stroke-width:3;animation-delay:1.9s;animation-duration:1.6s}
-.kv-stair{stroke-width:1;opacity:.6;animation-delay:2.8s}
-.kv-door{stroke-width:1.2;animation-delay:3.2s}
-.kv-car{stroke:var(--kv-red);stroke-width:1.6;stroke-dasharray:1;animation-delay:3.4s}
-.kv-fill{opacity:0;animation:kvFade .6s 2.8s forwards}
-.kv-stairfill{fill:url(#kvHatch)}
-.kv-lbl text{font-family:var(--kv-sans);font-size:14px;font-weight:800;fill:var(--kv-ink);text-anchor:middle;opacity:0;animation:kvFade .5s forwards}
-.kv-lbl text.sm{font-size:10.5px;fill:var(--kv-ink-2)}
-.kv-lbl text{paint-order:stroke;stroke:#FBFAF7;stroke-width:4px;stroke-linejoin:round}
-.kv-lbl text:nth-child(1){animation-delay:3.5s}.kv-lbl text:nth-child(2){animation-delay:3.65s}.kv-lbl text:nth-child(3){animation-delay:3.8s}.kv-lbl text:nth-child(4){animation-delay:3.95s}.kv-lbl text:nth-child(5){animation-delay:4.1s}.kv-lbl text:nth-child(6){animation-delay:4.25s}.kv-lbl text:nth-child(7){animation-delay:4.4s;fill:var(--kv-red)}
-.kv-dim path{stroke:var(--kv-blue);stroke-width:1;fill:none}
-.kv-dim text{font-size:11px;font-weight:800;fill:var(--kv-blue);text-anchor:middle}
-.kv-dim,.kv-road{opacity:0;animation:kvFade .6s .3s forwards}
-.kv-road rect{fill:var(--kv-ink)}.kv-road text{font-size:9px;font-weight:800;fill:#fff;text-anchor:middle;letter-spacing:.2em}
-@keyframes kvDraw{to{stroke-dashoffset:0}}
-@keyframes kvFade{to{opacity:1}}
-.kv-sheet-note{padding:6px 22px 24px;display:flex;flex-direction:column;gap:12px}
-.kv-hand{font-family:var(--kv-hand);font-size:24px;color:var(--kv-red);line-height:1}
-.kv-sheet-note ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.kv-sheet-note li{font-size:15px;color:var(--kv-ink-2);background:#fff;border:1px solid var(--kv-line);border-radius:14px;padding:10px 14px}
-.kv-sheet-note li b{font-size:18px;color:var(--kv-ink);margin-right:4px}
-.kv-unmute{align-self:flex-start;font:inherit;font-size:13px;font-weight:800;color:#fff;background:var(--kv-ink);border:none;border-radius:99px;padding:9px 16px;cursor:pointer}
+/* glass question widgets over the plots photo */
+.kv-hand{font-family:var(--kv-hand);font-size:24px;line-height:1}
+.kv-pill-white{background:#fff;color:var(--kv-ink)}
+.kv-glass{position:relative;z-index:2;margin:44px auto 0;max-width:980px;border-radius:30px;overflow:hidden;background:#20291a;box-shadow:0 30px 60px -30px rgba(20,22,26,.55);text-align:left;color:#fff}
+.kv-gbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%}
+.kv-glass::after{content:"";position:absolute;inset:0;background:rgba(10,14,8,.34)}
+.kv-gin{position:relative;z-index:1;padding:30px 16px 26px}
+.kv-ghead{text-align:center;margin-bottom:22px}
+.kv-ghead .kv-hand{color:var(--kv-yellow);font-size:25px}
+.kv-ghead h2{font-family:var(--kv-display);font-weight:400;font-size:clamp(30px,5.4vw,46px);line-height:1.05;letter-spacing:-.02em;color:#fff;margin-top:6px}
+.kv-ghead em{color:#FFD0CA}
+.kv-wgrid{display:grid;grid-template-columns:1fr;gap:12px}
+.kv-w{background:linear-gradient(150deg,rgba(255,255,255,.26),rgba(255,255,255,.1));-webkit-backdrop-filter:blur(16px) saturate(1.3);backdrop-filter:blur(16px) saturate(1.3);border:1px solid rgba(255,255,255,.34);border-radius:22px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 14px 30px -18px rgba(0,0,0,.6);transition:transform .25s}
+.kv-w:hover{transform:translateY(-3px)}
+.kv-w header{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.kv-w h3{font-family:var(--kv-sans);font-size:15.5px;font-weight:800;line-height:1.25;color:#fff}
+.kv-ic{flex:none;width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);display:grid;place-items:center}
+.kv-ic svg{width:21px;height:21px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.kv-ic b{font-size:18px;color:#fff}
+.kv-wnote{display:block;font-size:11.5px;color:rgba(255,255,255,.82);margin-top:9px;line-height:1.35}
+/* bedroom bars */
+.kv-hb{margin-top:10px}
+.kv-hb div{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;color:rgba(255,255,255,.9)}
+.kv-hb b{color:#fff}
+.kv-hb i{display:block;height:9px;width:var(--w);border-radius:99px;background:linear-gradient(90deg,#fff,var(--kv-yellow));transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.2,.8,.2,1) var(--t)}
+.pop.in .kv-hb i{transform:none}
+/* office rooms */
+.kv-rooms{display:flex;justify-content:space-around;align-items:flex-end;gap:10px;min-height:118px}
+.kv-rooms figure{margin:0;text-align:center;font-size:12px;color:rgba(255,255,255,.85)}
+.kv-rooms svg{display:block;margin:0 auto 6px;fill:none;stroke:#fff;stroke-width:3}
+.kv-rooms svg .f{fill:rgba(255,227,110,.75);stroke:none}
+.kv-rooms b{display:block;font-size:14px;color:#fff}
+/* floors */
+.kv-stacks{display:flex;justify-content:space-around;align-items:flex-end;min-height:104px}
+.kv-stacks>div{text-align:center;width:30%}
+.kv-stacks p{display:flex;flex-direction:column;gap:3px;margin:0 0 6px}
+.kv-stacks i{display:block;height:21px;border-radius:4px;background:rgba(255,255,255,.88);transform:translateY(10px);opacity:0;transition:transform .6s cubic-bezier(.2,.9,.3,1.2) var(--t),opacity .4s var(--t)}
+.kv-stacks p i:last-child{background:var(--kv-yellow)}
+.pop.in .kv-stacks i{transform:none;opacity:1}
+.kv-stacks b{display:block;font-size:14px;color:#fff}.kv-stacks span{font-size:12px;color:rgba(255,255,255,.85)}
+/* car park */
+.kv-car2{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.kv-car2 svg{flex:1 1 170px;max-width:240px}
+.kv-car2 .d{fill:none;stroke:var(--kv-yellow);stroke-width:2}
+.kv-car2 .o{stroke:rgba(255,255,255,.5);stroke-dasharray:4 4;stroke-width:1.4}.kv-car2 .o2{stroke:rgba(255,255,255,.32);stroke-dasharray:3 4;stroke-width:1.2}
+.kv-car2 .car rect{fill:rgba(255,255,255,.88)}.kv-car2 .car .g{fill:rgba(32,41,26,.75)}
+.kv-car2 ul{flex:1 1 130px;list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.kv-car2 li{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.9)}
+.kv-car2 li.on{background:var(--kv-yellow);color:var(--kv-ink);font-weight:800}
+.kv-car2 li b{color:inherit}
+/* one floor or two */
+.kv-cost{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
+.kv-vb{flex:1 1 170px;display:flex;gap:16px;justify-content:center;align-items:flex-end;height:132px}
+.kv-vb>div{flex:1;max-width:84px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;text-align:center}
+.kv-vb b{font-size:15px;color:#fff;margin-bottom:5px}
+.kv-vb i{display:block;height:calc(var(--h)*.68);border-radius:10px 10px 3px 3px;background:rgba(255,255,255,.72);transform:scaleY(0);transform-origin:bottom;transition:transform .9s cubic-bezier(.2,.8,.2,1) var(--t)}
+.kv-vb i.hot{background:var(--kv-red)}
+.pop.in .kv-vb i{transform:none}
+.kv-vb span{font-size:12px;margin-top:6px;color:rgba(255,255,255,.88)}
+.kv-cost p{flex:1 1 150px;margin:0;font-size:13.5px;color:rgba(255,255,255,.92)}
+.kv-cost p b{display:block;font-size:24px;color:var(--kv-yellow);letter-spacing:-.01em;line-height:1.1}
+.kv-cost small{display:block;font-size:11.5px;color:rgba(255,255,255,.8);margin-top:8px;line-height:1.35}
+.kv-gfoot{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:center;justify-content:center;margin-top:22px;font-size:14px;color:rgba(255,255,255,.92)}
+@media (min-width:760px){
+  .kv-hero{padding-top:72px}
+  .kv-gin{padding:40px 30px 32px}
+  .kv-wgrid{grid-template-columns:repeat(6,1fr);gap:14px}
+  .kv-a{grid-column:span 2}.kv-b{grid-column:span 3}
+}
+@media (prefers-reduced-motion:reduce){.kv-hb i,.kv-vb i,.kv-stacks i{transform:none;opacity:1;transition:none}}
 .kv-trust{display:inline-flex;align-items:center;gap:10px;margin:26px auto 0;font-size:14px;color:var(--kv-ink-2);position:relative;z-index:2}
 .kv-trust b{color:var(--kv-ink)}
 .kv-av{width:34px;height:34px;border-radius:50%;background:var(--kv-ink);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:800;letter-spacing:.04em;flex:none}
 @media (max-width:560px){.kv-by,.kv-sep,.kv-nav-cta,#kvCdLbl,.kv-eb2{display:none}.kv-nav{padding:8px 14px 8px 16px}.kv-cd{font-size:12px}}
-@media (min-width:760px){
-  .kv-sheet-body{grid-template-columns:1.2fr 1fr;align-items:center}
-  .kv-sheet-r{display:inline}
-  .kv-sheet-note{padding:24px 28px 24px 0}
-  .kv-hero{padding-top:72px}
-}
 @media (min-width:1360px){
   .kv-float,.kv-cursor{display:block}.kv-cursor{display:flex}
   .kv-float{animation:kvBob 6s ease-in-out infinite}
@@ -1187,7 +1219,6 @@ details.adv summary{cursor:pointer;color:var(--grey);font-weight:800;font-size:1
   .kv-c1{right:-40px;top:250px}.kv-c2{left:-30px;top:560px}
 }
 @media (prefers-reduced-motion:reduce){
-  .kv-d{stroke-dashoffset:0;animation:none}.kv-fill,.kv-lbl text,.kv-dim,.kv-road{opacity:1;animation:none}
   .kv-float,.kv-cursor,.kv-live,.kv-compass path,.kv-bars i,.kv-hl::before{animation:none}.kv-hl::before{transform:rotate(-1.5deg)}
 }
 /* guided tour */
@@ -1265,36 +1296,50 @@ details.adv summary{cursor:pointer;color:var(--grey);font-weight:800;font-size:1
         <p class="kv-fine kv-device">💻 Best experienced on a laptop or desktop.</p>
       </div>
 
-      <!-- media card: a drawing sheet with a small house plan drawing itself. TODO(media): swap for Nikhil's video when ready -->
-      <div class="kv-sheet">
-        <div class="kv-sheet-bar"><span class="kv-dots"><i></i><i></i><i></i></span><span>KYH · Drawing 01 · Ground floor</span><span class="kv-sheet-r">Plot 30′ × 40′ · North facing</span></div>
-        <div class="kv-sheet-body">
-          <svg class="kv-plan" viewBox="-30 -26 360 470" role="img" aria-label="A small house plan drawing itself on a 30 by 40 foot plot">
-            <defs><pattern id="kvHatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#14161A" stroke-width="1" opacity=".35"/></pattern></defs>
-            <rect class="kv-d kv-plot" x="0" y="0" width="300" height="400" pathLength="1"/>
-            <rect class="kv-d kv-plate" x="15" y="15" width="270" height="370" pathLength="1"/>
-            <rect class="kv-fill kv-stairfill" x="205" y="120" width="80" height="160"/>
-            <path class="kv-d kv-wall" pathLength="1" d="M15 150 H150 V15 M150 120 H285 M150 120 V280 M205 120 V280 M150 185 H205 M15 280 H285"/>
-            <path class="kv-d kv-stair" pathLength="1" d="M205 140 H285 M205 160 H285 M205 180 H285 M205 200 H285 M205 220 H285 M205 240 H285 M205 260 H285 M245 270 V130"/>
-            <path class="kv-d kv-door" pathLength="1" d="M60 150 A30 30 0 0 1 90 180 M90 150 V180 M150 230 A26 26 0 0 0 124 256 M150 256 H124"/>
-            <rect class="kv-d kv-car" x="40" y="300" width="96" height="62" rx="10" pathLength="1"/>
-            <g class="kv-lbl">
-              <text x="82" y="86">Bed 1</text><text x="217" y="72">Kitchen</text><text x="177" y="157" class="sm">WC</text>
-              <text x="82" y="222">Living</text><text x="177" y="240" class="sm">Dining</text><text x="245" y="205" class="sm">Stairs</text>
-              <text x="210" y="338">Car park</text>
-            </g>
-            <g class="kv-dim"><path d="M0 -12 H300 M0 -17 V-7 M300 -17 V-7 M-12 0 V400 M-17 0 H-7 M-17 400 H-7"/><text x="150" y="-16">30′-0″</text><text x="-16" y="200" transform="rotate(-90 -16 200)">40′-0″</text></g>
-            <g class="kv-road"><rect x="0" y="412" width="300" height="18" rx="3"/><text x="150" y="425">ROAD · NORTH</text></g>
-          </svg>
-          <div class="kv-sheet-note">
-            <span class="kv-hand">your plot, drawn up ↓</span>
-            <ul>
-              <li><b>999</b> sq ft buildable per floor</li>
-              <li><b>6</b> spaces placed on the ground floor</li>
-              <li><b>1.5′</b> setback all around</li>
-            </ul>
-            <button class="kv-unmute" type="button" data-act="intro-start" title="Start my home brief">▶ Tap to plan yours</button>
+      <!-- question widgets on glass. TODO(copy): questions and example figures. Sizes are the app's own space sizes. -->
+      <div class="kv-glass">
+        <img class="kv-gbg" data-cover alt="" aria-hidden="true">
+        <div class="kv-gin pop">
+          <div class="kv-ghead"><span class="kv-hand">every home starts with questions</span><h2>Bring your questions. <em>Leave with answers.</em></h2></div>
+          <div class="kv-wgrid">
+            <article class="kv-w kv-a">
+              <header><span class="kv-ic"><svg viewBox="0 0 24 24"><path d="M3 18v-11M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5M6.5 11.5h.01"/></svg></span><h3>Which bedroom size is bigger?</h3></header>
+              <div class="kv-hb"><div><span>Compact</span><b>13′ × 12′</b></div><i style="--w:70%;--t:.1s"></i></div>
+              <div class="kv-hb"><div><span>Standard</span><b>14′ × 13′</b></div><i style="--w:81%;--t:.25s"></i></div>
+              <div class="kv-hb"><div><span>Lavish</span><b>16′ × 14′</b></div><i style="--w:100%;--t:.4s"></i></div>
+            </article>
+            <article class="kv-w kv-a">
+              <header><span class="kv-ic"><svg viewBox="0 0 24 24"><path d="M4 7h16v9H4zM2 19h20M9 16v3M15 16v3"/></svg></span><h3>What size should my home office be?</h3></header>
+              <div class="kv-rooms">
+                <figure><svg viewBox="0 0 100 100" style="width:66px"><rect x="3" y="3" width="94" height="94" rx="4"/><rect class="f" x="12" y="12" width="76" height="22" rx="2"/><circle cx="50" cy="55" r="12"/></svg><figcaption><b>8′ × 8′</b>Compact</figcaption></figure>
+                <figure><svg viewBox="0 0 100 100" style="width:84px"><rect x="3" y="3" width="94" height="94" rx="4"/><rect class="f" x="12" y="12" width="76" height="20" rx="2"/><circle cx="50" cy="50" r="10"/><rect x="12" y="72" width="34" height="16" rx="2"/></svg><figcaption><b>10′ × 10′</b>Standard</figcaption></figure>
+              </div>
+            </article>
+            <article class="kv-w kv-a">
+              <header><span class="kv-ic"><svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></svg></span><h3>How many floors do I need?</h3></header>
+              <div class="kv-stacks">
+                <div><p><i style="--t:.1s"></i></p><b>G</b><span>999</span></div>
+                <div><p><i style="--t:.3s"></i><i style="--t:.15s"></i></p><b>G+1</b><span>1,998</span></div>
+                <div><p><i style="--t:.5s"></i><i style="--t:.35s"></i><i style="--t:.2s"></i></p><b>G+2</b><span>2,997</span></div>
+              </div>
+              <small class="kv-wnote">sq ft if every floor is full, on a 30 × 40 plot</small>
+            </article>
+            <article class="kv-w kv-b">
+              <header><span class="kv-ic"><svg viewBox="0 0 24 24"><path d="M3 14l2-6a2 2 0 0 1 2-1.4h10A2 2 0 0 1 19 8l2 6v4h-3v-2H6v2H3zM3 14h18M7 11h.01M17 11h.01"/></svg></span><h3>Will my car park fit my SUV?</h3></header>
+              <div class="kv-car2">
+                <svg viewBox="0 0 190 116" aria-hidden="true"><rect class="d" x="9.5" y="8" width="171" height="99" rx="4"/><rect class="d o" x="14" y="12.5" width="162" height="90" rx="4"/><rect class="d o2" x="23" y="17" width="144" height="81" rx="4"/><g class="car"><rect x="30" y="29" width="130" height="57" rx="15"/><rect class="g" x="96" y="36" width="27" height="43" rx="6"/><rect class="g" x="50" y="38" width="20" height="39" rx="5"/></g></svg>
+                <ul><li><span>Compact</span><b>9′ × 16′</b></li><li><span>Standard</span><b>10′ × 18′</b></li><li class="on"><span>SUV</span><b>11′ × 19′</b></li></ul>
+              </div>
+            </article>
+            <article class="kv-w kv-b">
+              <header><span class="kv-ic"><b>₹</b></span><h3>What will it cost: one floor or two?</h3></header>
+              <div class="kv-cost">
+                <div class="kv-vb"><div><b>₹28.6L</b><i style="--h:53%;--t:.15s"></i><span>One floor</span></div><div><b>₹53.6L</b><i class="hot" style="--h:100%;--t:.35s"></i><span>Two floors</span></div></div>
+                <p><b>About ₹25L</b>for the second floor<small>Example: 30 × 40 plot, full floors, Smart package. Yours depends on your plan.</small></p>
+              </div>
+            </article>
           </div>
+          <div class="kv-gfoot"><button class="kv-pill kv-pill-white kv-pill-lg" data-act="intro-start">Start my home brief <span class="ar">→</span></button><span>Your plot, your answers, in about 10 minutes.</span></div>
         </div>
       </div>
       <!-- TODO(copy): trust line; add Nikhil's photo in place of the initials -->
@@ -1340,8 +1385,7 @@ details.adv summary{cursor:pointer;color:var(--grey);font-weight:800;font-size:1
     </section>
 
     <section class="ix-promise pop">
-      <div class="ix-k">Our promise</div>
-      <h2 class="ix-h2">No hidden costs. <em>No surprises.</em></h2>
+      <h2 class="ix-h2">Know What Fits Your Plot. <em>And Your Pocket.</em></h2>
       <p class="ix-p">Real sizes and honest numbers. A starting point you can take straight to your architect.</p>
     </section>
 
@@ -2447,6 +2491,7 @@ document.addEventListener('keydown',e=>{if(!tour)return;if(e.key==='Escape')endT
 
 // ---------- cover page ----------
 // Shown to every new visitor before the start screen; "Why Know Your Home?" on the start screen reopens it.
+document.querySelectorAll('[data-cover]').forEach(i=>i.src=$('.kv-polaroid img').src);
 const LAUNCH_AT=Date.UTC(2026,10,11,5,41,0); // TODO: public launch, 11 Nov 2026 11:11 AM IST
 let kvTimer=null;
 function kvTick(){
